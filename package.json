@@ -2,7 +2,9 @@
   "name": "yj-portfolio",
   "version": "1.0.0",
   "scripts": {
-    "build": "tailwindcss -i ./input.css -o ./dist/output.css --minify && mkdir -p dist && cp index.html dist/ && cp -r img dist/"
+    "build:css": "tailwindcss -i ./input.css -o ./dist/output.css --minify",
+    "build:copy": "node build.js",
+    "build": "npm run build:css && npm run build:copy"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.1"
