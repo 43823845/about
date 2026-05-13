@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>杨杰 | 软硬件研发全栈工程师</title>
     <link rel="stylesheet" href="./output.css">
+    <link rel="stylesheet" href="./dist/output.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -450,14 +451,310 @@
             scrollbar-width: none;
         }
 
+        /* ===== Sensory UI Refresh ===== */
+        :root {
+            --bg-dark: #070b13;
+            --bg-card: rgba(13, 20, 33, 0.78);
+            --accent-blue: #5eead4;
+            --accent-cyan: #38bdf8;
+            --accent-orange: #f59e0b;
+            --accent-purple: #c084fc;
+            --border-subtle: rgba(148, 163, 184, 0.14);
+            --glass-bg: rgba(8, 13, 24, 0.78);
+            --surface-1: rgba(15, 23, 42, 0.62);
+            --surface-2: rgba(15, 23, 42, 0.36);
+            --hairline: rgba(226, 232, 240, 0.1);
+            --text-soft: #94a3b8;
+        }
+
+        body {
+            background:
+                radial-gradient(circle at 18% 8%, rgba(56, 189, 248, 0.16), transparent 32rem),
+                radial-gradient(circle at 82% 18%, rgba(245, 158, 11, 0.10), transparent 28rem),
+                linear-gradient(180deg, #070b13 0%, #0b1020 45%, #070b13 100%);
+            color: #d8e0ec;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.024) 1px, transparent 1px);
+            background-size: 72px 72px;
+            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.82), transparent 72%);
+        }
+
+        .hero-grid {
+            background-image:
+                linear-gradient(rgba(94, 234, 212, 0.055) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(56, 189, 248, 0.045) 1px, transparent 1px);
+            background-size: 80px 80px;
+        }
+
+        .hero-grid>.absolute.rounded-full {
+            display: none;
+        }
+
+        .glass-nav {
+            background: rgba(7, 11, 19, 0.72);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.09);
+            box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.03);
+        }
+
+        .glass-nav.scrolled {
+            background: rgba(7, 11, 19, 0.9);
+            box-shadow: 0 18px 60px rgba(0, 0, 0, 0.28), inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+        }
+
+        .glass-nav a,
+        .mobile-nav-link,
+        .filter-btn,
+        .skill-tag,
+        .project-card,
+        .stat-card,
+        .award-badge,
+        footer .group {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .hero-title {
+            max-width: 11ch;
+            letter-spacing: 0;
+            text-wrap: balance;
+            text-shadow: 0 28px 70px rgba(56, 189, 248, 0.18);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #f8fafc 0%, #5eead4 28%, #38bdf8 62%, #fbbf24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        #hero p,
+        #about p,
+        #experience p,
+        #awards p,
+        #contact p {
+            color: var(--text-soft);
+        }
+
+        #hero .inline-flex.rounded-full {
+            background: rgba(94, 234, 212, 0.08);
+            border-color: rgba(94, 234, 212, 0.22);
+            color: #99f6e4;
+            box-shadow: 0 0 0 1px rgba(94, 234, 212, 0.05), 0 20px 50px rgba(15, 23, 42, 0.36);
+        }
+
+        #hero .grid.grid-cols-2>div,
+        #about .lg\:col-span-2>div,
+        .timeline-item>div,
+        footer .group {
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.025)),
+                var(--surface-2);
+            border: 1px solid var(--hairline);
+            box-shadow: 0 18px 55px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        }
+
+        #hero .hidden.lg\:block>.relative {
+            border-radius: 28px;
+            background:
+                linear-gradient(145deg, rgba(94, 234, 212, 0.11), transparent 34%),
+                linear-gradient(315deg, rgba(245, 158, 11, 0.10), transparent 28%),
+                rgba(15, 23, 42, 0.58);
+            border: 1px solid rgba(226, 232, 240, 0.12);
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        section {
+            position: relative;
+        }
+
+        section[id]::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: min(1120px, calc(100% - 3rem));
+            height: 1px;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, transparent, rgba(148, 163, 184, 0.18), transparent);
+        }
+
+        .stat-card {
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.03)),
+                rgba(15, 23, 42, 0.46);
+            border-color: rgba(226, 232, 240, 0.11);
+            border-radius: 18px;
+            box-shadow: 0 20px 55px rgba(0, 0, 0, 0.18);
+        }
+
+        .stat-card:hover {
+            border-color: rgba(94, 234, 212, 0.34);
+            box-shadow: 0 24px 70px rgba(15, 23, 42, 0.36), 0 0 0 1px rgba(94, 234, 212, 0.08);
+        }
+
+        #skills .grid.md\:grid-cols-2>div {
+            padding: 1.35rem;
+            border-radius: 18px;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02)),
+                rgba(15, 23, 42, 0.36);
+            border: 1px solid rgba(226, 232, 240, 0.08);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .skill-tag {
+            background: rgba(255, 255, 255, 0.045);
+            border-color: rgba(226, 232, 240, 0.10);
+            border-radius: 10px;
+            color: #dbe7f3;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+        }
+
+        .skill-tag:hover {
+            border-color: rgba(94, 234, 212, 0.42);
+            color: #ffffff;
+            box-shadow: 0 12px 28px rgba(20, 184, 166, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        .project-card {
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+                rgba(15, 23, 42, 0.62);
+            border-color: rgba(226, 232, 240, 0.1);
+            border-radius: 18px;
+            box-shadow: 0 22px 70px rgba(0, 0, 0, 0.22);
+        }
+
+        .project-card::after {
+            border-radius: 18px;
+        }
+
+        .project-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 28px 90px rgba(0, 0, 0, 0.34), 0 0 0 1px rgba(94, 234, 212, 0.13);
+        }
+
+        .project-card .card-img {
+            opacity: 0.68;
+            filter: saturate(1.08) contrast(1.05);
+        }
+
+        .project-card .card-overlay {
+            background:
+                linear-gradient(to top, rgba(7, 11, 19, 0.96) 0%, rgba(7, 11, 19, 0.58) 48%, rgba(7, 11, 19, 0.12) 100%);
+        }
+
+        .award-badge {
+            min-height: 188px;
+            background:
+                linear-gradient(145deg, rgba(245, 158, 11, 0.08), transparent 48%),
+                rgba(15, 23, 42, 0.48);
+            border-color: rgba(251, 191, 36, 0.14);
+            border-radius: 18px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .award-badge:hover {
+            border-color: rgba(251, 191, 36, 0.38);
+            box-shadow: 0 22px 60px rgba(245, 158, 11, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        .timeline-line {
+            background: linear-gradient(to bottom, #5eead4, #38bdf8, #f59e0b);
+            opacity: 0.48;
+        }
+
+        .timeline-dot {
+            border-color: #5eead4;
+            box-shadow: 0 0 0 6px rgba(94, 234, 212, 0.06);
+        }
+
+        .timeline-item:hover .timeline-dot {
+            background: #5eead4;
+            box-shadow: 0 0 0 8px rgba(94, 234, 212, 0.10), 0 0 24px rgba(94, 234, 212, 0.42);
+        }
+
+        .modal-content {
+            background: rgba(15, 23, 42, 0.94);
+            border-color: rgba(226, 232, 240, 0.12);
+        }
+
+        #backToTop {
+            box-shadow: 0 16px 40px rgba(56, 189, 248, 0.22);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
         /* ===== Responsive ===== */
         @media (max-width: 768px) {
             .hero-title {
-                font-size: 2.5rem !important;
+                font-size: 2.65rem !important;
+                max-width: 10ch;
             }
 
             .stat-card {
                 padding: 1.25rem;
+                min-height: 126px;
+            }
+
+            .glass-nav .max-w-7xl {
+                height: 4.5rem;
+                padding-left: 1.1rem;
+                padding-right: 1.1rem;
+            }
+
+            #hero {
+                min-height: auto;
+                padding-top: 7rem;
+                padding-bottom: 5.5rem;
+            }
+
+            #hero .flex.flex-wrap.gap-4>a {
+                width: 100%;
+                justify-content: center;
+                border-radius: 14px;
+            }
+
+            section[id]::before {
+                width: calc(100% - 2rem);
+            }
+
+            #skills .grid.md\:grid-cols-2>div {
+                padding: 1rem;
+            }
+
+            .timeline-line {
+                left: 15px;
+            }
+
+            .timeline-dot {
+                left: 8px;
+            }
+
+            #experience .relative.pl-16 {
+                padding-left: 2.5rem;
             }
         }
     </style>
