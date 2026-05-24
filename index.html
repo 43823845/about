@@ -550,6 +550,16 @@
             text-shadow: 0 20px 60px rgba(110, 70, 34, 0.18);
         }
 
+        #hero {
+            min-height: auto;
+            padding-top: 7.5rem;
+            padding-bottom: 4.5rem;
+        }
+
+        #hero .max-w-7xl {
+            align-items: start;
+        }
+
         .hero-proof-grid {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1071,6 +1081,77 @@
 
             #experience .relative.pl-16 {
                 padding-left: 2.5rem;
+            }
+        }
+
+        @media (max-width: 1280px) {
+            #hero .max-w-7xl {
+                gap: 3rem;
+            }
+
+            .hero-title {
+                font-size: 4.25rem !important;
+                max-width: 10ch;
+            }
+
+            .hero-proof-grid {
+                grid-template-columns: 1fr;
+                max-width: 34rem;
+            }
+
+            #hero .hidden.lg\:block > .relative {
+                padding: 1.5rem;
+            }
+
+            #hero .grid.grid-cols-2 {
+                gap: 0.75rem;
+            }
+
+            #hero .grid.grid-cols-2 > div {
+                padding: 1rem;
+            }
+        }
+
+        @media (max-width: 1100px) {
+            #hero {
+                padding-bottom: 3.5rem;
+            }
+
+            #hero .max-w-7xl {
+                gap: 2.5rem;
+            }
+
+            .hero-title {
+                font-size: 3.75rem !important;
+            }
+
+            #hero p.text-lg {
+                font-size: 1rem;
+                max-width: 100%;
+            }
+
+            .hero-proof-card {
+                padding: 0.9rem 1rem;
+            }
+
+            .hero-proof-value {
+                font-size: 1.35rem;
+            }
+
+            .hero-proof-desc {
+                font-size: 0.78rem;
+            }
+
+            #hero .hidden.lg\:block {
+                display: none;
+            }
+
+            #hero .max-w-7xl {
+                grid-template-columns: 1fr;
+            }
+
+            #hero .animate-bounce {
+                display: none;
             }
         }
     </style>
@@ -1852,17 +1933,6 @@
                 </h2>
                 <p class="text-slate-500 mb-16 max-w-lg mx-auto">如果您正在寻找一位能从硬件到软件提供整体解决方案的工程师，欢迎随时联系我。</p>
             </div>
-            <div class="contact-actions reveal">
-                <button id="downloadResumeBtnFooter" type="button" class="contact-action-btn">
-                    <i class="fas fa-print"></i> 打印或导出简历
-                </button>
-                <a href="mailto:43823845@qq.com" class="contact-action-btn">
-                    <i class="fas fa-envelope"></i> 发送面试邀请
-                </a>
-                <button id="contactWechatBtn" type="button" class="contact-action-btn">
-                    <i class="fab fa-weixin"></i> 微信直连
-                </button>
-            </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal">
                 <a href="mailto:43823845@qq.com"
                     class="group p-6 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-blue-500/20 transition-all hover:-translate-y-1">
@@ -1871,7 +1941,7 @@
                         <i class="fas fa-envelope text-blue-400 text-lg"></i>
                     </div>
                     <p class="text-sm font-medium text-white">43823845@qq.com</p>
-                    <p class="text-xs text-slate-500 mt-1">点击发送邮件</p>
+                    <p class="text-xs text-slate-500 mt-1">发送面试邀请或合作邮件</p>
                 </a>
                 <button id="wechatCard" type="button"
                     class="group p-6 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-green-500/20 transition-all hover:-translate-y-1 cursor-pointer select-none w-full text-left">
@@ -1880,17 +1950,17 @@
                         <i class="fab fa-weixin text-green-500 text-lg"></i>
                     </div>
                     <p class="text-sm font-medium text-white">微信号: 43823845</p>
-                    <p class="text-xs text-slate-500 mt-1">点击查看二维码</p>
+                    <p class="text-xs text-slate-500 mt-1">点击查看二维码并快速沟通</p>
                 </button>
-                <div
-                    class="group p-6 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-orange-500/20 transition-all hover:-translate-y-1">
+                <button id="printResumeCard" type="button"
+                    class="group p-6 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-orange-500/20 transition-all hover:-translate-y-1 w-full text-left">
                     <div
                         class="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-orange-500/20 transition-colors">
-                        <i class="fas fa-location-dot text-orange-400 text-lg"></i>
+                        <i class="fas fa-print text-orange-400 text-lg"></i>
                     </div>
-                    <p class="text-sm font-medium text-white">陕西 · 西安</p>
-                    <p class="text-xs text-slate-500 mt-1">期望工作城市</p>
-                </div>
+                    <p class="text-sm font-medium text-white">打印或导出简历</p>
+                    <p class="text-xs text-slate-500 mt-1">点击后可保存为 PDF 或直接打印</p>
+                </button>
             </div>
             <div class="mt-16 pt-8 border-t border-white/5 text-center">
                 <p class="text-xs text-slate-600">&copy; 2026 杨杰 · 全栈工程师 · All Rights Reserved</p>
@@ -2280,8 +2350,7 @@
                 statCards.forEach(function (el) { statObserver.observe(el); });
 
                 var downloadResumeBtn = document.getElementById('downloadResumeBtn');
-                var downloadResumeBtnFooter = document.getElementById('downloadResumeBtnFooter');
-                var contactWechatBtn = document.getElementById('contactWechatBtn');
+                var printResumeCard = document.getElementById('printResumeCard');
 
                 function triggerResumeExport(e) {
                     if (e) {
@@ -2294,12 +2363,8 @@
                     downloadResumeBtn.addEventListener('click', triggerResumeExport);
                 }
 
-                if (downloadResumeBtnFooter) {
-                    downloadResumeBtnFooter.addEventListener('click', triggerResumeExport);
-                }
-
-                if (contactWechatBtn) {
-                    contactWechatBtn.addEventListener('click', showWechatQR);
+                if (printResumeCard) {
+                    printResumeCard.addEventListener('click', triggerResumeExport);
                 }
             });
 
