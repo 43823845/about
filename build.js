@@ -10,6 +10,12 @@ if (!fs.existsSync('dist')) {
 fs.copyFileSync('index.html', path.join('dist', 'index.html'));
 console.log('✓ Copied index.html to dist/');
 
+// 复制编译后的 CSS
+if (fs.existsSync('output.css')) {
+  fs.copyFileSync('output.css', path.join('dist', 'output.css'));
+  console.log('✓ Copied output.css to dist/');
+}
+
 // 复制 img 目录（如果存在）
 if (fs.existsSync('img')) {
   const copyDir = (src, dest) => {

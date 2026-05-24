@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>杨杰 | 软硬件研发全栈工程师</title>
     <link rel="stylesheet" href="./output.css">
-    <link rel="stylesheet" href="./dist/output.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -528,6 +527,288 @@
             text-shadow: 0 28px 70px rgba(56, 189, 248, 0.18);
         }
 
+        .hero-proof-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+            max-width: 46rem;
+        }
+
+        .hero-proof-card {
+            padding: 1rem 1.1rem;
+            border-radius: 18px;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
+                rgba(15, 23, 42, 0.45);
+            border: 1px solid rgba(226, 232, 240, 0.1);
+            box-shadow: 0 18px 42px rgba(0, 0, 0, 0.18);
+        }
+
+        .hero-proof-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            margin-bottom: 0.7rem;
+            color: #99f6e4;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .hero-proof-value {
+            color: #f8fafc;
+            font-size: 1.5rem;
+            line-height: 1;
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-proof-desc {
+            color: var(--text-soft);
+            font-size: 0.82rem;
+            line-height: 1.6;
+        }
+
+        .recruiter-panel {
+            padding: 1.4rem;
+            border-radius: 22px;
+            background:
+                linear-gradient(145deg, rgba(94, 234, 212, 0.12), transparent 35%),
+                linear-gradient(325deg, rgba(59, 130, 246, 0.12), transparent 30%),
+                rgba(15, 23, 42, 0.56);
+            border: 1px solid rgba(148, 163, 184, 0.16);
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.22);
+        }
+
+        .recruiter-point {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.9rem;
+            padding: 0.95rem 0;
+            border-top: 1px solid rgba(226, 232, 240, 0.08);
+        }
+
+        .recruiter-point:first-of-type {
+            border-top: 0;
+            padding-top: 0;
+        }
+
+        .recruiter-point-icon {
+            width: 2.4rem;
+            height: 2.4rem;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.9rem;
+            background: rgba(94, 234, 212, 0.1);
+            color: #99f6e4;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        .section-lead {
+            max-width: 42rem;
+        }
+
+        .impact-strip {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .impact-card {
+            padding: 1.15rem 1.25rem;
+            border-radius: 18px;
+            background:
+                linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02)),
+                rgba(15, 23, 42, 0.48);
+            border: 1px solid rgba(226, 232, 240, 0.1);
+            box-shadow: 0 18px 42px rgba(0, 0, 0, 0.18);
+        }
+
+        .impact-label {
+            color: #94a3b8;
+            font-size: 0.76rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 0.6rem;
+        }
+
+        .impact-value {
+            color: #f8fafc;
+            font-size: 1.7rem;
+            line-height: 1;
+            font-weight: 900;
+            margin-bottom: 0.55rem;
+        }
+
+        .impact-desc {
+            color: var(--text-soft);
+            font-size: 0.84rem;
+            line-height: 1.6;
+        }
+
+        .timeline-item {
+            padding-left: 0.25rem;
+        }
+
+        .timeline-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timeline-card::before {
+            content: '';
+            position: absolute;
+            inset: 0 auto 0 0;
+            width: 4px;
+            background: linear-gradient(180deg, #5eead4, #38bdf8, #f59e0b);
+            opacity: 0.85;
+        }
+
+        .timeline-card::after {
+            content: '';
+            position: absolute;
+            inset: auto -3rem -3rem auto;
+            width: 10rem;
+            height: 10rem;
+            border-radius: 999px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.14), transparent 68%);
+            pointer-events: none;
+        }
+
+        .timeline-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+            margin-top: 1rem;
+        }
+
+        .timeline-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.42rem 0.72rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(226, 232, 240, 0.08);
+            color: #cbd5e1;
+            font-size: 0.72rem;
+            font-weight: 600;
+        }
+
+        .project-showcase-header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-showcase-note {
+            max-width: 30rem;
+            color: var(--text-soft);
+            font-size: 0.92rem;
+            line-height: 1.7;
+        }
+
+        .project-card .card-frame {
+            position: absolute;
+            inset: 0;
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            pointer-events: none;
+        }
+
+        .project-card .card-number {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            color: rgba(248, 250, 252, 0.16);
+            font-size: 2.4rem;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -0.06em;
+        }
+
+        .project-card .card-summary {
+            color: #cbd5e1;
+            font-size: 0.82rem;
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            min-height: 4.1rem;
+        }
+
+        .project-card .card-proof {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            color: #99f6e4;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .project-card .card-proof::before {
+            content: '';
+            width: 0.6rem;
+            height: 0.6rem;
+            border-radius: 999px;
+            background: linear-gradient(135deg, #5eead4, #38bdf8);
+            box-shadow: 0 0 18px rgba(56, 189, 248, 0.45);
+        }
+
+        .contact-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 0 0 2.25rem;
+        }
+
+        .contact-action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            padding: 0.95rem 1.3rem;
+            border-radius: 999px;
+            border: 1px solid rgba(226, 232, 240, 0.1);
+            background: rgba(255, 255, 255, 0.04);
+            color: #f8fafc;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+
+        .contact-action-btn:hover {
+            transform: translateY(-2px);
+            border-color: rgba(94, 234, 212, 0.3);
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.26);
+        }
+
+        @media print {
+            #mainNav,
+            #backToTop,
+            #loader,
+            #projectModal,
+            #wechatModal,
+            #menuOverlay,
+            #mobileMenu,
+            #particles,
+            .contact-actions {
+                display: none !important;
+            }
+
+            body {
+                background: #ffffff !important;
+                color: #111827 !important;
+            }
+        }
+
         .text-gradient {
             background: linear-gradient(135deg, #f8fafc 0%, #5eead4 28%, #38bdf8 62%, #fbbf24 100%);
             -webkit-background-clip: text;
@@ -714,6 +995,18 @@
                 max-width: 10ch;
             }
 
+            .hero-proof-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .impact-strip {
+                grid-template-columns: 1fr;
+            }
+
+            .section-lead {
+                margin-left: 0 !important;
+            }
+
             .stat-card {
                 padding: 1.25rem;
                 min-height: 126px;
@@ -823,7 +1116,7 @@
             <!-- Mobile Hamburger -->
             <button id="menuToggle"
                 class="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 text-white"
-                aria-label="菜单">
+                aria-label="菜单" aria-expanded="false" aria-controls="mobileMenu">
                 <span class="w-6 h-0.5 bg-white transition-all duration-300" id="bar1"></span>
                 <span class="w-6 h-0.5 bg-white transition-all duration-300" id="bar2"></span>
                 <span class="w-4 h-0.5 bg-white transition-all duration-300 ml-auto" id="bar3"></span>
@@ -912,6 +1205,23 @@
                         data-target="contact">
                         <i class="fas fa-paper-plane text-sm"></i> 建立联系
                     </a>
+                </div>
+                <div class="hero-proof-grid reveal">
+                    <div class="hero-proof-card">
+                        <span class="hero-proof-kicker"><i class="fas fa-bolt"></i> 招聘者关注</span>
+                        <div class="hero-proof-value">0-1 交付</div>
+                        <p class="hero-proof-desc">从方案、原理图、PCB、固件到调试量产，我能直接负责完整闭环。</p>
+                    </div>
+                    <div class="hero-proof-card">
+                        <span class="hero-proof-kicker"><i class="fas fa-shield-halved"></i> 场景强度</span>
+                        <div class="hero-proof-value">高可靠</div>
+                        <p class="hero-proof-desc">军工、工业、车规、医疗项目经验，适合复杂约束与高稳定性岗位。</p>
+                    </div>
+                    <div class="hero-proof-card">
+                        <span class="hero-proof-kicker"><i class="fas fa-cubes-stacked"></i> 稀缺组合</span>
+                        <div class="hero-proof-value">硬件 + 嵌入式 + AI</div>
+                        <p class="hero-proof-desc">单人覆盖芯片到应用的关键链路，沟通成本更低，落地速度更快。</p>
+                    </div>
                 </div>
             </div>
             <div class="relative hidden lg:block">
@@ -1014,7 +1324,7 @@
                     <span class="w-12 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full"></span>
                     关于我
                 </h2>
-                <p class="text-slate-500 mb-12 ml-16">从兴趣出发，用技术说话</p>
+                <p class="text-slate-500 mb-12 ml-16 section-lead">从兴趣出发，用技术说话，也把招聘者最关心的交付能力、稳定性和成长潜力直接摆到台前。</p>
             </div>
             <div class="grid lg:grid-cols-5 gap-12 reveal">
                 <div class="lg:col-span-3 space-y-6">
@@ -1034,6 +1344,32 @@
                     </p>
                 </div>
                 <div class="lg:col-span-2 space-y-4">
+                    <div class="recruiter-panel">
+                        <h4 class="text-white font-bold text-base mb-4 flex items-center gap-2">
+                            <i class="fas fa-star text-cyan-300"></i> 为什么适合核心研发岗位
+                        </h4>
+                        <div class="recruiter-point">
+                            <div class="recruiter-point-icon"><i class="fas fa-diagram-project text-sm"></i></div>
+                            <div>
+                                <p class="text-white font-semibold text-sm mb-1">系统级视角完整</p>
+                                <p class="text-slate-400 text-sm">我关注的不止是单板设计，也关注整机协同、生产测试、交付节奏和后续维护。</p>
+                            </div>
+                        </div>
+                        <div class="recruiter-point">
+                            <div class="recruiter-point-icon"><i class="fas fa-gauge-high text-sm"></i></div>
+                            <div>
+                                <p class="text-white font-semibold text-sm mb-1">复杂问题处理稳定</p>
+                                <p class="text-slate-400 text-sm">面对高速信号、电源完整性、现场故障和资源受限平台，我能快速定位主因并推进收敛。</p>
+                            </div>
+                        </div>
+                        <div class="recruiter-point">
+                            <div class="recruiter-point-icon"><i class="fas fa-user-gear text-sm"></i></div>
+                            <div>
+                                <p class="text-white font-semibold text-sm mb-1">适配团队协作</p>
+                                <p class="text-slate-400 text-sm">适合研发骨干、技术带头人和跨部门接口岗位，能把研发语言转成项目结果。</p>
+                            </div>
+                        </div>
+                    </div>
                     <div class="p-5 bg-white/[0.03] rounded-2xl border border-white/5">
                         <h4 class="text-white font-bold text-sm mb-3 flex items-center gap-2">
                             <i class="fas fa-crosshairs text-blue-400"></i> 求职意向
@@ -1221,6 +1557,23 @@
                 </h2>
                 <p class="text-slate-500 mb-16 ml-16">多年深耕，从硬件到软件全栈</p>
             </div>
+            <div class="impact-strip reveal">
+                <div class="impact-card">
+                    <div class="impact-label">交付强度</div>
+                    <div class="impact-value">20+</div>
+                    <p class="impact-desc">覆盖军工、工业、物联网与检测设备项目，具备复杂系统的持续交付能力。</p>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-label">部署规模</div>
+                    <div class="impact-value">450+</div>
+                    <p class="impact-desc">共享充电与数据采集节点已规模化部署，项目能力经过真实业务环境验证。</p>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-label">稳定运行</div>
+                    <div class="impact-value">5W+</div>
+                    <p class="impact-desc">累计无故障运行小时数可见，体现硬件可靠性与软件稳定性的综合质量。</p>
+                </div>
+            </div>
             <div class="relative pl-16 space-y-12 reveal">
                 <div class="timeline-line"></div>
 
@@ -1228,7 +1581,7 @@
                 <div class="timeline-item relative">
                     <div class="timeline-dot"></div>
                     <div
-                        class="p-6 bg-white/[0.02] rounded-2xl border border-white/5 hover:border-blue-500/20 transition-all">
+                        class="timeline-card p-6 bg-white/[0.02] rounded-2xl border border-white/5 hover:border-blue-500/20 transition-all">
                         <div class="flex flex-wrap items-center gap-3 mb-3">
                             <span
                                 class="px-3 py-1 bg-blue-500/10 text-blue-400 text-xs font-bold rounded-lg border border-blue-500/15">当前</span>
@@ -1240,6 +1593,11 @@
                             深耕涉密研发一线，主导多款自研硬件功能板卡的全生命周期开发：从底层外设驱动、高速通讯协议栈到跨平台上位机，一手搭建模块化功能自检与自动化测试平台，实现测试用例一键回归、故障自动定位。
                             同时承担非标测试设备硬件板卡的“端到端”交付——独立完成需求拆解、器件选型、高速Layout、SI/PI仿真、BOM成本优化、SMT钢网与焊接工艺文件输出，直至产线调试与可靠性验证，确保每一块板卡在极端工况下零缺陷运行。
                         </p>
+                        <div class="timeline-meta">
+                            <span class="timeline-chip"><i class="fas fa-microchip"></i> 自研板卡</span>
+                            <span class="timeline-chip"><i class="fas fa-vial-circle-check"></i> 自动化测试</span>
+                            <span class="timeline-chip"><i class="fas fa-boxes-stacked"></i> 量产导入</span>
+                        </div>
                     </div>
                 </div>
 
@@ -1247,7 +1605,7 @@
                 <div class="timeline-item relative">
                     <div class="timeline-dot"></div>
                     <div
-                        class="p-6 bg-white/[0.02] rounded-2xl border border-white/5 hover:border-blue-500/20 transition-all">
+                        class="timeline-card p-6 bg-white/[0.02] rounded-2xl border border-white/5 hover:border-blue-500/20 transition-all">
                         <div class="flex flex-wrap items-center gap-3 mb-3">
                             <span class="text-xs text-slate-500">2025.02 - 2025.11</span>
                         </div>
@@ -1258,6 +1616,11 @@
                             作为唯一嵌入式软件负责人，为军工某所绝缘测试仪交付整套软件架构——工业电容屏 GUI、自定义通讯协议、实时校准算法全线贯通；
                             从 0 到 1 编写 HDLC 编解码引擎，实现多节点高速同步与误码重传，保障极端电磁环境下零丢包。
                         </p>
+                        <div class="timeline-meta">
+                            <span class="timeline-chip"><i class="fas fa-link"></i> HDLC 协议栈</span>
+                            <span class="timeline-chip"><i class="fas fa-display"></i> 工业 HMI</span>
+                            <span class="timeline-chip"><i class="fas fa-shield-halved"></i> 军工级可靠性</span>
+                        </div>
                     </div>
                 </div>
 
@@ -1265,7 +1628,7 @@
                 <div class="timeline-item relative">
                     <div class="timeline-dot"></div>
                     <div
-                        class="p-6 bg-white/[0.02] rounded-2xl border border-white/5 hover:border-blue-500/20 transition-all">
+                        class="timeline-card p-6 bg-white/[0.02] rounded-2xl border border-white/5 hover:border-blue-500/20 transition-all">
                         <div class="flex flex-wrap items-center gap-3 mb-3">
                             <span class="text-xs text-slate-500">2023.04 - 2025.01</span>
                         </div>
@@ -1277,6 +1640,11 @@
                             独立承担多款军工、汽车功能性测试系统PCB的研发与生产调试：完成绝缘耐压、瞬态脉冲、电流电压精度校准等测试模块，均一次性通过GJB151B电磁兼容与震动冲击试验。
                             作为核心成员参与新能源空调核心控制器项目，负责变频驱动、BMS接口、IoT通信三合一主板设计，支持Modbus、CANopen双协议，量产稳定性>99.5%；主导共享充电核心板及数据采集终端开发，实现AC/DC双向计量、4G远程升级、OTA灰度发布，已在山西、陕西两地规模化部署450+节点，累计无故障运行>5W小时。
                         </p>
+                        <div class="timeline-meta">
+                            <span class="timeline-chip"><i class="fas fa-bolt"></i> 5+ 量产机型</span>
+                            <span class="timeline-chip"><i class="fas fa-tower-cell"></i> 450+ 节点部署</span>
+                            <span class="timeline-chip"><i class="fas fa-clock"></i> 5W+ 运行小时</span>
+                        </div>
                     </div>
                 </div>
 
@@ -1301,7 +1669,7 @@
                 <div class="timeline-item relative">
                     <div class="timeline-dot"></div>
                     <div
-                        class="p-6 bg-white/[0.02] rounded-2xl border border-white/5 hover:border-blue-500/20 transition-all">
+                        class="timeline-card p-6 bg-white/[0.02] rounded-2xl border border-white/5 hover:border-blue-500/20 transition-all">
                         <div class="flex flex-wrap items-center gap-3 mb-3">
                             <span class="text-xs text-slate-500">2013.06 - 至今</span>
                         </div>
@@ -1310,6 +1678,11 @@
                         <p class="text-slate-400 text-sm leading-relaxed">
                             负责IDC机房及云平台的网络架构规划、核心交换与路由策略调优，独立完成Web服务器、数据库、中间件的高可用集群部署及重要数据自动化备份；主导业务系统CI/CD流水线搭建，办公设备、门禁、监控等IoT系统的安装维护及网络安全加固；7×24小时监控服务器运行状态，快速定位并解决网络故障与系统异常。期间沉淀扎实的网络工程与IT基础设施运维经验，并深入实践大数据云计算：基于Linux（CentOS/Ubuntu）构建KVM虚拟化资源池，利用Kubernetes+Docker实现微服务弹性伸缩；在阿里云、腾讯云、华为云完成IaaS/PaaS混合云部署，通过Prometheus+Grafana实现云资源与业务指标统一观测；使用Ansible+Terraform做基础设施即代码（IaC）交付，日均处理日志>500GB，基于ELK/ClickHouse完成实时数仓与离线计算，支撑峰值10W级并发，保障全年SLA>99.9%。
                         </p>
+                        <div class="timeline-meta">
+                            <span class="timeline-chip"><i class="fas fa-server"></i> 混合云部署</span>
+                            <span class="timeline-chip"><i class="fas fa-chart-line"></i> 10W 级并发</span>
+                            <span class="timeline-chip"><i class="fas fa-database"></i> 500GB 日志处理</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1326,7 +1699,7 @@
                             <span class="w-12 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full"></span>
                             研发项目精选
                         </h2>
-                        <p class="text-slate-500 ml-16">一些代表性的硬件系统开发案例</p>
+                        <p class="text-slate-500 ml-16 section-lead">精选项目覆盖军工航电、工业控制、物联网与医疗检测，突出复杂场景下的方案能力与交付能力。</p>
                     </div>
                     <div class="flex gap-2 ml-16 md:ml-0" id="filterBtns">
                         <button class="filter-btn active px-4 py-2 text-xs font-bold rounded-xl transition-all"
@@ -1338,6 +1711,17 @@
                         <button class="filter-btn px-4 py-2 text-xs font-bold rounded-xl transition-all"
                             data-filter="iot">物联网</button>
                     </div>
+                </div>
+            </div>
+            <div class="project-showcase-header reveal">
+                <p class="project-showcase-note">每个项目卡片都优先展示场景、角色、核心成果和技术关键词，让招聘者快速判断我是否适合他们的岗位强度。</p>
+                <div class="contact-actions !justify-start !m-0">
+                    <button id="downloadResumeBtn" type="button" class="contact-action-btn">
+                        <i class="fas fa-file-arrow-down"></i> 下载简历
+                    </button>
+                    <a href="#contact" class="contact-action-btn nav-scroll" data-target="contact">
+                        <i class="fas fa-comments"></i> 在线沟通
+                    </a>
                 </div>
             </div>
             <div id="projectGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 reveal">
@@ -1445,6 +1829,17 @@
                 </h2>
                 <p class="text-slate-500 mb-16 max-w-lg mx-auto">如果您正在寻找一位能从硬件到软件提供整体解决方案的工程师，欢迎随时联系我。</p>
             </div>
+            <div class="contact-actions reveal">
+                <button id="downloadResumeBtnFooter" type="button" class="contact-action-btn">
+                    <i class="fas fa-print"></i> 打印或导出简历
+                </button>
+                <a href="mailto:43823845@qq.com" class="contact-action-btn">
+                    <i class="fas fa-envelope"></i> 发送面试邀请
+                </a>
+                <button id="contactWechatBtn" type="button" class="contact-action-btn">
+                    <i class="fab fa-weixin"></i> 微信直连
+                </button>
+            </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal">
                 <a href="mailto:43823845@qq.com"
                     class="group p-6 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-blue-500/20 transition-all hover:-translate-y-1">
@@ -1455,16 +1850,15 @@
                     <p class="text-sm font-medium text-white">43823845@qq.com</p>
                     <p class="text-xs text-slate-500 mt-1">点击发送邮件</p>
                 </a>
-                <div id="wechatCard"
-                    class="group p-6 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-green-500/20 transition-all hover:-translate-y-1 cursor-pointer select-none"
-                    onclick="showWechatQR(event)">
+                <button id="wechatCard" type="button"
+                    class="group p-6 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-green-500/20 transition-all hover:-translate-y-1 cursor-pointer select-none w-full text-left">
                     <div
                         class="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-green-500/20 transition-colors">
                         <i class="fab fa-weixin text-green-500 text-lg"></i>
                     </div>
                     <p class="text-sm font-medium text-white">微信号: 43823845</p>
                     <p class="text-xs text-slate-500 mt-1">点击查看二维码</p>
-                </div>
+                </button>
                 <div
                     class="group p-6 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-orange-500/20 transition-all hover:-translate-y-1">
                     <div
@@ -1482,7 +1876,8 @@
     </footer>
 
     <!-- ===== PROJECT MODAL ===== -->
-    <div id="projectModal" class="items-center justify-center p-4">
+    <div id="projectModal" class="items-center justify-center p-4" role="dialog" aria-modal="true"
+        aria-labelledby="modalTitle">
         <div
             class="modal-content bg-slate-900 w-full max-w-5xl rounded-3xl overflow-hidden shadow-[0_0_80px_rgba(0,0,0,0.6)] flex flex-col md:flex-row relative max-h-[90vh] border border-white/5">
             <!-- Close Button -->
@@ -1494,7 +1889,7 @@
 
             <!-- Image Area -->
             <div class="md:w-1/2 h-56 md:h-auto bg-slate-800 relative overflow-hidden flex-shrink-0">
-                <img id="modalImg" src="" alt="" class="w-full h-full object-cover">
+                <img id="modalImg" src="" alt="" class="w-full h-full object-cover" loading="lazy">
                 <div class="absolute inset-0 bg-gradient-to-r from-transparent to-slate-900/20 hidden md:block"></div>
             </div>
 
@@ -1540,7 +1935,7 @@
         style="background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);">
         <div class="relative bg-[#0c1424] rounded-2xl border border-white/10 shadow-2xl p-8 max-w-sm w-full transform scale-90 transition-transform duration-300"
             id="wechatModalContent">
-            <button onclick="hideWechatQR(event)"
+            <button id="closeWechatModal" type="button" onclick="hideWechatQR(event)"
                 class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all">
                 <i class="fas fa-times text-sm"></i>
             </button>
@@ -1745,12 +2140,15 @@
                 function toggleMobileMenu() {
                     mobileMenu.classList.toggle('open');
                     menuOverlay.classList.toggle('hidden');
-                    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+                    var isOpen = mobileMenu.classList.contains('open');
+                    document.body.style.overflow = isOpen ? 'hidden' : '';
+                    menuToggle.setAttribute('aria-expanded', String(isOpen));
                 }
                 function closeMobileMenu() {
                     mobileMenu.classList.remove('open');
                     menuOverlay.classList.add('hidden');
                     document.body.style.overflow = '';
+                    menuToggle.setAttribute('aria-expanded', 'false');
                 }
 
                 // ===== Modal =====
@@ -1859,6 +2257,29 @@
 
                 // ===== Filter Button Styles =====
                 updateFilterStyles();
+
+                var downloadResumeBtn = document.getElementById('downloadResumeBtn');
+                var downloadResumeBtnFooter = document.getElementById('downloadResumeBtnFooter');
+                var contactWechatBtn = document.getElementById('contactWechatBtn');
+
+                function triggerResumeExport(e) {
+                    if (e) {
+                        e.preventDefault();
+                    }
+                    window.print();
+                }
+
+                if (downloadResumeBtn) {
+                    downloadResumeBtn.addEventListener('click', triggerResumeExport);
+                }
+
+                if (downloadResumeBtnFooter) {
+                    downloadResumeBtnFooter.addEventListener('click', triggerResumeExport);
+                }
+
+                if (contactWechatBtn) {
+                    contactWechatBtn.addEventListener('click', showWechatQR);
+                }
             });
 
             // ===== Render Projects =====
@@ -1866,7 +2287,7 @@
                 var grid = document.getElementById('projectGrid');
                 grid.innerHTML = '';
                 var filtered = filter === 'all' ? projects : projects.filter(function (p) { return p.filter === filter; });
-                filtered.forEach(function (p) {
+                filtered.forEach(function (p, index) {
                     var card = document.createElement('div');
                     card.className = 'project-card';
                     card.setAttribute('data-id', p.id);
@@ -1875,11 +2296,14 @@
                         e.stopPropagation();
                         openModal(p.id);
                     });
+                    var summary = getProjectSummary(p);
                     card.innerHTML =
                         '<div class="h-52 overflow-hidden relative">' +
-                        '<img src="' + p.img + '" alt="' + p.title + '" class="card-img w-full h-full object-cover opacity-50">' +
+                        '<img src="' + p.img + '" alt="' + p.title + '" loading="lazy" class="card-img w-full h-full object-cover opacity-50">' +
                         '<div class="card-overlay"></div>' +
+                        '<div class="card-frame"></div>' +
                         '<div class="absolute top-4 left-4 px-3 py-1 bg-blue-600/90 text-[10px] font-bold rounded-lg text-white uppercase tracking-wider">' + p.cat + '</div>' +
+                        '<div class="card-number">' + String(index + 1).padStart(2, '0') + '</div>' +
                         '<div class="view-btn absolute bottom-4 right-4 px-4 py-2 bg-white/10 backdrop-blur-sm text-white text-xs font-bold rounded-lg border border-white/20">' +
                         '<i class="fas fa-expand mr-1"></i> 查看详情' +
                         '</div>' +
@@ -1887,6 +2311,8 @@
                         '<div class="p-6">' +
                         '<h3 class="text-white font-bold mb-2 text-base">' + p.title + '</h3>' +
                         '<p class="text-slate-500 text-xs mb-4">' + p.role + '</p>' +
+                        '<div class="card-proof">核心成果摘要</div>' +
+                        '<p class="card-summary">' + summary + '</p>' +
                         '<div class="flex flex-wrap gap-2">' +
                         p.tags.map(function (t) {
                             return '<span class="text-[10px] text-slate-400 bg-white/[0.04] px-2.5 py-1 rounded-lg border border-white/5">#' + t + '</span>';
@@ -1895,6 +2321,18 @@
                         '</div>';
                     grid.appendChild(card);
                 });
+            }
+
+            function getProjectSummary(project) {
+                if (project.achievements && project.achievements.length > 68) {
+                    return project.achievements.slice(0, 68) + '...';
+                }
+
+                if (project.tech && project.tech.length > 68) {
+                    return project.tech.slice(0, 68) + '...';
+                }
+
+                return project.tech || '';
             }
 
             // ===== Animate Counter =====
@@ -1954,6 +2392,8 @@
             var modal = document.getElementById('wechatModal');
             var content = document.getElementById('wechatModalContent');
             var qrImg = document.getElementById('wechatQRImg');
+            var wechatCard = document.getElementById('wechatCard');
+            var closeWechatModalBtn = document.getElementById('closeWechatModal');
 
             // Load QR image
             qrImg.src = qrBase64;
@@ -1973,6 +2413,9 @@
                 content.style.transform = 'scale(0.9)';
                 document.body.style.overflow = '';
             };
+
+            wechatCard.addEventListener('click', showWechatQR);
+            closeWechatModalBtn.addEventListener('click', hideWechatQR);
 
             // Close on backdrop click
             modal.addEventListener('click', function (e) {
