@@ -1926,16 +1926,19 @@
                     <p class="text-sm font-medium text-white">微信号: 43823845</p>
                     <p class="text-xs text-slate-500 mt-1">点击查看二维码并快速沟通</p>
                 </button>
-                <button id="printResumeCard" type="button"
-                    class="group p-6 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-orange-500/20 transition-all hover:-translate-y-1 w-full text-left">
+                <button id="easterEggCard" type="button"
+                    class="group p-6 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-amber-400/20 transition-all hover:-translate-y-1 w-full text-left relative overflow-hidden">
                     <div
-                        class="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-orange-500/20 transition-colors">
-                        <i class="fas fa-print text-orange-400 text-lg"></i>
+                        class="absolute inset-0 bg-gradient-to-br from-amber-400/0 via-amber-400/0 to-amber-400/0 group-hover:from-amber-400/5 group-hover:via-transparent group-hover:to-amber-400/5 transition-all duration-500"></div>
+                    <div
+                        class="w-12 h-12 rounded-xl bg-amber-400/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-amber-400/20 transition-all group-hover:scale-110 relative z-10">
+                        <i class="fas fa-magic text-amber-400 text-lg group-hover:animate-pulse"></i>
                     </div>
-                    <p class="text-sm font-medium text-white">打印或导出简历</p>
-                    <p class="text-xs text-slate-500 mt-1">点击后可保存为 PDF 或直接打印</p>
+                    <p class="text-sm font-medium text-white relative z-10">发现彩蛋</p>
+                    <p class="text-xs text-slate-500 mt-1 relative z-10">点击触发隐藏特效</p>
                 </button>
             </div>
+            <canvas id="particleCanvas" class="fixed inset-0 pointer-events-none z-[9999]" style="display:none;"></canvas>
             <div class="mt-16 pt-8 border-t border-white/5 text-center">
                 <p class="text-xs text-slate-600">&copy; 2026 杨杰 · 全栈工程师 · All Rights Reserved</p>
             </div>
@@ -2324,7 +2327,6 @@
                 statCards.forEach(function (el) { statObserver.observe(el); });
 
                 var downloadResumeBtn = document.getElementById('downloadResumeBtn');
-                var printResumeCard = document.getElementById('printResumeCard');
 
                 function triggerResumeExport(e) {
                     if (e) {
@@ -2337,8 +2339,13 @@
                     downloadResumeBtn.addEventListener('click', triggerResumeExport);
                 }
 
-                if (printResumeCard) {
-                    printResumeCard.addEventListener('click', triggerResumeExport);
+                // ===== Easter Egg: Particle Explosion =====
+                var easterEggCard = document.getElementById('easterEggCard');
+                if (easterEggCard) {
+                    easterEggCard.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        triggerParticleBurst();
+                    });
                 }
             });
 
@@ -2490,6 +2497,137 @@
                     hideWechatQR(e);
                 }
             });
+        })();
+
+        // ===== Easter Egg Particle System =====
+        (function () {
+            var canvas = document.getElementById('particleCanvas');
+            var ctx = canvas.getContext('2d');
+            var particles = [];
+            var animating = false;
+            var rafId = null;
+
+            var COLORS = [
+                '#f0cf93', '#e8b04f', '#d4a15a', '#ebc98d',
+                '#fff4df', '#9f6b3b', '#b67944', '#fff8ec',
+                '#ffd700', '#ffaa00', '#f5e6c8', '#daa520'
+            ];
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            function createParticle(cx, cy) {
+                var angle = Math.random() * Math.PI * 2;
+                var speed = 2 + Math.random() * 8;
+                var size = 2 + Math.random() * 5;
+                var life = 1;
+                var decay = 0.008 + Math.random() * 0.025;
+                var color = COLORS[Math.floor(Math.random() * COLORS.length)];
+
+                return {
+                    x: cx,
+                    y: cy,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed - (1 + Math.random() * 3),
+                    size: size,
+                    life: life,
+                    decay: decay,
+                    color: color,
+                    gravity: 0.04 + Math.random() * 0.06
+                };
+            }
+
+            function sparkParticle(cx, cy) {
+                var angle = Math.random() * Math.PI * 2;
+                var speed = 3 + Math.random() * 12;
+                return {
+                    x: cx,
+                    y: cy,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed,
+                    size: 1 + Math.random() * 2,
+                    life: 1,
+                    decay: 0.03 + Math.random() * 0.06,
+                    color: '#fff8ec',
+                    gravity: 0
+                };
+            }
+
+            function burst(x, y) {
+                for (var i = 0; i < 80; i++) {
+                    particles.push(createParticle(x, y));
+                }
+                for (var j = 0; j < 30; j++) {
+                    particles.push(sparkParticle(x, y));
+                }
+            }
+
+            function animate() {
+                if (!animating && particles.length === 0) {
+                    canvas.style.display = 'none';
+                    return;
+                }
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                for (var i = particles.length - 1; i >= 0; i--) {
+                    var p = particles[i];
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += p.gravity;
+                    p.vx *= 0.99;
+                    p.vy *= 0.99;
+                    p.life -= p.decay;
+
+                    if (p.life <= 0) {
+                        particles.splice(i, 1);
+                        continue;
+                    }
+
+                    ctx.save();
+                    ctx.globalAlpha = p.life;
+                    ctx.fillStyle = p.color;
+                    ctx.shadowColor = p.color;
+                    ctx.shadowBlur = p.size * 3;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                }
+
+                if (particles.length === 0 && !animating) {
+                    canvas.style.display = 'none';
+                    return;
+                }
+
+                rafId = requestAnimationFrame(animate);
+            }
+
+            window.triggerParticleBurst = function () {
+                canvas.style.display = 'block';
+                animating = true;
+
+                var cx = window.innerWidth / 2;
+                var cy = window.innerHeight / 2;
+
+                // Triple burst for dramatic effect
+                burst(cx, cy);
+                setTimeout(function () { burst(cx - 60, cy - 20); }, 150);
+                setTimeout(function () { burst(cx + 60, cy + 20); }, 300);
+
+                if (!rafId) {
+                    animate();
+                }
+
+                setTimeout(function () {
+                    animating = false;
+                    rafId = null;
+                }, 2500);
+            };
         })();
 
     </script>
