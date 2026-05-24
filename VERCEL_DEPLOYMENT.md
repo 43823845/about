@@ -32,7 +32,7 @@ Vercel 会自动读取 `vercel.json` 中的配置：
 部署时，Vercel 会执行以下步骤：
 
 1. **安装依赖**: `npm install`
-2. **构建 CSS**: `tailwindcss -i ./input.css -o ./dist/output.css --minify`
+2. **构建 CSS**: `tailwindcss -i ./input.css -o ./output.css --minify`
 3. **复制文件**: 
    - 复制 `index.html` 到 `dist/`
    - 复制 `img/` 目录到 `dist/img/`
@@ -45,8 +45,7 @@ about/
 │   ├── index.html     # 主页面
 │   ├── output.css     # 编译后的 CSS
 │   └── img/           # 图片资源
-├── src/
-│   └── input.css      # Tailwind CSS 输入
+├── input.css          # Tailwind CSS 输入
 ├── index.html         # 源 HTML 文件
 ├── img/               # 源图片目录
 ├── build.js           # 构建脚本
@@ -98,7 +97,7 @@ ls dist
 1. 在 Vercel 仪表板中进入项目设置
 2. 导航到 "Environment Variables"
 3. 添加所需的环境变量
-4. 重新部署项目
+4. 返回 "Deployments" 页面并点击 "Redeploy"
 
 ## 自定义域名
 
