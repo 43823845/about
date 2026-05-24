@@ -2499,22 +2499,29 @@
             });
         })();
 
-        // ===== Easter Egg: PCB Trace Growing Animation =====
+        // ===== Easter Egg: PCB with Components & Auto-Routing =====
         (function () {
             var canvas = document.getElementById('particleCanvas');
             var ctx = canvas.getContext('2d');
+            var comps = [];
             var traces = [];
             var active = false;
             var rafId = null;
-            var fadeAlpha = 0;
             var phase = 'idle';
             var startTime = 0;
             var bgAlpha = 0;
+            var fadeAlpha = 1;
+            var allTracesDone = false;
+            var sparkParticles = [];
 
-            var TRACE_COLOR = '#e8b04f';
-            var PAD_COLOR = '#f0cf93';
-            var SPARK_COLOR = '#fff8ec';
-            var BG_COLOR = '#0a3020';
+            var C_PAD = '#f0cf93';
+            var C_TRACE = '#e8b04f';
+            var C_SPARK = '#fffbe6';
+            var C_BG = '#0a2a18';
+            var C_CHIP = '#1a3a28';
+            var C_SILK = 'rgba(240,207,147,0.45)';
+            var C_RES = '#8b6914';
+            var C_CAP = '#6b8fa3';
 
             function resize() {
                 canvas.width = window.innerWidth;
@@ -2523,188 +2530,525 @@
             window.addEventListener('resize', resize);
             resize();
 
-            function createTrace(cx, cy) {
-                var dirs = [[1, 0], [-1, 0], [0, 1], [0, -1]];
-                var dir = dirs[Math.floor(Math.random() * 4)];
-                var maxSeg = 6 + Math.floor(Math.random() * 14);
+            // ===== COMPONENT CREATION =====
+            function makePin(x, y) { return { x: x, y: y }; }
+
+            function createMCU(cx, cy) {
+                var w = 140, h = 140;
+                var pins = [];
+                var pn = 10, pl = 22, pw = 3;
+                for (var i = 0; i < pn; i++) {
+                    var px = cx - w / 2 + (i + 1) * w / (pn + 1);
+                    pins.push(makePin(px, cy - h / 2 - pl));
+                    pins.push(makePin(px, cy + h / 2 + pl));
+                }
+                for (var j = 0; j < 5; j++) {
+                    var py = cy - h / 2 + (j + 1) * h / (5 + 1);
+                    pins.push(makePin(cx - w / 2 - pl, py));
+                    pins.push(makePin(cx + w / 2 + pl, py));
+                }
+                return { type: 'mcu', cx: cx, cy: cy, w: w, h: h, pins: pins, alpha: 0, label: 'MCU' };
+            }
+
+            function createResistor(cx, cy) {
                 return {
-                    x: cx, y: cy,
-                    dir: dir[0], dirY: dir[1],
-                    maxSeg: maxSeg,
-                    grownSeg: 0,
-                    progress: 0,
-                    path: [{ x: cx, y: cy }],
-                    pads: [{ x: cx, y: cy, r: 3 + Math.random() * 3 }],
-                    speed: 0.3 + Math.random() * 1.2
+                    type: 'res', cx: cx, cy: cy, w: 48, h: 18,
+                    pins: [makePin(cx - 30, cy), makePin(cx + 30, cy)],
+                    alpha: 0, label: 'R'
                 };
             }
 
-            function growTraces() {
-                var allDone = true;
-                for (var i = traces.length - 1; i >= 0; i--) {
-                    var t = traces[i];
-                    if (t.grownSeg >= t.maxSeg) continue;
-                    allDone = false;
-
-                    t.progress += t.speed;
-                    if (t.progress >= 1) {
-                        t.progress = 0;
-                        var segLen = 12 + Math.random() * 28;
-                        var nx = t.x + t.dir * segLen;
-                        var ny = t.y + t.dirY * segLen;
-                        t.path.push({ x: nx, y: ny });
-                        t.x = nx;
-                        t.y = ny;
-                        t.grownSeg++;
-
-                        if (Math.random() < 0.45 && t.grownSeg < t.maxSeg) {
-                            var dx = t.dir;
-                            var dy = t.dirY;
-                            if (Math.random() < 0.5) {
-                                t.dir = dy;
-                                t.dirY = -dx;
-                            } else {
-                                t.dir = -dy;
-                                t.dirY = dx;
-                            }
-                            t.pads.push({ x: nx, y: ny, r: 2 + Math.random() * 2 });
-                        }
-
-                        if (t.grownSeg === t.maxSeg) {
-                            t.pads.push({ x: nx, y: ny, r: 3 + Math.random() * 4 });
-                        }
-                    }
-                }
-                return allDone;
+            function createCapacitor(cx, cy) {
+                return {
+                    type: 'cap', cx: cx, cy: cy, w: 12, h: 32,
+                    pins: [makePin(cx - 18, cy), makePin(cx + 18, cy)],
+                    alpha: 0, label: 'C'
+                };
             }
 
-            function drawPCB(alpha) {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            function createLED(cx, cy) {
+                return {
+                    type: 'led', cx: cx, cy: cy, w: 24, h: 20,
+                    pins: [makePin(cx - 20, cy), makePin(cx + 20, cy)],
+                    alpha: 0, label: 'LED'
+                };
+            }
 
-                // PCB substrate background
-                if (bgAlpha > 0) {
-                    ctx.save();
-                    ctx.globalAlpha = bgAlpha;
-                    ctx.fillStyle = BG_COLOR;
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+            function createSmallIC(cx, cy) {
+                var w = 50, h = 40;
+                var pins = [];
+                for (var i = 0; i < 4; i++) {
+                    pins.push(makePin(cx - w / 2 + (i + 1) * w / 5, cy - h / 2 - 12));
+                    pins.push(makePin(cx - w / 2 + (i + 1) * w / 5, cy + h / 2 + 12));
+                }
+                return { type: 'ic', cx: cx, cy: cy, w: w, h: h, pins: pins, alpha: 0, label: 'IC' };
+            }
 
-                    // Grid pattern like PCB substrate
-                    ctx.strokeStyle = 'rgba(20,80,50,0.3)';
-                    ctx.lineWidth = 0.5;
-                    var gridSize = 40;
-                    for (var gx = 0; gx < canvas.width; gx += gridSize) {
-                        ctx.beginPath();
-                        ctx.moveTo(gx, 0);
-                        ctx.lineTo(gx, canvas.height);
-                        ctx.stroke();
+            // ===== MANHATTAN ROUTING =====
+            function manhattanRoute(x1, y1, x2, y2) {
+                var midX = (x1 + x2) / 2;
+                var midY = (y1 + y2) / 2;
+                if (Math.random() < 0.5) {
+                    return [{ x: x1, y: y1 }, { x: x1, y: midY }, { x: x2, y: midY }, { x: x2, y: y2 }];
+                } else {
+                    return [{ x: x1, y: y1 }, { x: midX, y: y1 }, { x: midX, y: y2 }, { x: x2, y: y2 }];
+                }
+            }
+
+            // ===== SCENE SETUP =====
+            function buildScene() {
+                comps = [];
+                traces = [];
+                sparkParticles = [];
+                var cx = canvas.width / 2;
+                var cy = canvas.height / 2;
+
+                // Center MCU
+                comps.push(createMCU(cx, cy));
+
+                // Scatter peripheral components
+                var margins = { top: 80, bottom: 80, left: 60, right: 60 };
+                var aw = canvas.width - margins.left - margins.right;
+                var ah = canvas.height - margins.top - margins.bottom;
+
+                var types = [
+                    { fn: createResistor, count: 8 },
+                    { fn: createCapacitor, count: 6 },
+                    { fn: createLED, count: 4 },
+                    { fn: createSmallIC, count: 2 }
+                ];
+
+                for (var t = 0; t < types.length; t++) {
+                    for (var c = 0; c < types[t].count; c++) {
+                        var attempts = 0;
+                        var placed = false;
+                        while (!placed && attempts < 50) {
+                            var rx = margins.left + 40 + Math.random() * (aw - 80);
+                            var ry = margins.top + 40 + Math.random() * (ah - 80);
+                            var dist = Math.sqrt((rx - cx) * (rx - cx) + (ry - cy) * (ry - cy));
+                            if (dist > 100 && dist < Math.min(aw, ah) * 0.45) {
+                                var comp = types[t].fn(rx, ry);
+                                // Avoid overlap with existing
+                                var ok = true;
+                                for (var e = 0; e < comps.length; e++) {
+                                    var dx2 = comps[e].cx - rx;
+                                    var dy2 = comps[e].cy - ry;
+                                    if (Math.sqrt(dx2 * dx2 + dy2 * dy2) < 70) { ok = false; break; }
+                                }
+                                if (ok) {
+                                    comps.push(comp);
+                                    placed = true;
+                                }
+                            }
+                            attempts++;
+                        }
                     }
-                    for (var gy = 0; gy < canvas.height; gy += gridSize) {
-                        ctx.beginPath();
-                        ctx.moveTo(0, gy);
-                        ctx.lineTo(canvas.width, gy);
-                        ctx.stroke();
-                    }
-                    ctx.restore();
                 }
 
+                // Create traces: MCU pins -> nearest component pins
+                var mcu = comps[0];
+                var usedCompPins = {};
+                for (var pi = 0; pi < mcu.pins.length; pi++) {
+                    var bestDist = Infinity;
+                    var bestComp = null;
+                    var bestPinIdx = -1;
+                    for (var ci = 1; ci < comps.length; ci++) {
+                        var cp = comps[ci];
+                        for (var cpi = 0; cpi < cp.pins.length; cpi++) {
+                            var key = ci + '_' + cpi;
+                            if (usedCompPins[key]) continue;
+                            var d = Math.sqrt(
+                                (mcu.pins[pi].x - cp.pins[cpi].x) * (mcu.pins[pi].x - cp.pins[cpi].x) +
+                                (mcu.pins[pi].y - cp.pins[cpi].y) * (mcu.pins[pi].y - cp.pins[cpi].y)
+                            );
+                            if (d < bestDist && d < 500) {
+                                bestDist = d;
+                                bestComp = ci;
+                                bestPinIdx = cpi;
+                            }
+                        }
+                    }
+                    if (bestComp !== null) {
+                        usedCompPins[bestComp + '_' + bestPinIdx] = true;
+                        var segs = manhattanRoute(
+                            mcu.pins[pi].x, mcu.pins[pi].y,
+                            comps[bestComp].pins[bestPinIdx].x, comps[bestComp].pins[bestPinIdx].y
+                        );
+                        traces.push({
+                            segments: segs,
+                            progress: 0,
+                            speed: 0.015 + Math.random() * 0.04,
+                            done: false
+                        });
+                    }
+                }
+            }
+
+            // ===== DRAWING =====
+            function drawResistor(comp, alpha) {
                 ctx.save();
                 ctx.globalAlpha = alpha;
-
-                // Draw all traces
-                for (var i = 0; i < traces.length; i++) {
-                    var t = traces[i];
-                    if (t.path.length < 2) continue;
-
-                    // Trace glow (thick)
-                    ctx.strokeStyle = TRACE_COLOR;
-                    ctx.lineWidth = 4;
-                    ctx.shadowColor = TRACE_COLOR;
-                    ctx.shadowBlur = 10;
-                    ctx.lineCap = 'round';
-                    ctx.lineJoin = 'round';
-                    ctx.beginPath();
-                    ctx.moveTo(t.path[0].x, t.path[0].y);
-                    for (var j = 1; j < t.path.length; j++) {
-                        ctx.lineTo(t.path[j].x, t.path[j].y);
-                    }
-                    // Partial segment being grown
-                    if (t.progress > 0 && t.grownSeg < t.maxSeg && t.path.length >= 2) {
-                        var last = t.path[t.path.length - 1];
-                        var nextX = last.x + t.dir * (12 + Math.random() * 28) * t.progress;
-                        var nextY = last.y + t.dirY * (12 + Math.random() * 28) * t.progress;
-                        ctx.lineTo(nextX, nextY);
-                    }
-                    ctx.stroke();
-
-                    // Trace core (thin bright line)
-                    ctx.strokeStyle = SPARK_COLOR;
-                    ctx.lineWidth = 1.5;
-                    ctx.shadowBlur = 4;
-                    ctx.beginPath();
-                    ctx.moveTo(t.path[0].x, t.path[0].y);
-                    for (var k = 1; k < t.path.length; k++) {
-                        ctx.lineTo(t.path[k].x, t.path[k].y);
-                    }
-                    ctx.stroke();
+                // Body
+                ctx.fillStyle = C_RES;
+                ctx.strokeStyle = C_SILK;
+                ctx.lineWidth = 1.2;
+                var r = comp;
+                roundRect(r.cx - r.w / 2, r.cy - r.h / 2, r.w, r.h, 4);
+                ctx.fill();
+                ctx.stroke();
+                // Zigzag inside
+                ctx.strokeStyle = C_PAD;
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                var zs = r.w * 0.7, zh = r.h * 0.6, zx = r.cx - zs / 2, zy = r.cy;
+                ctx.moveTo(zx, zy);
+                for (var zi = 0; zi < 5; zi++) {
+                    var zxx = zx + (zi + 0.5) * (zs / 5);
+                    var zyy = zy + (zi % 2 === 0 ? -1 : 1) * zh;
+                    ctx.lineTo(zxx, zyy);
                 }
+                ctx.lineTo(zx + zs, zy);
+                ctx.stroke();
+                // Label
+                ctx.fillStyle = C_SILK;
+                ctx.font = '9px monospace';
+                ctx.textAlign = 'center';
+                ctx.fillText(r.label, r.cx, r.cy - r.h - 6);
+                ctx.restore();
+            }
 
-                // Draw pads
-                ctx.shadowBlur = 0;
-                for (var m = 0; m < traces.length; m++) {
-                    var tm = traces[m];
-                    for (var n = 0; n < tm.pads.length; n++) {
-                        var pad = tm.pads[n];
-                        // Outer ring (copper)
-                        ctx.fillStyle = PAD_COLOR;
-                        ctx.beginPath();
-                        ctx.arc(pad.x, pad.y, pad.r + 2, 0, Math.PI * 2);
-                        ctx.fill();
-                        // Inner hole (dark - via effect)
-                        ctx.fillStyle = BG_COLOR;
-                        ctx.beginPath();
-                        ctx.arc(pad.x, pad.y, pad.r * 0.6, 0, Math.PI * 2);
-                        ctx.fill();
-                        // Center dot (bright)
-                        ctx.fillStyle = SPARK_COLOR;
-                        ctx.beginPath();
-                        ctx.arc(pad.x, pad.y, 1.2, 0, Math.PI * 2);
-                        ctx.fill();
+            function drawCapacitor(comp, alpha) {
+                ctx.save();
+                ctx.globalAlpha = alpha;
+                var r = comp;
+                ctx.strokeStyle = C_SILK;
+                ctx.lineWidth = 2;
+                // Two vertical plates
+                ctx.beginPath();
+                ctx.moveTo(r.cx - 4, r.cy - r.h / 2);
+                ctx.lineTo(r.cx - 4, r.cy + r.h / 2);
+                ctx.moveTo(r.cx + 4, r.cy - r.h / 2);
+                ctx.lineTo(r.cx + 4, r.cy + r.h / 2);
+                ctx.stroke();
+                // Label
+                ctx.fillStyle = C_SILK;
+                ctx.font = '9px monospace';
+                ctx.textAlign = 'center';
+                ctx.fillText(r.label, r.cx, r.cy - r.h / 2 - 8);
+                ctx.restore();
+            }
+
+            function drawLED(comp, alpha) {
+                ctx.save();
+                ctx.globalAlpha = alpha;
+                var r = comp;
+                // Triangle
+                ctx.fillStyle = '#cc3333';
+                ctx.strokeStyle = C_SILK;
+                ctx.lineWidth = 1.2;
+                ctx.beginPath();
+                ctx.moveTo(r.cx, r.cy - r.h / 2);
+                ctx.lineTo(r.cx - r.w / 2, r.cy + r.h / 2);
+                ctx.lineTo(r.cx + r.w / 2, r.cy + r.h / 2);
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+                // Horizontal line
+                ctx.beginPath();
+                ctx.moveTo(r.cx - r.w / 2 - 4, r.cy + r.h / 2);
+                ctx.lineTo(r.cx + r.w / 2 + 4, r.cy + r.h / 2);
+                ctx.stroke();
+                // Arrows (light emission)
+                ctx.fillStyle = C_PAD;
+                ctx.font = '10px monospace';
+                ctx.textAlign = 'center';
+                ctx.fillText('>>', r.cx + r.w / 2 + 10, r.cy + 3);
+                // Label
+                ctx.fillStyle = C_SILK;
+                ctx.font = '9px monospace';
+                ctx.fillText(r.label, r.cx, r.cy - r.h - 6);
+                ctx.restore();
+            }
+
+            function drawChip(comp, alpha, isMCU) {
+                ctx.save();
+                ctx.globalAlpha = alpha;
+                var r = comp;
+                var bodyColor = isMCU ? '#1a2a1a' : C_CHIP;
+
+                // Body
+                ctx.fillStyle = bodyColor;
+                ctx.strokeStyle = C_SILK;
+                ctx.lineWidth = 1.5;
+                roundRect(r.cx - r.w / 2, r.cy - r.h / 2, r.w, r.h, 6);
+                ctx.fill();
+                ctx.stroke();
+
+                // Pin 1 dot
+                ctx.fillStyle = C_PAD;
+                ctx.beginPath();
+                ctx.arc(r.cx - r.w / 2 + 10, r.cy - r.h / 2 + 10, 3, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Label
+                ctx.fillStyle = C_SILK;
+                ctx.font = isMCU ? 'bold 14px monospace' : '10px monospace';
+                ctx.textAlign = 'center';
+                ctx.fillText(r.label, r.cx, r.cy + 4);
+
+                // Pin rectangles on MCU edges
+                if (isMCU) {
+                    ctx.fillStyle = C_PAD;
+                    var pw = 3, pl = 10;
+                    for (var pi = 0; pi < r.pins.length; pi++) {
+                        var p = r.pins[pi];
+                        ctx.fillRect(p.x - pw / 2, p.y - pl / 2, pw, pl);
+                    }
+                } else {
+                    ctx.fillStyle = C_PAD;
+                    for (var pj = 0; pj < r.pins.length; pj++) {
+                        var q = r.pins[pj];
+                        ctx.fillRect(q.x - 2, q.y - 5, 4, 10);
                     }
                 }
 
                 ctx.restore();
             }
 
+            function drawComponents(alpha) {
+                for (var i = 0; i < comps.length; i++) {
+                    var c = comps[i];
+                    var ca = Math.min(alpha, c.alpha);
+                    if (ca <= 0) continue;
+
+                    // Draw connecting leads from pin to body
+                    ctx.save();
+                    ctx.globalAlpha = ca;
+                    ctx.strokeStyle = C_TRACE;
+                    ctx.lineWidth = 1.5;
+                    ctx.shadowColor = C_TRACE;
+                    ctx.shadowBlur = 2;
+                    for (var j = 0; j < c.pins.length; j++) {
+                        ctx.beginPath();
+                        ctx.moveTo(c.pins[j].x, c.pins[j].y);
+                        if (c.type === 'mcu' || c.type === 'ic') {
+                            // Connect pin to closest body edge
+                            var bx = Math.max(c.cx - c.w / 2, Math.min(c.cx + c.w / 2, c.pins[j].x));
+                            var by = Math.max(c.cy - c.h / 2, Math.min(c.cy + c.h / 2, c.pins[j].y));
+                            ctx.lineTo(bx, by);
+                        } else if (c.type === 'res' || c.type === 'cap' || c.type === 'led') {
+                            ctx.lineTo(c.cx + (j === 0 ? -c.w / 2 - 12 : c.w / 2 + 12), c.cy);
+                        }
+                        ctx.stroke();
+                    }
+                    ctx.shadowBlur = 0;
+                    ctx.restore();
+
+                    switch (c.type) {
+                        case 'mcu': drawChip(c, ca, true); break;
+                        case 'ic': drawChip(c, ca, false); break;
+                        case 'res': drawResistor(c, ca); break;
+                        case 'cap': drawCapacitor(c, ca); break;
+                        case 'led': drawLED(c, ca); break;
+                    }
+                }
+            }
+
+            function drawTraces() {
+                ctx.save();
+                for (var i = 0; i < traces.length; i++) {
+                    var t = traces[i];
+                    if (t.done && fadeAlpha < 1) continue;
+
+                    var segs = t.segments;
+                    var prog = t.progress;
+
+                    // Glow layer
+                    ctx.strokeStyle = C_TRACE;
+                    ctx.lineWidth = 3;
+                    ctx.shadowColor = C_TRACE;
+                    ctx.shadowBlur = 8;
+                    ctx.lineCap = 'round';
+                    ctx.lineJoin = 'round';
+                    ctx.beginPath();
+                    ctx.moveTo(segs[0].x, segs[0].y);
+                    for (var s = 1; s < segs.length; s++) {
+                        var frac = Math.max(0, Math.min(1, (prog - (s - 1) / (segs.length - 1)) * (segs.length - 1)));
+                        if (frac <= 0) break;
+                        var sx = segs[s - 1].x + (segs[s].x - segs[s - 1].x) * Math.min(1, frac);
+                        var sy = segs[s - 1].y + (segs[s].y - segs[s - 1].y) * Math.min(1, frac);
+                        ctx.lineTo(sx, sy);
+                    }
+                    ctx.stroke();
+
+                    // Core bright line
+                    ctx.strokeStyle = C_SPARK;
+                    ctx.lineWidth = 1;
+                    ctx.shadowBlur = 3;
+                    ctx.beginPath();
+                    ctx.moveTo(segs[0].x, segs[0].y);
+                    for (var s2 = 1; s2 < segs.length; s2++) {
+                        var frac2 = Math.max(0, Math.min(1, (prog - (s2 - 1) / (segs.length - 1)) * (segs.length - 1)));
+                        if (frac2 <= 0) break;
+                        var sx2 = segs[s2 - 1].x + (segs[s2].x - segs[s2 - 1].x) * Math.min(1, frac2);
+                        var sy2 = segs[s2 - 1].y + (segs[s2].y - segs[s2 - 1].y) * Math.min(1, frac2);
+                        ctx.lineTo(sx2, sy2);
+                    }
+                    ctx.stroke();
+
+                    // Pad at growing tip
+                    ctx.shadowBlur = 0;
+                    if (prog < 1) {
+                        var lastSeg = Math.min(segs.length - 1, Math.floor(prog * (segs.length - 1)) + 1);
+                        var lfrac = (prog - (lastSeg - 1) / (segs.length - 1)) * (segs.length - 1);
+                        var tipX = segs[lastSeg - 1].x + (segs[lastSeg].x - segs[lastSeg - 1].x) * Math.min(1, lfrac);
+                        var tipY = segs[lastSeg - 1].y + (segs[lastSeg].y - segs[lastSeg - 1].y) * Math.min(1, lfrac);
+                        ctx.fillStyle = C_SPARK;
+                        ctx.beginPath();
+                        ctx.arc(tipX, tipY, 2.5, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+
+                // Draw all via pads at segment corners
+                for (var vi = 0; vi < traces.length; vi++) {
+                    var tv = traces[vi];
+                    for (var vj = 0; vj < tv.segments.length; vj++) {
+                        if (tv.progress < vj / (tv.segments.length - 1)) break;
+                        var vs = tv.segments[vj];
+                        ctx.fillStyle = C_PAD;
+                        ctx.beginPath();
+                        ctx.arc(vs.x, vs.y, 3, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.fillStyle = C_BG;
+                        ctx.beginPath();
+                        ctx.arc(vs.x, vs.y, 1.5, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.fillStyle = C_SPARK;
+                        ctx.beginPath();
+                        ctx.arc(vs.x, vs.y, 0.8, 0, Math.PI * 2);
+                        ctx.fill();
+                    }
+                }
+                ctx.restore();
+            }
+
             function animate(timestamp) {
-                if (!active && traces.length === 0 && fadeAlpha <= 0) {
+                if (!active && traces.length === 0 && comps.length === 0 && fadeAlpha <= 0) {
                     canvas.style.display = 'none';
                     rafId = null;
                     return;
                 }
 
-                if (phase === 'growing') {
-                    // Fade in background
-                    if (bgAlpha < 0.6) bgAlpha += 0.02;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-                    var done = growTraces();
-                    if (done && timestamp - startTime > 1800) {
+                // PCB background
+                if (bgAlpha > 0) {
+                    ctx.save();
+                    ctx.globalAlpha = bgAlpha * 0.5;
+                    ctx.fillStyle = C_BG;
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.strokeStyle = 'rgba(20,80,50,0.25)';
+                    ctx.lineWidth = 0.5;
+                    for (var gx = 0; gx < canvas.width; gx += 40) { ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, canvas.height); ctx.stroke(); }
+                    for (var gy = 0; gy < canvas.height; gy += 40) { ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(canvas.width, gy); ctx.stroke(); }
+                    ctx.restore();
+                }
+
+                if (phase === 'growing') {
+                    if (bgAlpha < 1) bgAlpha += 0.025;
+
+                    // Fade in components
+                    for (var ci = 0; ci < comps.length; ci++) {
+                        if (comps[ci].alpha < 1) comps[ci].alpha += 0.03;
+                    }
+
+                    // Grow traces
+                    allTracesDone = true;
+                    for (var ti = 0; ti < traces.length; ti++) {
+                        if (!traces[ti].done) {
+                            allTracesDone = false;
+                            traces[ti].progress += traces[ti].speed;
+                            if (traces[ti].progress >= 1) {
+                                traces[ti].progress = 1;
+                                traces[ti].done = true;
+                            }
+                        }
+                    }
+
+                    // Spark particles at growing tips
+                    if (Math.random() < 0.6) {
+                        for (var si = 0; si < traces.length; si++) {
+                            if (!traces[si].done && traces[si].progress > 0.1) {
+                                var ts = traces[si].segments;
+                                var lastS = Math.min(ts.length - 1, Math.floor(traces[si].progress * (ts.length - 1)) + 1);
+                                var lf = (traces[si].progress - (lastS - 1) / (ts.length - 1)) * (ts.length - 1);
+                                var tx = ts[lastS - 1].x + (ts[lastS].x - ts[lastS - 1].x) * Math.min(1, lf);
+                                var ty = ts[lastS - 1].y + (ts[lastS].y - ts[lastS - 1].y) * Math.min(1, lf);
+                                sparkParticles.push({ x: tx, y: ty, vx: (Math.random() - 0.5) * 3, vy: (Math.random() - 0.5) * 3, life: 0.6 });
+                            }
+                        }
+                    }
+
+                    if (allTracesDone && timestamp - startTime > 2500) {
                         phase = 'fading';
                     }
-                    drawPCB(1);
+
+                    drawTraces();
+                    drawComponents(1);
+
                 } else if (phase === 'fading') {
-                    fadeAlpha = Math.max(0, fadeAlpha - 0.012);
-                    bgAlpha = Math.max(0, bgAlpha - 0.012);
+                    fadeAlpha = Math.max(0, fadeAlpha - 0.015);
+                    bgAlpha = Math.max(0, bgAlpha - 0.015);
                     if (fadeAlpha <= 0) {
                         active = false;
+                        comps = [];
                         traces = [];
+                        sparkParticles = [];
                         canvas.style.display = 'none';
                         rafId = null;
                         return;
                     }
-                    drawPCB(fadeAlpha);
+                    ctx.save();
+                    ctx.globalAlpha = fadeAlpha;
+                    drawTraces();
+                    drawComponents(1);
+                    ctx.restore();
+                }
+
+                // Draw spark particles
+                for (var spi = sparkParticles.length - 1; spi >= 0; spi--) {
+                    var sp = sparkParticles[spi];
+                    sp.x += sp.vx;
+                    sp.y += sp.vy;
+                    sp.life -= 0.03;
+                    if (sp.life <= 0) { sparkParticles.splice(spi, 1); continue; }
+                    ctx.save();
+                    ctx.globalAlpha = sp.life;
+                    ctx.fillStyle = C_SPARK;
+                    ctx.shadowColor = C_SPARK;
+                    ctx.shadowBlur = 4;
+                    ctx.beginPath();
+                    ctx.arc(sp.x, sp.y, 1.5, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
                 }
 
                 rafId = requestAnimationFrame(animate);
+            }
+
+            function roundRect(x, y, w, h, r) {
+                ctx.beginPath();
+                ctx.moveTo(x + r, y);
+                ctx.lineTo(x + w - r, y);
+                ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+                ctx.lineTo(x + w, y + h - r);
+                ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+                ctx.lineTo(x + r, y + h);
+                ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+                ctx.lineTo(x, y + r);
+                ctx.quadraticCurveTo(x, y, x + r, y);
+                ctx.closePath();
             }
 
             window.triggerParticleBurst = function () {
@@ -2713,17 +3057,11 @@
                 phase = 'growing';
                 fadeAlpha = 1;
                 bgAlpha = 0;
-                traces = [];
+                sparkParticles = [];
+                allTracesDone = false;
+
+                buildScene();
                 startTime = performance.now();
-
-                var cx = window.innerWidth / 2;
-                var cy = window.innerHeight / 2;
-
-                // Create 16-24 traces radiating from center
-                var numTraces = 16 + Math.floor(Math.random() * 9);
-                for (var i = 0; i < numTraces; i++) {
-                    traces.push(createTrace(cx, cy));
-                }
 
                 if (!rafId) {
                     rafId = requestAnimationFrame(animate);
