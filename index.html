@@ -2622,20 +2622,23 @@
                     for (var c = 0; c < types[t].count; c++) {
                         var attempts = 0;
                         var placed = false;
-                        while (!placed && attempts < 50) {
+                        while (!placed && attempts < 60) {
                             var rx = margins.left + 40 + Math.random() * (aw - 80);
                             var ry = margins.top + 40 + Math.random() * (ah - 80);
                             var dist = Math.sqrt((rx - cx) * (rx - cx) + (ry - cy) * (ry - cy));
                             if (dist > 100 && dist < Math.min(aw, ah) * 0.45) {
                                 var comp = types[t].fn(rx, ry);
-                                // Avoid overlap with existing
                                 var ok = true;
                                 for (var e = 0; e < comps.length; e++) {
                                     var dx2 = comps[e].cx - rx;
                                     var dy2 = comps[e].cy - ry;
-                                    if (Math.sqrt(dx2 * dx2 + dy2 * dy2) < 70) { ok = false; break; }
+                                    if (Math.sqrt(dx2 * dx2 + dy2 * dy2) < 80) { ok = false; break; }
                                 }
                                 if (ok) {
+                                    // Staggered fade-in: farther components appear later
+                                    comp.alpha = 0;
+                                    comp.fadeSpeed = 0.02 + Math.random() * 0.03;
+                                    comp.fadeDelay = Math.floor(dist / 80);
                                     comps.push(comp);
                                     placed = true;
                                 }
@@ -2645,7 +2648,7 @@
                     }
                 }
 
-                // Create traces: MCU pins -> nearest component pins
+                // Create traces: MCU pins -> nearest component pins (staggered start)
                 var mcu = comps[0];
                 var usedCompPins = {};
                 for (var pi = 0; pi < mcu.pins.length; pi++) {
@@ -2677,43 +2680,45 @@
                         traces.push({
                             segments: segs,
                             progress: 0,
-                            speed: 0.015 + Math.random() * 0.04,
-                            done: false
+                            speed: 0.02 + Math.random() * 0.05,
+                            startDelay: pi * 2 + Math.floor(Math.random() * 15),
+                            done: false,
+                            pulseAlpha: 0
                         });
                     }
                 }
+                // Sort traces so shorter ones start first
+                traces.sort(function (a, b) { return a.startDelay - b.startDelay; });
             }
 
             // ===== DRAWING =====
             function drawResistor(comp, alpha) {
                 ctx.save();
                 ctx.globalAlpha = alpha;
-                // Body
-                ctx.fillStyle = C_RES;
-                ctx.strokeStyle = C_SILK;
-                ctx.lineWidth = 1.2;
                 var r = comp;
+                // Body
+                ctx.fillStyle = '#c4956b';
+                ctx.strokeStyle = 'rgba(240,207,147,0.5)';
+                ctx.lineWidth = 1.2;
                 roundRect(r.cx - r.w / 2, r.cy - r.h / 2, r.w, r.h, 4);
                 ctx.fill();
                 ctx.stroke();
-                // Zigzag inside
-                ctx.strokeStyle = C_PAD;
-                ctx.lineWidth = 1;
-                ctx.beginPath();
-                var zs = r.w * 0.7, zh = r.h * 0.6, zx = r.cx - zs / 2, zy = r.cy;
-                ctx.moveTo(zx, zy);
-                for (var zi = 0; zi < 5; zi++) {
-                    var zxx = zx + (zi + 0.5) * (zs / 5);
-                    var zyy = zy + (zi % 2 === 0 ? -1 : 1) * zh;
-                    ctx.lineTo(zxx, zyy);
+                // Color bands (4-band: brown-black-red-gold)
+                var bands = ['#8b4513', '#222', '#c0392b', '#daa520'];
+                var bw = 4, bgap = r.w / 6;
+                for (var bi = 0; bi < 4; bi++) {
+                    ctx.fillStyle = bands[bi];
+                    ctx.fillRect(r.cx - r.w * 0.35 + bi * bgap, r.cy - r.h / 2 + 2, bw, r.h - 4);
                 }
-                ctx.lineTo(zx + zs, zy);
-                ctx.stroke();
+                // End caps (metallic)
+                ctx.fillStyle = '#c0c0c0';
+                ctx.fillRect(r.cx - r.w / 2 - 2, r.cy - r.h / 2, 5, r.h);
+                ctx.fillRect(r.cx + r.w / 2 - 3, r.cy - r.h / 2, 5, r.h);
                 // Label
-                ctx.fillStyle = C_SILK;
+                ctx.fillStyle = 'rgba(240,207,147,0.55)';
                 ctx.font = '9px monospace';
                 ctx.textAlign = 'center';
-                ctx.fillText(r.label, r.cx, r.cy - r.h - 6);
+                ctx.fillText(r.label, r.cx, r.cy - r.h - 8);
                 ctx.restore();
             }
 
@@ -2721,52 +2726,73 @@
                 ctx.save();
                 ctx.globalAlpha = alpha;
                 var r = comp;
-                ctx.strokeStyle = C_SILK;
-                ctx.lineWidth = 2;
-                // Two vertical plates
+                // Body cylinder
+                ctx.fillStyle = '#3a5f8a';
+                ctx.strokeStyle = 'rgba(240,207,147,0.5)';
+                ctx.lineWidth = 1;
+                roundRect(r.cx - 5, r.cy - r.h / 2, 10, r.h, 3);
+                ctx.fill();
+                ctx.stroke();
+                // Polarity stripe
+                ctx.fillStyle = '#c0c0c0';
+                ctx.fillRect(r.cx - 5, r.cy - r.h / 2, 10, 5);
+                // Negative mark
+                ctx.fillStyle = '#fff';
+                ctx.font = 'bold 8px monospace';
+                ctx.textAlign = 'center';
+                ctx.fillText('-', r.cx, r.cy - r.h / 2 + 5);
+                // Lead wires
+                ctx.strokeStyle = C_TRACE;
+                ctx.lineWidth = 1.2;
                 ctx.beginPath();
-                ctx.moveTo(r.cx - 4, r.cy - r.h / 2);
-                ctx.lineTo(r.cx - 4, r.cy + r.h / 2);
-                ctx.moveTo(r.cx + 4, r.cy - r.h / 2);
-                ctx.lineTo(r.cx + 4, r.cy + r.h / 2);
+                ctx.moveTo(r.cx - 5, r.cy);
+                ctx.lineTo(r.cx - 18, r.cy);
+                ctx.moveTo(r.cx + 5, r.cy);
+                ctx.lineTo(r.cx + 18, r.cy);
                 ctx.stroke();
                 // Label
-                ctx.fillStyle = C_SILK;
+                ctx.fillStyle = 'rgba(240,207,147,0.55)';
                 ctx.font = '9px monospace';
                 ctx.textAlign = 'center';
-                ctx.fillText(r.label, r.cx, r.cy - r.h / 2 - 8);
+                ctx.fillText(r.label, r.cx, r.cy - r.h / 2 - 10);
                 ctx.restore();
             }
 
-            function drawLED(comp, alpha) {
+            function drawLED(comp, alpha, connected) {
                 ctx.save();
                 ctx.globalAlpha = alpha;
                 var r = comp;
-                // Triangle
-                ctx.fillStyle = '#cc3333';
-                ctx.strokeStyle = C_SILK;
-                ctx.lineWidth = 1.2;
+                // Body base
+                ctx.fillStyle = '#444';
+                ctx.fillRect(r.cx - r.w / 2, r.cy - r.h / 2, r.w, r.h * 0.5);
+                // Triangle (LED element)
+                var glowColor = connected ? '#ff6644' : '#cc3333';
+                ctx.fillStyle = glowColor;
+                ctx.shadowColor = connected ? '#ff8844' : 'transparent';
+                ctx.shadowBlur = connected ? 12 : 0;
                 ctx.beginPath();
-                ctx.moveTo(r.cx, r.cy - r.h / 2);
-                ctx.lineTo(r.cx - r.w / 2, r.cy + r.h / 2);
-                ctx.lineTo(r.cx + r.w / 2, r.cy + r.h / 2);
+                ctx.moveTo(r.cx, r.cy - r.h / 2 + 3);
+                ctx.lineTo(r.cx - r.w / 2 + 3, r.cy + r.h / 2 - 3);
+                ctx.lineTo(r.cx + r.w / 2 - 3, r.cy + r.h / 2 - 3);
                 ctx.closePath();
                 ctx.fill();
-                ctx.stroke();
-                // Horizontal line
+                ctx.shadowBlur = 0;
+                // Frame line (cathode bar)
+                ctx.strokeStyle = 'rgba(240,207,147,0.5)';
+                ctx.lineWidth = 1.2;
                 ctx.beginPath();
-                ctx.moveTo(r.cx - r.w / 2 - 4, r.cy + r.h / 2);
-                ctx.lineTo(r.cx + r.w / 2 + 4, r.cy + r.h / 2);
+                ctx.moveTo(r.cx - r.w / 2 - 2, r.cy + r.h / 2);
+                ctx.lineTo(r.cx + r.w / 2 + 2, r.cy + r.h / 2);
                 ctx.stroke();
-                // Arrows (light emission)
-                ctx.fillStyle = C_PAD;
-                ctx.font = '10px monospace';
+                // Emission arrows
+                ctx.fillStyle = connected ? 'rgba(255,136,68,0.9)' : 'rgba(240,207,147,0.5)';
+                ctx.font = 'bold 10px monospace';
                 ctx.textAlign = 'center';
-                ctx.fillText('>>', r.cx + r.w / 2 + 10, r.cy + 3);
+                ctx.fillText('\u00bb\u00bb', r.cx + r.w / 2 + 8, r.cy + 3);
                 // Label
-                ctx.fillStyle = C_SILK;
+                ctx.fillStyle = 'rgba(240,207,147,0.55)';
                 ctx.font = '9px monospace';
-                ctx.fillText(r.label, r.cx, r.cy - r.h - 6);
+                ctx.fillText(r.label, r.cx, r.cy - r.h - 8);
                 ctx.restore();
             }
 
@@ -2821,27 +2847,39 @@
                     var ca = Math.min(alpha, c.alpha);
                     if (ca <= 0) continue;
 
+                    // Check if this component has any connected traces
+                    var connected = false;
+                    if (c.type === 'led') {
+                        for (var ti = 0; ti < traces.length; ti++) {
+                            if (traces[ti].done && traces[ti].segments) {
+                                var lastPt = traces[ti].segments[traces[ti].segments.length - 1];
+                                for (var pi = 0; pi < c.pins.length; pi++) {
+                                    var dx = lastPt.x - c.pins[pi].x;
+                                    var dy = lastPt.y - c.pins[pi].y;
+                                    if (Math.sqrt(dx * dx + dy * dy) < 5) { connected = true; break; }
+                                }
+                            }
+                            if (connected) break;
+                        }
+                    }
+
                     // Draw connecting leads from pin to body
                     ctx.save();
                     ctx.globalAlpha = ca;
                     ctx.strokeStyle = C_TRACE;
-                    ctx.lineWidth = 1.5;
-                    ctx.shadowColor = C_TRACE;
-                    ctx.shadowBlur = 2;
+                    ctx.lineWidth = 1.2;
                     for (var j = 0; j < c.pins.length; j++) {
                         ctx.beginPath();
                         ctx.moveTo(c.pins[j].x, c.pins[j].y);
                         if (c.type === 'mcu' || c.type === 'ic') {
-                            // Connect pin to closest body edge
                             var bx = Math.max(c.cx - c.w / 2, Math.min(c.cx + c.w / 2, c.pins[j].x));
                             var by = Math.max(c.cy - c.h / 2, Math.min(c.cy + c.h / 2, c.pins[j].y));
                             ctx.lineTo(bx, by);
-                        } else if (c.type === 'res' || c.type === 'cap' || c.type === 'led') {
-                            ctx.lineTo(c.cx + (j === 0 ? -c.w / 2 - 12 : c.w / 2 + 12), c.cy);
+                        } else {
+                            ctx.lineTo(c.cx + (j === 0 ? -c.w / 2 - 10 : c.w / 2 + 10), c.cy);
                         }
                         ctx.stroke();
                     }
-                    ctx.shadowBlur = 0;
                     ctx.restore();
 
                     switch (c.type) {
@@ -2849,7 +2887,7 @@
                         case 'ic': drawChip(c, ca, false); break;
                         case 'res': drawResistor(c, ca); break;
                         case 'cap': drawCapacitor(c, ca); break;
-                        case 'led': drawLED(c, ca); break;
+                        case 'led': drawLED(c, ca, connected); break;
                     }
                 }
             }
@@ -2858,16 +2896,14 @@
                 ctx.save();
                 for (var i = 0; i < traces.length; i++) {
                     var t = traces[i];
-                    if (t.done && fadeAlpha < 1) continue;
-
                     var segs = t.segments;
                     var prog = t.progress;
 
                     // Glow layer
                     ctx.strokeStyle = C_TRACE;
-                    ctx.lineWidth = 3;
+                    ctx.lineWidth = 2.8;
                     ctx.shadowColor = C_TRACE;
-                    ctx.shadowBlur = 8;
+                    ctx.shadowBlur = 6;
                     ctx.lineCap = 'round';
                     ctx.lineJoin = 'round';
                     ctx.beginPath();
@@ -2884,7 +2920,8 @@
                     // Core bright line
                     ctx.strokeStyle = C_SPARK;
                     ctx.lineWidth = 1;
-                    ctx.shadowBlur = 3;
+                    ctx.shadowColor = C_SPARK;
+                    ctx.shadowBlur = 2;
                     ctx.beginPath();
                     ctx.moveTo(segs[0].x, segs[0].y);
                     for (var s2 = 1; s2 < segs.length; s2++) {
@@ -2896,38 +2933,78 @@
                     }
                     ctx.stroke();
 
-                    // Pad at growing tip
                     ctx.shadowBlur = 0;
-                    if (prog < 1) {
+
+                    // Growing tip glow
+                    if (prog < 1 && prog > 0) {
                         var lastSeg = Math.min(segs.length - 1, Math.floor(prog * (segs.length - 1)) + 1);
-                        var lfrac = (prog - (lastSeg - 1) / (segs.length - 1)) * (segs.length - 1);
-                        var tipX = segs[lastSeg - 1].x + (segs[lastSeg].x - segs[lastSeg - 1].x) * Math.min(1, lfrac);
-                        var tipY = segs[lastSeg - 1].y + (segs[lastSeg].y - segs[lastSeg - 1].y) * Math.min(1, lfrac);
+                        var lfrac = Math.min(1, (prog - (lastSeg - 1) / (segs.length - 1)) * (segs.length - 1));
+                        var tipX = segs[lastSeg - 1].x + (segs[lastSeg].x - segs[lastSeg - 1].x) * lfrac;
+                        var tipY = segs[lastSeg - 1].y + (segs[lastSeg].y - segs[lastSeg - 1].y) * lfrac;
                         ctx.fillStyle = C_SPARK;
+                        ctx.shadowColor = C_SPARK;
+                        ctx.shadowBlur = 8;
                         ctx.beginPath();
-                        ctx.arc(tipX, tipY, 2.5, 0, Math.PI * 2);
+                        ctx.arc(tipX, tipY, 3, 0, Math.PI * 2);
                         ctx.fill();
+                        ctx.shadowBlur = 0;
+                    }
+
+                    // Completion pulse at destination
+                    if (t.pulseAlpha > 0 && segs.length > 0) {
+                        var dst = segs[segs.length - 1];
+                        ctx.fillStyle = C_SPARK;
+                        ctx.globalAlpha = t.pulseAlpha;
+                        ctx.shadowColor = C_SPARK;
+                        ctx.shadowBlur = 16;
+                        ctx.beginPath();
+                        ctx.arc(dst.x, dst.y, 6, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.shadowBlur = 0;
+                        ctx.globalAlpha = 1;
                     }
                 }
 
-                // Draw all via pads at segment corners
+                // Draw all via pads
                 for (var vi = 0; vi < traces.length; vi++) {
                     var tv = traces[vi];
-                    for (var vj = 0; vj < tv.segments.length; vj++) {
+                    for (var vj = 1; vj < tv.segments.length - 1; vj++) {
                         if (tv.progress < vj / (tv.segments.length - 1)) break;
                         var vs = tv.segments[vj];
+                        // Outer ring
                         ctx.fillStyle = C_PAD;
                         ctx.beginPath();
-                        ctx.arc(vs.x, vs.y, 3, 0, Math.PI * 2);
+                        ctx.arc(vs.x, vs.y, 3.5, 0, Math.PI * 2);
                         ctx.fill();
+                        // Dark inner
                         ctx.fillStyle = C_BG;
                         ctx.beginPath();
-                        ctx.arc(vs.x, vs.y, 1.5, 0, Math.PI * 2);
+                        ctx.arc(vs.x, vs.y, 1.8, 0, Math.PI * 2);
                         ctx.fill();
+                        // Center highlight
                         ctx.fillStyle = C_SPARK;
                         ctx.beginPath();
-                        ctx.arc(vs.x, vs.y, 0.8, 0, Math.PI * 2);
+                        ctx.arc(vs.x, vs.y, 0.6, 0, Math.PI * 2);
                         ctx.fill();
+                    }
+                    // Start and end pads
+                    if (tv.progress > 0) {
+                        for (var vk = 0; vk < tv.segments.length; vk += tv.segments.length - 1) {
+                            if (tv.progress < vk / (tv.segments.length - 1)) break;
+                            var ve = tv.segments[vk];
+                            ctx.fillStyle = C_PAD;
+                            ctx.beginPath();
+                            ctx.arc(ve.x, ve.y, 4, 0, Math.PI * 2);
+                            ctx.fill();
+                            ctx.fillStyle = C_BG;
+                            ctx.beginPath();
+                            ctx.arc(ve.x, ve.y, 2, 0, Math.PI * 2);
+                            ctx.fill();
+                            ctx.fillStyle = C_SPARK;
+                            ctx.beginPath();
+                            ctx.arc(ve.x, ve.y, 0.8, 0, Math.PI * 2);
+                            ctx.fill();
+                        }
                     }
                 }
                 ctx.restore();
@@ -2948,58 +3025,96 @@
                     ctx.globalAlpha = bgAlpha * 0.5;
                     ctx.fillStyle = C_BG;
                     ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    ctx.strokeStyle = 'rgba(20,80,50,0.25)';
+                    ctx.strokeStyle = 'rgba(15,70,40,0.2)';
                     ctx.lineWidth = 0.5;
                     for (var gx = 0; gx < canvas.width; gx += 40) { ctx.beginPath(); ctx.moveTo(gx, 0); ctx.lineTo(gx, canvas.height); ctx.stroke(); }
                     for (var gy = 0; gy < canvas.height; gy += 40) { ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(canvas.width, gy); ctx.stroke(); }
                     ctx.restore();
                 }
 
+                var elapsed = timestamp - startTime;
+
                 if (phase === 'growing') {
                     if (bgAlpha < 1) bgAlpha += 0.025;
 
-                    // Fade in components
+                    // Staggered component fade-in
                     for (var ci = 0; ci < comps.length; ci++) {
-                        if (comps[ci].alpha < 1) comps[ci].alpha += 0.03;
+                        var comp = comps[ci];
+                        if (comp.alpha < 1) {
+                            comp.fadeDelay = Math.max(0, comp.fadeDelay - 1);
+                            if (comp.fadeDelay <= 0 && comp.alpha < 1) {
+                                comp.alpha = Math.min(1, comp.alpha + comp.fadeSpeed);
+                            }
+                        }
                     }
 
-                    // Grow traces
+                    // Staggered trace growth
                     allTracesDone = true;
                     for (var ti = 0; ti < traces.length; ti++) {
-                        if (!traces[ti].done) {
+                        var tr = traces[ti];
+                        if (elapsed < tr.startDelay * 16) { allTracesDone = false; continue; }
+                        if (!tr.done) {
                             allTracesDone = false;
-                            traces[ti].progress += traces[ti].speed;
-                            if (traces[ti].progress >= 1) {
-                                traces[ti].progress = 1;
-                                traces[ti].done = true;
+                            tr.progress += tr.speed;
+                            if (tr.progress >= 1) {
+                                tr.progress = 1;
+                                tr.done = true;
+                                tr.pulseAlpha = 1;
                             }
                         }
+                        // Decay completion pulse
+                        if (tr.pulseAlpha > 0) tr.pulseAlpha = Math.max(0, tr.pulseAlpha - 0.04);
                     }
 
-                    // Spark particles at growing tips
-                    if (Math.random() < 0.6) {
+                    // Spark particles at active growing tips
+                    if (Math.random() < 0.5) {
                         for (var si = 0; si < traces.length; si++) {
-                            if (!traces[si].done && traces[si].progress > 0.1) {
-                                var ts = traces[si].segments;
-                                var lastS = Math.min(ts.length - 1, Math.floor(traces[si].progress * (ts.length - 1)) + 1);
-                                var lf = (traces[si].progress - (lastS - 1) / (ts.length - 1)) * (ts.length - 1);
+                            var st = traces[si];
+                            if (!st.done && st.progress > 0.05 && elapsed > st.startDelay * 16) {
+                                var ts = st.segments;
+                                var lastS = Math.min(ts.length - 1, Math.floor(st.progress * (ts.length - 1)) + 1);
+                                var lf = (st.progress - (lastS - 1) / (ts.length - 1)) * (ts.length - 1);
                                 var tx = ts[lastS - 1].x + (ts[lastS].x - ts[lastS - 1].x) * Math.min(1, lf);
                                 var ty = ts[lastS - 1].y + (ts[lastS].y - ts[lastS - 1].y) * Math.min(1, lf);
-                                sparkParticles.push({ x: tx, y: ty, vx: (Math.random() - 0.5) * 3, vy: (Math.random() - 0.5) * 3, life: 0.6 });
+                                sparkParticles.push({ x: tx, y: ty, vx: (Math.random() - 0.5) * 2, vy: (Math.random() - 0.5) * 2 - 1, life: 0.5, size: 1 + Math.random() });
                             }
                         }
                     }
 
-                    if (allTracesDone && timestamp - startTime > 2500) {
-                        phase = 'fading';
+                    if (allTracesDone && elapsed > 3000) {
+                        phase = 'complete';
+                        startTime = timestamp;
                     }
 
                     drawTraces();
                     drawComponents(1);
 
+                } else if (phase === 'complete') {
+                    // Power-on flash: brief brightness pulse then fade
+                    var completeElapsed = timestamp - startTime;
+                    if (completeElapsed < 400) {
+                        // Flash phase: extra bright
+                        var flash = 1 + Math.sin(completeElapsed * 0.03) * 0.4;
+                        ctx.save();
+                        ctx.globalCompositeOperation = 'lighter';
+                        ctx.globalAlpha = 0.3 * (1 - completeElapsed / 400);
+                        ctx.fillStyle = C_SPARK;
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                        ctx.restore();
+
+                        drawTraces();
+                        drawComponents(flash);
+                    } else if (completeElapsed < 1200) {
+                        // Brief hold
+                        drawTraces();
+                        drawComponents(1);
+                    } else {
+                        phase = 'fading';
+                    }
+
                 } else if (phase === 'fading') {
-                    fadeAlpha = Math.max(0, fadeAlpha - 0.015);
-                    bgAlpha = Math.max(0, bgAlpha - 0.015);
+                    fadeAlpha = Math.max(0, fadeAlpha - 0.018);
+                    bgAlpha = Math.max(0, bgAlpha - 0.018);
                     if (fadeAlpha <= 0) {
                         active = false;
                         comps = [];
@@ -3021,15 +3136,16 @@
                     var sp = sparkParticles[spi];
                     sp.x += sp.vx;
                     sp.y += sp.vy;
-                    sp.life -= 0.03;
+                    sp.vy += 0.03;
+                    sp.life -= 0.025;
                     if (sp.life <= 0) { sparkParticles.splice(spi, 1); continue; }
                     ctx.save();
                     ctx.globalAlpha = sp.life;
                     ctx.fillStyle = C_SPARK;
                     ctx.shadowColor = C_SPARK;
-                    ctx.shadowBlur = 4;
+                    ctx.shadowBlur = 3;
                     ctx.beginPath();
-                    ctx.arc(sp.x, sp.y, 1.5, 0, Math.PI * 2);
+                    ctx.arc(sp.x, sp.y, sp.size, 0, Math.PI * 2);
                     ctx.fill();
                     ctx.restore();
                 }
