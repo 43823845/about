@@ -831,12 +831,20 @@
             background-clip: text;
         }
 
-        #hero p,
-        #about p,
-        #experience p,
-        #awards p,
-        #contact p {
-            color: var(--text-soft);
+        #about .grid.lg\:grid-cols-5 {
+            align-items: stretch;
+        }
+
+        #about .lg\:col-span-3 {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        #about .lg\:col-span-2 {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         #hero .inline-flex.rounded-full {
