@@ -1285,8 +1285,7 @@
                 </div>
                 <h1
                     class="hero-title text-5xl md:text-6xl lg:text-7xl font-black text-white mb-8 leading-[1.08] tracking-tight">
-                    硬核研发，<br>
-                    <span class="text-gradient">交付物理世界的<br>最优解。</span>
+                    你永远无法优化一个不存在的东西。
                 </h1>
                 <p class="text-lg text-slate-400 mb-10 leading-relaxed max-w-xl">
                     学历并非光环，却因对电子的执念，把童年“拆拆装装”的热忱炼成今日硬核实力。十余年一线淬炼，军工、工业、车规、医疗等严苛场景里，从 0 到 1
@@ -1783,11 +1782,9 @@
                         <button class="filter-btn active px-4 py-2 text-xs font-bold rounded-xl transition-all"
                             data-filter="all">全部</button>
                         <button class="filter-btn px-4 py-2 text-xs font-bold rounded-xl transition-all"
-                            data-filter="mil">军工/航电</button>
+                            data-filter="hw">硬件</button>
                         <button class="filter-btn px-4 py-2 text-xs font-bold rounded-xl transition-all"
-                            data-filter="ind">工业/能源</button>
-                        <button class="filter-btn px-4 py-2 text-xs font-bold rounded-xl transition-all"
-                            data-filter="iot">物联网</button>
+                            data-filter="sw">软件</button>
                     </div>
                 </div>
             </div>
@@ -2051,7 +2048,7 @@
             // ===== Project Data =====
             const projects = [
                 {
-                    id: 1, title: "军品绝缘自动测试系统", cat: "军工/航电", filter: "mil",
+                    id: 1, title: "军品绝缘自动测试系统", cat: "军工/航电", filter: "mil", type: "hw",
                     img: "img/jytest_th.jpg",
                     tags: ["12层板", "精密采样", "FPGA"],
                     role: "项目负责人 · 2025.11 - 2026.01",
@@ -2060,7 +2057,7 @@
                     achievements: "独立完成自研板卡原理设计以及PCB设计绘制、嵌入式程序开发调试及焊接、测试设备线缆设计焊接及生产、交互上位机开发及协议编写。输出测试规范、校准规范等交付资料。"
                 },
                 {
-                    id: 2, title: "机载配电系统地面测试设备", cat: "军工/航电", filter: "mil",
+                    id: 2, title: "机载配电系统地面测试设备", cat: "军工/航电", filter: "mil", type: "hw",
                     img: "img/jzpdtest_th.jpg",
                     tags: ["AVIC", "机载", "配电系统"],
                     role: "项目经理 · 2025.02 - 2025.07",
@@ -2069,7 +2066,7 @@
                     achievements: "独立完成方案设计、航插及板卡选型、自研板卡原理及PCB设计、嵌入式程序开发调试、测试设备线缆设计焊接、交互上位机开发及协议编写。输出全套交付资料。"
                 },
                 {
-                    id: 3, title: "机载电加热组件测试设备", cat: "军工/航电", filter: "mil",
+                    id: 3, title: "机载电加热组件测试设备", cat: "军工/航电", filter: "mil", type: "hw",
                     img: "img/jrqtest_th.jpg",
                     tags: ["AVIC", "宽温域", "自动化测试"],
                     role: "项目经理 · 2025.08 - 2025.11",
@@ -2078,7 +2075,7 @@
                     achievements: "独立完成全套方案设计至交付，包括测试设备线缆设计焊接及生产、测试柜内部组件安装电气布线、交互上位机开发及协议编写。输出测试规范、校准规范等交付资料。"
                 },
                 {
-                    id: 4, title: "航发电喷测试工装", cat: "军工/航电", filter: "mil",
+                    id: 4, title: "航发电喷测试工装", cat: "军工/航电", filter: "mil", type: "hw",
                     img: "img/dptest_th.jpg",
                     tags: ["航发", "ECU", "信号调理"],
                     role: "项目负责人 · 2025.12 - 2026.03",
@@ -2087,7 +2084,7 @@
                     achievements: "独立完成测试工装的问题修复工作，解决EMI干扰、信号采集异常、调理卡设计缺陷等问题。完成客户新增功能并对硬件及软件进行更新工作，完成交付文档的编写与输出。"
                 },
                 {
-                    id: 5, title: "某型无人机滤波器", cat: "军工/航电", filter: "mil",
+                    id: 5, title: "某型无人机滤波器", cat: "军工/航电", filter: "mil", type: "hw",
                     img: "img/lbqtest_th.jpg",
                     tags: ["无人机", "电源滤波", "项目总包"],
                     role: "项目总包 · 2025.02 - 至今",
@@ -2096,7 +2093,7 @@
                     achievements: "全流程主导产品需求设计至样品交付，确保项目按时高质量完成。主导模块量产定稿，制定模具加工工艺并审核质检报告，保障产品性能与生产一致性。"
                 },
                 {
-                    id: 6, title: "非标量产型采集模组", cat: "工业/能源", filter: "ind",
+                    id: 6, title: "非标量产型采集模组", cat: "工业/能源", filter: "ind", type: "hw",
                     img: "img/cvtest_th.jpg",
                     tags: ["AC/DC", "多模态", "动态校准"],
                     role: "研发负责人 · 2026.01 - 2026.03",
@@ -2105,7 +2102,7 @@
                     achievements: "负责功能板卡硬件实现、原理设计、PCB设计及Layout、焊接调试。嵌入式软件程序编写与协议开发联调联试，配套上位机逻辑功能编写与调试含UI设计。"
                 },
                 {
-                    id: 7, title: "军工型CV测试系统", cat: "军工/航电", filter: "mil",
+                    id: 7, title: "军工型CV测试系统", cat: "军工/航电", filter: "mil", type: "hw",
                     img: "img/jgtest_th.jpg",
                     tags: ["军工", "电流电压", "数据采集"],
                     role: "硬件工程师 · 2023.07 - 2024.10",
@@ -2114,7 +2111,7 @@
                     achievements: "独立完成硬件设计和嵌入式软件编写并交付测试，独立完成上位机数据采集客户端的编写。项目已通过验收并成功交付。"
                 },
                 {
-                    id: 8, title: "通用型4G数据采集模组", cat: "物联网", filter: "iot",
+                    id: 8, title: "通用型4G数据采集模组", cat: "物联网", filter: "iot", type: "hw",
                     img: "img/txtest_th.jpg",
                     tags: ["4G", "远程数传", "批量投产"],
                     role: "硬件工程师 · 2023.08 - 2024.11",
@@ -2123,7 +2120,7 @@
                     achievements: "模组已批量投产并在公司客户项目中广泛采用，独立设计了相关的配套3D外壳。通过了EMI认证及高低温耐久性测试。"
                 },
                 {
-                    id: 9, title: "新能源地源热泵控制板", cat: "工业/能源", filter: "ind",
+                    id: 9, title: "新能源地源热泵控制板", cat: "工业/能源", filter: "ind", type: "hw",
                     img: "img/dytest_th.jpg",
                     tags: ["新能源", "热泵", "物联网"],
                     role: "硬件设计研发 · 2023.08 - 2024.01",
@@ -2132,7 +2129,7 @@
                     achievements: "客户单位热泵机组产线目前已全线采用自研发设计的空调主控板。独立完成热泵空调机组状态远程数据采集核心模组及具有物联功能的机组控制面板。"
                 },
                 {
-                    id: 10, title: "共享充电控制器", cat: "物联网", filter: "iot",
+                    id: 10, title: "共享充电控制器", cat: "物联网", filter: "iot", type: "hw",
                     img: "img/gxtest_th.jpg",
                     tags: ["共享经济", "充电桩", "TCP通讯"],
                     role: "硬件工程师 · 2023.05 - 2023.08",
@@ -2141,7 +2138,7 @@
                     achievements: "山西运城市公共设施已部署共享充电节点约450个。独立完成从核心电路设计到量产调试的全流程开发。"
                 },
                 {
-                    id: 11, title: "军用脉冲时间同步器", cat: "军工/航电", filter: "mil",
+                    id: 11, title: "军用脉冲时间同步器", cat: "军工/航电", filter: "mil", type: "hw",
                     img: "img/sztest_th.jpg",
                     tags: ["FPGA", "光电信号", "多协处理"],
                     role: "硬件工程师 · 2023.04 - 2023.09",
@@ -2150,13 +2147,21 @@
                     achievements: "成功完成基于FPGA的光电信号采集处理系统开发，多协处理方案有效实现各项数据互补。"
                 },
                 {
-                    id: 12, title: "某装备车载测试电源", cat: "军工/航电", filter: "mil",
+                    id: 12, title: "某装备车载测试电源", cat: "军工/航电", filter: "mil", type: "hw",
                     img: "img/cztest_th.jpg",
                     tags: ["28V/11A", "车载", "全周期"],
                     role: "硬件工程师 · 2025",
                     tech: "独立完成某装备车载测试电源28V11A的研发与交付，涵盖硬件选型、装配工艺、测试流程及高低温试验等全周期开发。",
                     challenges: ["28V/11A大功率电源设计", "车载环境高低温试验", "装配工艺与测试流程制定", "全周期独立开发与交付"],
                     achievements: "项目已通过验收并成功交付。从方案设计原理到PCB设计样机制作全程独立设计研发及后期装配调试，结合HMI实现自动化控制，提升测试效率与操作便捷性。"
+                {
+                    id: 13, title: "北斗与GPS定位管理系统", cat: "软件", filter: "sw", type: "sw",
+                    img: "img/gps_tracking_sw.png",
+                    tags: ["北斗/GPS", "实时定位", "Web平台"],
+                    role: "全栈开发 · 2025",
+                    tech: "基于Web的北斗与GPS双模定位管理平台，实现多设备实时定位、轨迹查询、设备状态监控等功能。集成高德地图，支持多设备同时在线追踪，实时显示电压、温度、速度等遥测数据。",
+                    challenges: ["多设备并发实时数据接入", "GPS/北斗双模数据解析与融合", "WebSocket实时通信与数据推送", "地图可视化与设备状态实时刷新"],
+                    achievements: "独立完成系统前后端开发，实现TCP/HTTP双协议设备接入，支持实时定位与轨迹回放。系统已在实际场景中部署运行，支持多设备同时在线监控。"
                 }
             ];
 
@@ -2396,7 +2401,7 @@
             function renderProjects(filter) {
                 var grid = document.getElementById('projectGrid');
                 grid.innerHTML = '';
-                var filtered = filter === 'all' ? projects : projects.filter(function (p) { return p.filter === filter; });
+                var filtered = filter === 'all' ? projects : projects.filter(function (p) { return p.type === filter; });
                 filtered.forEach(function (p, index) {
                     var card = document.createElement('div');
                     card.className = 'project-card';
