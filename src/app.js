@@ -109,11 +109,19 @@
         /* ── #7 合并 + 节流 scroll 监听器 ── */
         var nav       = document.getElementById('mainNav');
         var backToTop = document.getElementById('backToTop');
+        var scrollProgress = document.getElementById('scrollProgress');
 
         window.addEventListener('scroll', throttle(function () {
             var y = window.scrollY;
             if (nav)       nav.classList.toggle('scrolled', y > 50);
             if (backToTop) backToTop.classList.toggle('show', y > 600);
+
+            // 实时滚动进度监控
+            var totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+            if (scrollProgress && totalHeight > 0) {
+                var progress = (y / totalHeight) * 100;
+                scrollProgress.style.width = progress + '%';
+            }
         }, 100));
 
         if (backToTop) {
@@ -684,19 +692,60 @@
         }
 
         function parseCommand(cmd) {
-            var parts = cmd.toLowerCase().split(' ');
-            var core = parts[0];
+            var parts = cmd.trim().split(/\s+/);
+            var core = parts[0].toLowerCase();
+            var arg1 = parts[1] ? parts[1] : '';
 
             setTimeout(function () {
                 if (core === 'help') {
                     printRow('可用指令菜单:', 'info');
                     printRow('  help      - 显示此指令菜单');
+                    printRow('  ls        - 列出虚拟内核工作目录');
+                    printRow('  cat <file>- 查看指定文本文件内容');
                     printRow('  status    - 查看硬件系统实时健康诊断报告');
                     printRow('  projects  - 查看全栈研发项目分类列表');
                     printRow('  egg       - 启动隐藏的极客浪漫彩蛋');
                     printRow('  clear     - 清空终端屏幕历史记录');
+                } else if (core === 'ls') {
+                    printRow('项目集/  技能库/  工作经历/  儿时初心.txt  隐藏彩蛋.sh*', 'info');
+                } else if (core === 'cat') {
+                    if (arg1 === '儿时初心.txt') {
+                        printRow('>> 正在读取 儿时初心.txt ...', 'info');
+                        printRow('【儿时初心与硬件信仰】', 'success');
+                        printRow('小时候，我是大人眼里的“破坏大王”，家里的收音机、手电筒都被我拆了个遍。但正是这份最初的破坏欲与好奇心，熔铸成了我 13 年深耕军工、车规、工业高可靠电路的职业信仰。');
+                        printRow('我一直信奉：对电子和代码最纯粹的热爱，才是支撑产品“零妥协、高稳定性”交付的终极源泉。期待与您并肩作战，让想法先变成有用的“真家伙”，再细细打磨成好用的精品！');
+                    } else if (arg1 === '') {
+                        printRow('用法: cat [文件名]，例如: cat 儿时初心.txt', 'error');
+                    } else {
+                        printRow('错误: 未找到文件 "' + esc(arg1) + '"', 'error');
+                    }
+                } else if (core === 'sh' || core === './隐藏彩蛋.sh' || (core === 'sh' && arg1 === '隐藏彩蛋.sh')) {
+                    if (core === 'sh' && arg1 !== '隐藏彩蛋.sh') {
+                        printRow('错误: 脚本未找到。用法: ./隐藏彩蛋.sh 或 sh 隐藏彩蛋.sh', 'error');
+                    } else {
+                        printRow('>> 正在启动极客浪漫彩蛋 system...', 'success');
+                        var eggBtn = document.getElementById('easterEggCard');
+                        if (eggBtn) { eggBtn.click(); }
+                    }
+                } else if (core === 'rm' || core.indexOf('rm') === 0 || core === 'sudo') {
+                    var isRM = false;
+                    for (var idx = 0; idx < parts.length; idx++) {
+                        if (parts[idx].toLowerCase() === 'rm') {
+                            isRM = true;
+                            break;
+                        }
+                    }
+                    if (isRM) {
+                        printRow('[ 警告 ] 检测到非法自毁自残协议！', 'error');
+                        printRow('你正在尝试强行拆卸杨杰的服务器内核 (/) ... 防御系统已启动，拒绝执行。', 'warn');
+                    } else {
+                        if (core === 'sudo') {
+                            printRow('用法: sudo [指令]，例如: sudo rm -rf /', 'info');
+                        } else {
+                            printRow('无法识别指令: "' + esc(core) + '"。请输入 "help" 获取帮助菜单。', 'error');
+                        }
+                    }
                 } else if (core === 'clear') {
-                    // 保留光标并清空其他
                     consoleHistory.innerHTML = '';
                     var cursor = document.createElement('span');
                     cursor.className = 'console-cursor';
@@ -789,7 +838,7 @@
                 var amp = parseFloat(ampSlider.value);
                 var waveType = waveSelect.value;
 
-                // 绘制流动波形辉光
+                // 绘制流动波形辉光 (叠加物理白噪声与高频阻尼铃流，还原真实硬件示波器 CRT 显示)
                 ctx.strokeStyle = 'rgba(232, 176, 79, 0.95)';
                 ctx.shadowColor = 'rgba(232, 176, 79, 0.8)';
                 ctx.shadowBlur = 10;
@@ -801,12 +850,21 @@
                     var angle = i * freq + offset;
                     var yVal = 0;
 
+                    // 叠合高频微小随机白噪声模拟示波器热噪声
+                    var noise = (Math.random() - 0.5) * 1.5;
+
                     if (waveType === 'sine') {
-                        yVal = Math.sin(angle) * amp;
+                        yVal = Math.sin(angle) * amp + noise;
                     } else if (waveType === 'square') {
-                        yVal = Math.sin(angle) >= 0 ? amp : -amp;
+                        var base = Math.sin(angle) >= 0 ? amp : -amp;
+                        // 方波跳变沿的过冲与高频铃流振荡模拟 (Capacitive Overshoot & Ringing)
+                        var transitionPhase = Math.abs(Math.sin(angle));
+                        if (transitionPhase < 0.15) {
+                            base += Math.sin(angle * 12) * (amp * 0.15) * (1 - transitionPhase / 0.15);
+                        }
+                        yVal = base + noise;
                     } else if (waveType === 'triangle') {
-                        yVal = (Math.abs((angle % (Math.PI * 2)) - Math.PI) / Math.PI - 0.5) * 2 * amp;
+                        yVal = ((Math.abs((angle % (Math.PI * 2)) - Math.PI) / Math.PI - 0.5) * 2 * amp) + noise;
                     }
 
                     if (i === 0) {

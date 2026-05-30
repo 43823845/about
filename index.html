@@ -63,6 +63,8 @@
 
     <!-- Navigation -->
     <nav id="mainNav" class="fixed top-0 w-full z-[1000] glass-nav">
+        <!-- 顶部滚动进度条 (微光金色渐变) -->
+        <div id="scrollProgress" class="absolute top-0 left-0 h-0.5 w-0 z-[1002]"></div>
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <a href="#hero" class="nav-scroll flex items-center gap-3 group" data-target="hero">
                 <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-400 flex items-center justify-center font-bold text-white text-sm shadow-lg shadow-amber-500/20 group-hover:shadow-amber-500/40 transition-shadow">
@@ -714,12 +716,26 @@
             </div>
             
             <div id="easterEggModal" class="fixed inset-0 z-[10000] flex items-center justify-center p-4 opacity-0 invisible transition-all duration-300" style="background: rgba(0,0,0,0.85); backdrop-filter: blur(12px);" role="dialog" aria-modal="true" aria-label="浪漫彩蛋">
-                <div class="relative max-w-xs w-full transform scale-90 transition-transform duration-300" id="easterEggModalContent">
-                    <button id="closeEasterEgg" type="button" class="absolute -top-3 -right-3 w-9 h-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-red-500/80 text-white transition-all z-10" aria-label="关闭彩蛋">
+                <div class="relative bg-slate-900 border border-white/10 w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row transform scale-90 transition-all duration-300" id="easterEggModalContent">
+                    <button id="closeEasterEgg" type="button" class="absolute top-5 right-5 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-red-500/80 text-white transition-all z-10 focus:outline-none" aria-label="关闭彩蛋">
                         <i class="fas fa-times text-sm" aria-hidden="true"></i>
                     </button>
-                    <img id="easterEggGif" src="img/easter-egg.gif" alt="硬件工程师的浪漫彩蛋动画" loading="lazy" decoding="async" width="286" height="286" class="w-full rounded-2xl shadow-2xl border border-white/10">
-                    <p class="text-center text-slate-400 text-xs mt-4">硬件工程师的浪漫</p>
+                    <!-- Left: GIF Image -->
+                    <div class="md:w-1/2 bg-slate-950 p-6 flex flex-col items-center justify-center border-r border-white/5 flex-shrink-0">
+                        <img id="easterEggGif" src="img/easter-egg.gif" alt="硬件工程师的浪漫彩蛋动画" loading="lazy" decoding="async" width="240" height="240" class="rounded-xl shadow-lg border border-white/10 object-contain max-w-full">
+                        <p class="text-center text-slate-400 text-xs mt-4">硬件工程师的浪漫</p>
+                    </div>
+                    <!-- Right: Emotional Letter -->
+                    <div class="md:w-1/2 p-8 overflow-y-auto no-scrollbar max-h-[70vh] md:max-h-none flex flex-col justify-center">
+                        <h3 class="text-white font-bold text-lg mb-3 flex items-center gap-2">
+                            <i class="fas fa-heart text-amber-500"></i>
+                            写给技术招聘官的一封信
+                        </h3>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            小时候，我是大人眼里的“破坏大王”，家里的收音机、手电筒都被我拆了个遍。但正是这份最初的破坏欲与好奇心，熔铸成了我 13 年深耕军工、车规、工业高可靠电路的职业信仰。<br><br>
+                            我一直信奉：对电子和代码最纯粹的热爱，才是支撑产品“零妥协、高稳定性”交付的终极源泉。期待与您并肩作战，让想法先变成有用的“真家伙”，再细细打磨成好用的精品！
+                        </p>
+                    </div>
                 </div>
             </div>
             
