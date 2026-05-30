@@ -34,6 +34,37 @@
         return d.innerHTML;
     }
 
+    /** SafeStorage helper (防止 file:// 协议下抛出 SecurityError 导致 JS 瘫痪) */
+    var SafeStorage = {
+        getItem: function (key) {
+            try {
+                return localStorage.getItem(key);
+            } catch (e) {
+                console.warn('[SafeStorage] 浏览器安全策略限制：无法在 file:// 协议下读取 localStorage。数据将在内存中临时保存。');
+                return window.__safe_storage_fallback ? window.__safe_storage_fallback[key] : null;
+            }
+        },
+        setItem: function (key, value) {
+            try {
+                localStorage.setItem(key, value);
+            } catch (e) {
+                console.warn('[SafeStorage] 浏览器安全策略限制：无法在 file:// 协议下写入 localStorage。');
+                if (!window.__safe_storage_fallback) window.__safe_storage_fallback = {};
+                window.__safe_storage_fallback[key] = value;
+            }
+        },
+        removeItem: function (key) {
+            try {
+                localStorage.removeItem(key);
+            } catch (e) {
+                console.warn('[SafeStorage] 浏览器安全策略限制：无法在 file:// 协议下清除 localStorage。');
+                if (window.__safe_storage_fallback) {
+                    delete window.__safe_storage_fallback[key];
+                }
+            }
+        }
+    };
+
     /* ─────────────────────────────────────────
        DOM 就绪后执行
     ───────────────────────────────────────── */
@@ -44,7 +75,7 @@
             window.DEFAULT_PROJECTS = JSON.parse(JSON.stringify(window.PROJECTS));
         }
         // 从 localStorage 融合加载自定义修改后的项目列表
-        var customProjs = localStorage.getItem('yj_custom_projects');
+        var customProjs = SafeStorage.getItem('yj_custom_projects');
         var projects = customProjs ? JSON.parse(customProjs) : (window.PROJECTS || []);
         window.PROJECTS = projects;
 
@@ -492,7 +523,7 @@
         function deleteAdminProject(index) {
             if (!confirm('确定要删除项目 "' + projects[index].title + '" 吗？')) return;
             projects.splice(index, 1);
-            localStorage.setItem('yj_custom_projects', JSON.stringify(projects));
+            SafeStorage.setItem('yj_custom_projects', JSON.stringify(projects));
             renderProjects('all');
             renderAdminProjectList();
             resetAdminForm();
@@ -560,7 +591,7 @@
                     targetProj.achievements = achievements;
                 }
 
-                localStorage.setItem('yj_custom_projects', JSON.stringify(projects));
+                SafeStorage.setItem('yj_custom_projects', JSON.stringify(projects));
                 renderProjects('all');
                 renderAdminProjectList();
                 resetAdminForm();
@@ -572,7 +603,7 @@
             adminResetBtn.addEventListener('click', function(e) {
                 e.preventDefault();
                 if (!confirm('确定要清除所有自定义修改，恢复为系统出厂配置吗？')) return;
-                localStorage.removeItem('yj_custom_projects');
+                SafeStorage.removeItem('yj_custom_projects');
                 if (window.DEFAULT_PROJECTS) {
                     projects = JSON.parse(JSON.stringify(window.DEFAULT_PROJECTS));
                     window.PROJECTS = projects;
