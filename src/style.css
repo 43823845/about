@@ -561,7 +561,7 @@ section { scroll-margin-top: 90px; }
     padding-bottom: 4.5rem;
 }
 
-#hero .max-w-7xl { align-items: stretch; gap: 4rem; }
+#hero .max-w-7xl { align-items: center; gap: 4rem; }
 #hero > .max-w-7xl > div:first-child { display: flex; flex-direction: column; justify-content: center; }
 #hero > .max-w-7xl > div:last-child  { margin-left: auto; }
 
