@@ -9,1152 +9,55 @@
     <meta name="author" content="杨杰">
     <meta name="robots" content="index,follow">
     <meta name="theme-color" content="#14110f">
+    
+    <!-- Open Graph / SEO -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="杨杰 | 软硬件研发全栈工程师">
-    <meta property="og:description" content="聚焦硬件研发、嵌入式系统、PCB 设计、工业控制与高可靠产品交付的个人作品集站点。">
+    <meta property="og:description" content="聚焦硬件研发、嵌入式系统、PCB 设计、工业控制与高可靠交付方向的个人作品集与求职主页。">
     <meta property="og:locale" content="zh_CN">
     <meta property="og:site_name" content="杨杰作品集">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="杨杰 | 软硬件研发全栈工程师">
     <meta name="twitter:description" content="硬件研发、嵌入式系统、工业控制与高可靠交付方向的个人作品集与求职主页。">
+    
     <title>杨杰 | 软硬件研发全栈工程师</title>
+
+    <!-- PWA 支持 -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="杨杰作品集">
+    <link rel="apple-touch-icon" href="img/wechat-qr.jpg">
+
+    <!-- CSS 资源 -->
     <link rel="stylesheet" href="./output.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="src/style.css">
+
+    <!-- 异步加载外部字体与图标库 (非阻塞) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap"
-        rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
-            overflow-x: hidden;
-            line-height: 1.7;
-        }
-
-        /* ===== Loading Screen ===== */
-        #loader {
-            position: fixed;
-            inset: 0;
-            z-index: 99999;
-            background: var(--bg-dark);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
-        }
-
-        #loader.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .loader-ring {
-            width: 48px;
-            height: 48px;
-            border: 3px solid rgba(56, 189, 248, 0.15);
-            border-top-color: var(--accent-blue);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* ===== Scrollbar ===== */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: rgba(56, 189, 248, 0.2);
-            border-radius: 3px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(56, 189, 248, 0.4);
-        }
-
-        /* ===== Navigation ===== */
-        .glass-nav {
-            background: rgba(5, 10, 18, 0.88);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border-bottom: 1px solid var(--border-subtle);
-            transition: all 0.3s ease;
-        }
-
-        .glass-nav.scrolled {
-            background: rgba(5, 10, 18, 0.95);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        section {
-            scroll-margin-top: 90px;
-        }
-
-        /* ===== Gradient Text ===== */
-        .text-gradient {
-            background: linear-gradient(135deg, var(--accent-blue) 0%, var(--accent-cyan) 40%, var(--accent-purple) 70%, var(--accent-orange) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* ===== Skill Tags ===== */
-        .skill-tag {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            font-weight: 500;
-            letter-spacing: 0.01em;
-        }
-
-        .skill-tag::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(167, 139, 250, 0.1));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 0;
-        }
-
-        .skill-tag:hover::before {
-            opacity: 1;
-        }
-
-        .skill-tag:hover {
-            border-color: rgba(56, 189, 248, 0.5);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(56, 189, 248, 0.15),
-                0 0 0 1px rgba(56, 189, 248, 0.1);
-        }
-
-        .skill-tag>* {
-            position: relative;
-            z-index: 1;
-        }
-
-        /* ===== Skill Category Headers ===== */
-        .skill-category-title {
-            font-size: 0.875rem;
-            font-weight: 700;
-            margin-bottom: 1.25rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            position: relative;
-            padding-bottom: 0.75rem;
-        }
-
-        .skill-category-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            border-radius: 1px;
-            transition: width 0.3s ease;
-        }
-
-        .skill-category-title.text-orange-400::after {
-            background: linear-gradient(90deg, #fb923c, rgba(251, 146, 60, 0.3));
-        }
-
-        .skill-category-title.text-blue-400::after {
-            background: linear-gradient(90deg, #38bdf8, rgba(56, 189, 248, 0.3));
-        }
-
-        .skill-category-title.text-cyan-400::after {
-            background: linear-gradient(90deg, #22d3ee, rgba(34, 211, 238, 0.3));
-        }
-
-        .skill-category-title.text-green-400::after {
-            background: linear-gradient(90deg, #4ade80, rgba(74, 222, 128, 0.3));
-        }
-
-        .skill-category-title.text-purple-400::after {
-            background: linear-gradient(90deg, #a78bfa, rgba(167, 139, 250, 0.3));
-        }
-
-        .skill-category-title.text-rose-400::after {
-            background: linear-gradient(90deg, #fb7185, rgba(251, 113, 133, 0.3));
-        }
-
-        .skill-category-title:hover::after {
-            width: 60px;
-        }
-
-        /* ===== Project Cards ===== */
-        .project-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: 20px;
-            overflow: hidden;
-            cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-        }
-
-        .project-card::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 20px;
-            border: 1px solid transparent;
-            transition: border-color 0.4s ease;
-            pointer-events: none;
-        }
-
-        .project-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4), 0 0 40px rgba(56, 189, 248, 0.08);
-        }
-
-        .project-card:hover::after {
-            border-color: rgba(56, 189, 248, 0.3);
-        }
-
-        .project-card .card-img {
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
-        }
-
-        .project-card:hover .card-img {
-            transform: scale(1.08);
-            opacity: 0.85;
-        }
-
-        .project-card .card-overlay {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(to top, rgba(5, 10, 18, 0.95) 0%, rgba(5, 10, 18, 0.3) 50%, transparent 100%);
-        }
-
-        .project-card .view-btn {
-            opacity: 0;
-            transform: translateY(10px);
-            transition: all 0.35s ease;
-        }
-
-        .project-card:hover .view-btn {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* ===== Modal ===== */
-        #projectModal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            z-index: 10000;
-            background: rgba(0, 0, 0, 0.92);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            opacity: 0;
-            transition: opacity 0.35s ease;
-        }
-
-        #projectModal.active {
-            display: flex;
-            opacity: 1;
-        }
-
-        .modal-content {
-            transform: scale(0.92) translateY(20px);
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        #projectModal.active .modal-content {
-            transform: scale(1) translateY(0);
-        }
-
-        /* ===== Timeline ===== */
-        .timeline-line {
-            position: absolute;
-            left: 23px;
-            top: 0;
-            bottom: 0;
-            width: 2px;
-            background: linear-gradient(to bottom, var(--accent-blue), var(--accent-purple), var(--accent-orange));
-            opacity: 0.3;
-        }
-
-        .timeline-dot {
-            position: absolute;
-            left: 16px;
-            top: 6px;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            border: 2px solid var(--accent-blue);
-            background: var(--bg-dark);
-            z-index: 2;
-            transition: all 0.3s ease;
-        }
-
-        .timeline-item:hover .timeline-dot {
-            background: var(--accent-blue);
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
-        }
-
-        /* ===== Stat Counter ===== */
-        .stat-card {
-            background: linear-gradient(135deg, rgba(56, 189, 248, 0.05), rgba(167, 139, 250, 0.05));
-            border: 1px solid rgba(56, 189, 248, 0.1);
-            border-radius: 20px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.35s ease;
-        }
-
-        .stat-card:hover {
-            border-color: rgba(56, 189, 248, 0.3);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 40px rgba(56, 189, 248, 0.1);
-        }
-
-        /* ===== Section Reveal Animation ===== */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* ===== Floating Particles ===== */
-        .particle {
-            position: absolute;
-            border-radius: 50%;
-            pointer-events: none;
-            animation: float linear infinite;
-        }
-
-        @keyframes float {
-            0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 0;
-            }
-
-            10% {
-                opacity: 1;
-            }
-
-            90% {
-                opacity: 1;
-            }
-
-            100% {
-                transform: translateY(-100vh) rotate(720deg);
-                opacity: 0;
-            }
-        }
-
-        /* ===== Hero Grid Pattern ===== */
-        .hero-grid {
-            background-image:
-                linear-gradient(rgba(56, 189, 248, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(56, 189, 248, 0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
-        }
-
-        /* ===== Mobile Menu ===== */
-        .mobile-menu {
-            transform: translateX(100%);
-            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .mobile-menu.open {
-            transform: translateX(0);
-        }
-
-        /* ===== Back to Top ===== */
-        #backToTop {
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.35s ease;
-        }
-
-        #backToTop.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* ===== Award Badge ===== */
-        .award-badge {
-            background: linear-gradient(135deg, rgba(251, 146, 60, 0.08), rgba(251, 146, 60, 0.02));
-            border: 1px solid rgba(251, 146, 60, 0.15);
-            border-radius: 16px;
-            padding: 1.5rem;
-            transition: all 0.35s ease;
-        }
-
-        .award-badge:hover {
-            border-color: rgba(251, 146, 60, 0.35);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(251, 146, 60, 0.08);
-        }
-
-        /* ===== No scrollbar for modal ===== */
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-
-        /* ===== Sensory UI Refresh ===== */
-        :root {
-            --bg-dark: #14110f;
-            --bg-card: rgba(34, 26, 23, 0.86);
-            --accent-blue: #e8b04f;
-            --accent-cyan: #d4a15a;
-            --accent-orange: #9f6b3b;
-            --accent-purple: #f2d6a2;
-            --border-subtle: rgba(214, 187, 140, 0.18);
-            --glass-bg: rgba(24, 18, 16, 0.82);
-            --surface-1: rgba(39, 30, 27, 0.68);
-            --surface-2: rgba(31, 24, 22, 0.58);
-            --hairline: rgba(242, 214, 162, 0.1);
-            --text-soft: #b6a79a;
-        }
-
-        body {
-            background:
-                radial-gradient(circle at 18% 8%, rgba(212, 161, 90, 0.18), transparent 34rem),
-                radial-gradient(circle at 82% 18%, rgba(120, 68, 35, 0.18), transparent 28rem),
-                linear-gradient(180deg, #161210 0%, #201916 45%, #14110f 100%);
-            color: #efe3d2;
-        }
-
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: -1;
-            background-image:
-                linear-gradient(rgba(255, 243, 222, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 243, 222, 0.02) 1px, transparent 1px);
-            background-size: 80px 80px;
-            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.82), transparent 72%);
-        }
-
-        body::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: -1;
-            background: radial-gradient(circle at center, rgba(242, 214, 162, 0.035), transparent 55%);
-            mix-blend-mode: screen;
-        }
-
-        .hero-grid {
-            background-image:
-                linear-gradient(rgba(232, 176, 79, 0.045) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(159, 107, 59, 0.05) 1px, transparent 1px);
-            background-size: 96px 96px;
-        }
-
-        .hero-grid>.absolute.rounded-full {
-            display: none;
-        }
-
-        .glass-nav {
-            background: rgba(20, 16, 15, 0.74);
-            border-bottom: 1px solid rgba(242, 214, 162, 0.08);
-            box-shadow: inset 0 -1px 0 rgba(255, 243, 222, 0.03);
-        }
-
-        .glass-nav.scrolled {
-            background: rgba(20, 16, 15, 0.92);
-            box-shadow: 0 18px 60px rgba(0, 0, 0, 0.34), inset 0 -1px 0 rgba(255, 243, 222, 0.06);
-        }
-
-        .glass-nav a,
-        .mobile-nav-link,
-        .filter-btn,
-        .skill-tag,
-        .project-card,
-        .stat-card,
-        .award-badge,
-        footer .group {
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .hero-title {
-            max-width: 11ch;
-            letter-spacing: 0;
-            text-wrap: balance;
-            text-shadow: 0 20px 60px rgba(110, 70, 34, 0.18);
-        }
-
-        #hero {
-            min-height: auto;
-            padding-top: 7.5rem;
-            padding-bottom: 4.5rem;
-        }
-
-        #hero .max-w-7xl {
-            align-items: stretch;
-            gap: 4rem;
-        }
-
-        #hero > .max-w-7xl > div:first-child {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        #hero > .max-w-7xl > div:last-child {
-            margin-left: auto;
-        }
-
-        .hero-proof-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 1rem;
-            margin-top: 1.5rem;
-            max-width: 46rem;
-        }
-
-        .hero-proof-card {
-            padding: 1rem 1.1rem;
-            border-radius: 18px;
-            background:
-                linear-gradient(180deg, rgba(255, 245, 227, 0.08), rgba(255, 255, 255, 0.015)),
-                rgba(42, 31, 27, 0.58);
-            border: 1px solid rgba(242, 214, 162, 0.12);
-            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.24);
-        }
-
-        .hero-proof-kicker {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.45rem;
-            margin-bottom: 0.7rem;
-            color: #ebc98d;
-            font-size: 0.75rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-        }
-
-        .hero-proof-value {
-            color: #fff6e7;
-            font-size: 1.5rem;
-            line-height: 1;
-            font-weight: 900;
-            margin-bottom: 0.5rem;
-        }
-
-        .hero-proof-desc {
-            color: var(--text-soft);
-            font-size: 0.82rem;
-            line-height: 1.6;
-        }
-
-        .recruiter-panel {
-            padding: 1.4rem;
-            border-radius: 22px;
-            background:
-                linear-gradient(145deg, rgba(232, 176, 79, 0.12), transparent 35%),
-                linear-gradient(325deg, rgba(159, 107, 59, 0.16), transparent 30%),
-                rgba(42, 31, 27, 0.6);
-            border: 1px solid rgba(214, 187, 140, 0.16);
-            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
-        }
-
-        .recruiter-point {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.9rem;
-            padding: 0.95rem 0;
-            border-top: 1px solid rgba(226, 232, 240, 0.08);
-        }
-
-        .recruiter-point:first-of-type {
-            border-top: 0;
-            padding-top: 0;
-        }
-
-        .recruiter-point-icon {
-            width: 2.4rem;
-            height: 2.4rem;
-            flex-shrink: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 0.9rem;
-            background: rgba(232, 176, 79, 0.12);
-            color: #ebc98d;
-            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
-        }
-
-        .section-lead {
-            max-width: 42rem;
-        }
-
-        .impact-strip {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .impact-card {
-            padding: 1.15rem 1.25rem;
-            border-radius: 18px;
-            background:
-                linear-gradient(180deg, rgba(255, 245, 227, 0.07), rgba(255, 255, 255, 0.018)),
-                rgba(42, 31, 27, 0.6);
-            border: 1px solid rgba(242, 214, 162, 0.1);
-            box-shadow: 0 18px 42px rgba(0, 0, 0, 0.22);
-        }
-
-        .impact-label {
-            color: #94a3b8;
-            font-size: 0.76rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            margin-bottom: 0.6rem;
-        }
-
-        .impact-value {
-            color: #fff4df;
-            font-size: 1.7rem;
-            line-height: 1;
-            font-weight: 900;
-            margin-bottom: 0.55rem;
-        }
-
-        .impact-desc {
-            color: var(--text-soft);
-            font-size: 0.84rem;
-            line-height: 1.6;
-        }
-
-        .timeline-item {
-            padding-left: 0.25rem;
-        }
-
-        .timeline-card {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .timeline-card::before {
-            content: '';
-            position: absolute;
-            inset: 0 auto 0 0;
-            width: 4px;
-            background: linear-gradient(180deg, #f0cf93, #d4a15a, #8f5b2c);
-            opacity: 0.85;
-        }
-
-        .timeline-card::after {
-            content: '';
-            position: absolute;
-            inset: auto -3rem -3rem auto;
-            width: 10rem;
-            height: 10rem;
-            border-radius: 999px;
-            background: radial-gradient(circle, rgba(212, 161, 90, 0.16), transparent 68%);
-            pointer-events: none;
-        }
-
-        .timeline-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.55rem;
-            margin-top: 1rem;
-        }
-
-        .timeline-chip {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.35rem;
-            padding: 0.42rem 0.72rem;
-            border-radius: 999px;
-            background: rgba(255, 248, 235, 0.045);
-            border: 1px solid rgba(242, 214, 162, 0.08);
-            color: #dbc7b2;
-            font-size: 0.72rem;
-            font-weight: 600;
-        }
-
-        .project-showcase-header {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .project-showcase-note {
-            max-width: 30rem;
-            color: var(--text-soft);
-            font-size: 0.92rem;
-            line-height: 1.7;
-        }
-
-        .project-card .card-frame {
-            position: absolute;
-            inset: 0;
-            border-radius: 18px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            pointer-events: none;
-        }
-
-        .project-card .card-number {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            color: rgba(255, 235, 200, 0.18);
-            font-size: 2.4rem;
-            font-weight: 900;
-            line-height: 1;
-            letter-spacing: -0.06em;
-        }
-
-        .project-card .card-summary {
-            color: #d8c5b0;
-            font-size: 0.82rem;
-            line-height: 1.7;
-            margin-bottom: 1rem;
-            min-height: 4.1rem;
-        }
-
-        .project-card .card-proof {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-            color: #ebc98d;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-        }
-
-        .project-card .card-proof::before {
-            content: '';
-            width: 0.6rem;
-            height: 0.6rem;
-            border-radius: 999px;
-            background: linear-gradient(135deg, #f0cf93, #b67944);
-            box-shadow: 0 0 18px rgba(182, 121, 68, 0.42);
-        }
-
-        .contact-actions {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1rem;
-            margin: 0 0 2.25rem;
-        }
-
-        .contact-action-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.7rem;
-            padding: 0.95rem 1.3rem;
-            border-radius: 999px;
-            border: 1px solid rgba(242, 214, 162, 0.12);
-            background: rgba(255, 247, 232, 0.035);
-            color: #fff4e4;
-            font-weight: 700;
-            transition: all 0.3s ease;
-        }
-
-        .contact-action-btn:hover {
-            transform: translateY(-2px);
-            border-color: rgba(232, 176, 79, 0.32);
-            box-shadow: 0 18px 40px rgba(44, 31, 24, 0.32);
-        }
-
-        @media print {
-            #mainNav,
-            #backToTop,
-            #loader,
-            #projectModal,
-            #wechatModal,
-            #menuOverlay,
-            #mobileMenu,
-            #particles,
-            .contact-actions {
-                display: none !important;
-            }
-
-            body {
-                background: #ffffff !important;
-                color: #111827 !important;
-            }
-        }
-
-        .text-gradient {
-            background: linear-gradient(135deg, #fff8ec 0%, #f0cf93 32%, #d4a15a 68%, #8f5b2c 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        #about .grid.lg\:grid-cols-5 {
-            align-items: center;
-        }
-
-        #about .lg\:col-span-3 {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        #about .lg\:col-span-2 {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        #hero .inline-flex.rounded-full {
-            background: rgba(232, 176, 79, 0.09);
-            border-color: rgba(232, 176, 79, 0.24);
-            color: #f0cf93;
-            box-shadow: 0 0 0 1px rgba(232, 176, 79, 0.05), 0 20px 50px rgba(32, 25, 22, 0.34);
-        }
-
-        #hero .grid.grid-cols-2>div,
-        #about .lg\:col-span-2>div,
-        .timeline-item>div,
-        footer .group {
-            background:
-                linear-gradient(180deg, rgba(255, 244, 224, 0.07), rgba(255, 255, 255, 0.018)),
-                var(--surface-2);
-            border: 1px solid var(--hairline);
-            box-shadow: 0 18px 55px rgba(0, 0, 0, 0.24), inset 0 1px 0 rgba(255, 248, 235, 0.05);
-        }
-
-        #hero .hidden.lg\:block>.relative {
-            border-radius: 28px;
-            background:
-                linear-gradient(145deg, rgba(232, 176, 79, 0.13), transparent 34%),
-                linear-gradient(315deg, rgba(120, 68, 35, 0.15), transparent 28%),
-                rgba(38, 29, 26, 0.72);
-            border: 1px solid rgba(242, 214, 162, 0.12);
-            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.38), inset 0 1px 0 rgba(255, 248, 235, 0.06);
-        }
-
-        section {
-            position: relative;
-        }
-
-        section[id]::before {
-            content: '';
-            position: absolute;
-            left: 50%;
-            top: 0;
-            width: min(1120px, calc(100% - 3rem));
-            height: 1px;
-            transform: translateX(-50%);
-            background: linear-gradient(90deg, transparent, rgba(214, 187, 140, 0.18), transparent);
-        }
-
-        .stat-card {
-            min-height: 150px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background:
-                linear-gradient(180deg, rgba(255, 245, 227, 0.075), rgba(255, 255, 255, 0.02)),
-                rgba(43, 33, 29, 0.6);
-            border-color: rgba(242, 214, 162, 0.11);
-            border-radius: 18px;
-            box-shadow: 0 20px 55px rgba(0, 0, 0, 0.24);
-        }
-
-        .stat-card:hover {
-            border-color: rgba(232, 176, 79, 0.34);
-            box-shadow: 0 24px 70px rgba(28, 22, 20, 0.38), 0 0 0 1px rgba(232, 176, 79, 0.08);
-        }
-
-        #skills .grid.md\:grid-cols-2>div {
-            padding: 1.35rem;
-            border-radius: 18px;
-            background:
-                linear-gradient(180deg, rgba(255, 247, 232, 0.05), rgba(255, 255, 255, 0.015)),
-                rgba(39, 30, 27, 0.5);
-            border: 1px solid rgba(242, 214, 162, 0.08);
-            box-shadow: inset 0 1px 0 rgba(255, 248, 235, 0.05);
-        }
-
-        .skill-tag {
-            background: rgba(255, 248, 235, 0.045);
-            border-color: rgba(242, 214, 162, 0.10);
-            border-radius: 10px;
-            color: #e6d8c6;
-            box-shadow: inset 0 1px 0 rgba(255, 248, 235, 0.04);
-        }
-
-        .skill-tag:hover {
-            border-color: rgba(232, 176, 79, 0.42);
-            color: #fff7ea;
-            box-shadow: 0 12px 28px rgba(159, 107, 59, 0.16), inset 0 1px 0 rgba(255, 248, 235, 0.08);
-        }
-
-        .project-card {
-            background:
-                linear-gradient(180deg, rgba(255, 246, 230, 0.06), rgba(255, 255, 255, 0.015)),
-                rgba(38, 29, 26, 0.74);
-            border-color: rgba(242, 214, 162, 0.1);
-            border-radius: 18px;
-            box-shadow: 0 22px 70px rgba(0, 0, 0, 0.28);
-        }
-
-        .project-card::after {
-            border-radius: 18px;
-        }
-
-        .project-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 28px 90px rgba(0, 0, 0, 0.36), 0 0 0 1px rgba(232, 176, 79, 0.16);
-        }
-
-        .project-card .card-img {
-            opacity: 0.62;
-            filter: saturate(0.92) contrast(1.02) sepia(0.12);
-        }
-
-        .project-card .card-overlay {
-            background:
-                linear-gradient(to top, rgba(20, 16, 15, 0.96) 0%, rgba(30, 22, 19, 0.68) 48%, rgba(20, 16, 15, 0.18) 100%);
-        }
-
-        .award-badge {
-            min-height: 188px;
-            background:
-                linear-gradient(145deg, rgba(232, 176, 79, 0.1), transparent 48%),
-                rgba(42, 31, 27, 0.58);
-            border-color: rgba(232, 176, 79, 0.16);
-            border-radius: 18px;
-            box-shadow: inset 0 1px 0 rgba(255, 248, 235, 0.05);
-        }
-
-        .award-badge:hover {
-            border-color: rgba(232, 176, 79, 0.38);
-            box-shadow: 0 22px 60px rgba(159, 107, 59, 0.12), inset 0 1px 0 rgba(255, 248, 235, 0.08);
-        }
-
-        .timeline-line {
-            background: linear-gradient(to bottom, #f0cf93, #d4a15a, #8f5b2c);
-            opacity: 0.48;
-        }
-
-        .timeline-dot {
-            border-color: #e8b04f;
-            box-shadow: 0 0 0 6px rgba(232, 176, 79, 0.08);
-        }
-
-        .timeline-item:hover .timeline-dot {
-            background: #e8b04f;
-            box-shadow: 0 0 0 8px rgba(232, 176, 79, 0.12), 0 0 24px rgba(182, 121, 68, 0.4);
-        }
-
-        .modal-content {
-            background: rgba(34, 26, 23, 0.95);
-            border-color: rgba(242, 214, 162, 0.12);
-        }
-
-        #backToTop {
-            box-shadow: 0 16px 40px rgba(159, 107, 59, 0.24);
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            *,
-            *::before,
-            *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                scroll-behavior: auto !important;
-                transition-duration: 0.01ms !important;
-            }
-        }
-
-        /* ===== Responsive ===== */
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.65rem !important;
-                max-width: 10ch;
-            }
-
-            .hero-proof-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .impact-strip {
-                grid-template-columns: 1fr;
-            }
-
-            .section-lead {
-                margin-left: 0 !important;
-            }
-
-            .stat-card {
-                padding: 1.25rem;
-                min-height: 126px;
-            }
-
-            .glass-nav .max-w-7xl {
-                height: 4.5rem;
-                padding-left: 1.1rem;
-                padding-right: 1.1rem;
-            }
-
-            #hero {
-                min-height: auto;
-                padding-top: 7rem;
-                padding-bottom: 5.5rem;
-            }
-
-            #hero .flex.flex-wrap.gap-4>a {
-                width: 100%;
-                justify-content: center;
-                border-radius: 14px;
-            }
-
-            section[id]::before {
-                width: calc(100% - 2rem);
-            }
-
-            #skills .grid.md\:grid-cols-2>div {
-                padding: 1rem;
-            }
-
-            .timeline-line {
-                left: 15px;
-            }
-
-            .timeline-dot {
-                left: 8px;
-            }
-
-            #experience .relative.pl-16 {
-                padding-left: 2.5rem;
-            }
-        }
-
-        @media (max-width: 1280px) {
-            #hero .max-w-7xl {
-                gap: 3rem;
-            }
-
-            #hero > .max-w-7xl > div:last-child {
-                margin-left: auto;
-            }
-
-            .hero-title {
-                font-size: 4.25rem !important;
-                max-width: 10ch;
-            }
-
-            .hero-proof-grid {
-                grid-template-columns: 1fr;
-                max-width: 34rem;
-            }
-
-            #hero .hidden.lg\:block > .relative {
-                padding: 1.5rem;
-            }
-
-            #hero .grid.grid-cols-2 {
-                gap: 0.75rem;
-            }
-
-            #hero .grid.grid-cols-2 > div {
-                padding: 1rem;
-            }
-        }
-
-        @media (max-width: 1100px) {
-            #hero {
-                padding-bottom: 3.5rem;
-            }
-
-            #hero .max-w-7xl {
-                gap: 2.5rem;
-            }
-
-            .hero-title {
-                font-size: 3.75rem !important;
-            }
-
-            #hero p.text-lg {
-                font-size: 1rem;
-                max-width: 100%;
-            }
-
-            .hero-proof-card {
-                padding: 0.9rem 1rem;
-            }
-
-            .hero-proof-value {
-                font-size: 1.35rem;
-            }
-
-            .hero-proof-desc {
-                font-size: 0.78rem;
-            }
-
-            #hero .hidden.lg\:block {
-                display: none;
-            }
-
-            #hero .max-w-7xl {
-                grid-template-columns: 1fr;
-            }
-
-            #hero .animate-bounce {
-                display: none;
-            }
-        }
-    </style>
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+
+    <!-- 预加载核心字体 -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+SC:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+SC:wght@400;700&display=swap" media="print" onload="this.media='all'">
+    
+    <!-- 异步加载 Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
+
+    <noscript>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+SC:wght@400;700&display=swap">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    </noscript>
 </head>
 
 <body class="antialiased">
 
+    <!-- 跳至主内容链接 (a11y) -->
+    <a href="#hero" class="sr-only focus:not-sr-only">跳至主内容</a>
+
     <!-- Loading Screen -->
-    <div id="loader">
+    <div id="loader" role="status" aria-label="正在加载">
         <div class="loader-ring"></div>
     </div>
 
@@ -1162,59 +65,42 @@
     <nav id="mainNav" class="fixed top-0 w-full z-[1000] glass-nav">
         <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
             <a href="#hero" class="nav-scroll flex items-center gap-3 group" data-target="hero">
-                <div
-                    class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center font-bold text-white text-sm shadow-lg shadow-blue-500/20 group-hover:shadow-blue-500/40 transition-shadow">
-                    YJ</div>
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-400 flex items-center justify-center font-bold text-white text-sm shadow-lg shadow-amber-500/20 group-hover:shadow-amber-500/40 transition-shadow">
+                    YJ
+                </div>
                 <span class="text-xl font-bold tracking-tight text-white">杨杰</span>
             </a>
             <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
-                <a href="#hero" class="nav-scroll text-slate-400 hover:text-white transition-colors relative group"
-                    data-target="hero">
+                <a href="#hero" class="nav-scroll text-slate-400 hover:text-white transition-colors relative group" data-target="hero">
                     首页
-                    <span
-                        class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
+                    <span class="nav-underline"></span>
                 </a>
-                <a href="#about" class="nav-scroll text-slate-400 hover:text-white transition-colors relative group"
-                    data-target="about">
+                <a href="#about" class="nav-scroll text-slate-400 hover:text-white transition-colors relative group" data-target="about">
                     关于我
-                    <span
-                        class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
+                    <span class="nav-underline"></span>
                 </a>
-                <a href="#skills" class="nav-scroll text-slate-400 hover:text-white transition-colors relative group"
-                    data-target="skills">
+                <a href="#skills" class="nav-scroll text-slate-400 hover:text-white transition-colors relative group" data-target="skills">
                     技能矩阵
-                    <span
-                        class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
+                    <span class="nav-underline"></span>
                 </a>
-                <a href="#experience"
-                    class="nav-scroll text-slate-400 hover:text-white transition-colors relative group"
-                    data-target="experience">
+                <a href="#experience" class="nav-scroll text-slate-400 hover:text-white transition-colors relative group" data-target="experience">
                     工作经历
-                    <span
-                        class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
+                    <span class="nav-underline"></span>
                 </a>
-                <a href="#projects" class="nav-scroll text-slate-400 hover:text-white transition-colors relative group"
-                    data-target="projects">
+                <a href="#projects" class="nav-scroll text-slate-400 hover:text-white transition-colors relative group" data-target="projects">
                     研发项目
-                    <span
-                        class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
+                    <span class="nav-underline"></span>
                 </a>
-                <a href="#awards" class="nav-scroll text-slate-400 hover:text-white transition-colors relative group"
-                    data-target="awards">
+                <a href="#awards" class="nav-scroll text-slate-400 hover:text-white transition-colors relative group" data-target="awards">
                     荣誉
-                    <span
-                        class="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-400 group-hover:w-full transition-all duration-300"></span>
+                    <span class="nav-underline"></span>
                 </a>
-                <a href="#contact"
-                    class="nav-scroll px-5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-blue-600/20 hover:shadow-blue-500/30"
-                    data-target="contact">
+                <a href="#contact" class="nav-scroll px-5 py-2.5 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-amber-600/20 hover:shadow-amber-500/30" data-target="contact">
                     联系我
                 </a>
             </div>
             <!-- Mobile Hamburger -->
-            <button id="menuToggle"
-                class="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 text-white"
-                aria-label="菜单" aria-expanded="false" aria-controls="mobileMenu">
+            <button id="menuToggle" class="md:hidden w-10 h-10 flex flex-col items-center justify-center gap-1.5 text-white" aria-label="菜单" aria-expanded="false" aria-controls="mobileMenu">
                 <span class="w-6 h-0.5 bg-white transition-all duration-300" id="bar1"></span>
                 <span class="w-6 h-0.5 bg-white transition-all duration-300" id="bar2"></span>
                 <span class="w-4 h-0.5 bg-white transition-all duration-300 ml-auto" id="bar3"></span>
@@ -1223,152 +109,119 @@
     </nav>
 
     <!-- Mobile Menu -->
-    <div id="mobileMenu"
-        class="mobile-menu fixed top-0 right-0 w-72 h-full z-[1001] bg-slate-900/98 backdrop-blur-xl border-l border-white/5">
+    <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 w-72 h-full z-[1001] bg-slate-900/98 backdrop-blur-xl border-l border-white/5">
         <div class="p-6 pt-24 flex flex-col gap-2">
-            <a href="#hero"
-                class="mobile-nav-link block px-4 py-3 text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition-all"
-                data-target="hero">
-                <i class="fas fa-home w-6 text-blue-400"></i> 首页
+            <a href="#hero" class="mobile-nav-link block px-4 py-3 text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition-all" data-target="hero">
+                <i class="fas fa-home w-6 text-amber-400" aria-hidden="true"></i> 首页
             </a>
-            <a href="#about"
-                class="mobile-nav-link block px-4 py-3 text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition-all"
-                data-target="about">
-                <i class="fas fa-user w-6 text-blue-400"></i> 关于我
+            <a href="#about" class="mobile-nav-link block px-4 py-3 text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition-all" data-target="about">
+                <i class="fas fa-user w-6 text-amber-400" aria-hidden="true"></i> 关于我
             </a>
-            <a href="#skills"
-                class="mobile-nav-link block px-4 py-3 text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition-all"
-                data-target="skills">
-                <i class="fas fa-microchip w-6 text-blue-400"></i> 技能矩阵
+            <a href="#skills" class="mobile-nav-link block px-4 py-3 text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition-all" data-target="skills">
+                <i class="fas fa-microchip w-6 text-amber-400" aria-hidden="true"></i> 技能矩阵
             </a>
-            <a href="#experience"
-                class="mobile-nav-link block px-4 py-3 text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition-all"
-                data-target="experience">
-                <i class="fas fa-briefcase w-6 text-blue-400"></i> 工作经历
+            <a href="#experience" class="mobile-nav-link block px-4 py-3 text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition-all" data-target="experience">
+                <i class="fas fa-briefcase w-6 text-amber-400" aria-hidden="true"></i> 工作经历
             </a>
-            <a href="#projects"
-                class="mobile-nav-link block px-4 py-3 text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition-all"
-                data-target="projects">
-                <i class="fas fa-rocket w-6 text-blue-400"></i> 研发项目
+            <a href="#projects" class="mobile-nav-link block px-4 py-3 text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition-all" data-target="projects">
+                <i class="fas fa-rocket w-6 text-amber-400" aria-hidden="true"></i> 研发项目
             </a>
-            <a href="#awards"
-                class="mobile-nav-link block px-4 py-3 text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition-all"
-                data-target="awards">
-                <i class="fas fa-trophy w-6 text-blue-400"></i> 荣誉
+            <a href="#awards" class="mobile-nav-link block px-4 py-3 text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition-all" data-target="awards">
+                <i class="fas fa-trophy w-6 text-amber-400" aria-hidden="true"></i> 荣誉
             </a>
-            <a href="#contact"
-                class="mobile-nav-link block px-4 py-3 text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition-all"
-                data-target="contact">
-                <i class="fas fa-envelope w-6 text-blue-400"></i> 联系我
+            <a href="#contact" class="mobile-nav-link block px-4 py-3 text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition-all" data-target="contact">
+                <i class="fas fa-envelope w-6 text-amber-400" aria-hidden="true"></i> 联系我
             </a>
         </div>
     </div>
-    <div id="menuOverlay" class="fixed inset-0 bg-black/50 z-[1000] hidden"></div>
+    <div id="menuOverlay" class="fixed inset-0 bg-black/50 z-[1000] hidden" aria-hidden="true"></div>
 
     <!-- ===== HERO SECTION ===== -->
     <section id="hero" class="min-h-screen flex items-center px-6 relative overflow-hidden hero-grid">
-        <!-- Particles Container -->
-        <div id="particles" class="absolute inset-0 pointer-events-none overflow-hidden"></div>
+        <!-- Canvas Particles (替代原本 30个高开销 DOM 元素) -->
+        <canvas id="particles-canvas" class="absolute inset-0 pointer-events-none w-full h-full"></canvas>
+        
         <!-- Gradient Orbs -->
-        <div class="absolute top-1/4 -left-32 w-96 h-96 bg-blue-500/10 rounded-full blur-[120px] pointer-events-none">
-        </div>
-        <div
-            class="absolute bottom-1/4 -right-32 w-96 h-96 bg-purple-500/8 rounded-full blur-[120px] pointer-events-none">
-        </div>
+        <div class="absolute top-1/4 -left-32 w-96 h-96 bg-amber-500/10 rounded-full blur-[120px] pointer-events-none" aria-hidden="true"></div>
+        <div class="absolute bottom-1/4 -right-32 w-96 h-96 bg-orange-500/8 rounded-full blur-[120px] pointer-events-none" aria-hidden="true"></div>
 
         <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center relative z-10 w-full">
             <div>
-                <div
-                    class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 text-blue-400 text-xs font-bold mb-8 border border-blue-500/20">
-                    <span class="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 text-amber-400 text-xs font-bold mb-8 border border-amber-500/20">
+                    <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
                     软硬件研发全栈工程师 · 13年行业经验
                 </div>
-                <h1
-                    class="hero-title text-5xl md:text-6xl lg:text-7xl font-black text-white mb-8 leading-[1.08] tracking-tight">
+                <h1 class="hero-title text-5xl md:text-6xl lg:text-7xl font-black text-white mb-8 leading-[1.08] tracking-tight">
                     你永远无法优化一个不存在的东西。
                 </h1>
                 <p class="text-lg text-slate-400 mb-10 leading-relaxed max-w-xl">
-                    学历不是光环，儿时的"破坏大王"对电子的热爱才是。把童年"拆拆装装"的热忱炼成硬核实力，十余年深耕军工、工业、车规、医疗等严苛场景，从 0 到 1
-                    全程交付。信奉"先做出来，再细细打磨"——快速验证核心功能，持续迭代优化细节，在实战中打磨出可量产、可落地的全栈最优解。期待面对面碰撞，让想法先变成能用的"真家伙"，再磨成好用的精品。
+                    学历不是光环，儿时的“破坏大王”对电子的热爱才是。把童年“拆拆装装”的热忱炼成硬核实力，十余年深耕军工、工业、车规、医疗等严苛场景，从 0 到 1 全程交付。信奉“先做出来，再细细打磨”——快速验证核心功能，持续迭代优化细节，在实战中打磨出可量产、可落地的全栈最优解。期待面对面碰撞，让想法先变成能用的“真家伙”，再磨成好用的精品。
                 </p>
                 <div class="flex flex-wrap gap-4">
-                    <a href="#projects"
-                        class="nav-scroll inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-500 hover:to-cyan-400 text-white font-bold rounded-2xl transition-all shadow-xl shadow-blue-600/25 hover:shadow-blue-500/40 hover:-translate-y-0.5"
-                        data-target="projects">
-                        <i class="fas fa-rocket text-sm"></i> 查看项目集
+                    <a href="#projects" class="nav-scroll inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-amber-600 to-orange-500 hover:from-amber-500 hover:to-orange-400 text-white font-bold rounded-2xl transition-all shadow-xl shadow-amber-600/25 hover:shadow-amber-500/40 hover:-translate-y-0.5" data-target="projects">
+                        <i class="fas fa-rocket text-sm" aria-hidden="true"></i> 查看项目集
                     </a>
-                    <a href="#contact"
-                        class="nav-scroll inline-flex items-center gap-2 px-8 py-4 bg-white/5 hover:bg-white/10 text-white font-bold rounded-2xl transition-all border border-white/10 hover:border-white/20 hover:-translate-y-0.5"
-                        data-target="contact">
-                        <i class="fas fa-paper-plane text-sm"></i> 建立联系
+                    <a href="#contact" class="nav-scroll inline-flex items-center gap-2 px-8 py-4 bg-white/5 hover:bg-white/10 text-white font-bold rounded-2xl transition-all border border-white/10 hover:border-white/20 hover:-translate-y-0.5" data-target="contact">
+                        <i class="fas fa-paper-plane text-sm" aria-hidden="true"></i> 建立联系
                     </a>
                 </div>
             </div>
             <div class="relative hidden lg:block">
-                <div
-                    class="absolute -inset-8 bg-gradient-to-br from-blue-500/15 via-cyan-500/10 to-purple-500/10 blur-3xl rounded-full">
-                </div>
-                <div
-                    class="relative bg-gradient-to-br from-slate-900 to-slate-800/80 border border-white/10 rounded-3xl p-8 shadow-2xl">
+                <div class="absolute -inset-8 bg-gradient-to-br from-amber-500/15 via-orange-500/10 to-yellow-500/10 blur-3xl rounded-full" aria-hidden="true"></div>
+                <div class="relative bg-gradient-to-br from-slate-900 to-slate-800/80 border border-white/10 rounded-3xl p-8 shadow-2xl">
                     <div class="grid grid-cols-3 gap-3 mb-4">
                         <div class="p-4 bg-white/[0.03] rounded-xl border border-white/5">
-                            <span class="hero-proof-kicker text-xs"><i class="fas fa-bolt"></i> 0-1 交付</span>
+                            <span class="hero-proof-kicker text-xs"><i class="fas fa-bolt" aria-hidden="true"></i> 0-1 交付</span>
                             <p class="text-slate-400 text-xs mt-2 leading-relaxed">从方案、原理图、PCB、固件到调试量产，我能直接负责完整闭环。</p>
                         </div>
                         <div class="p-4 bg-white/[0.03] rounded-xl border border-white/5">
-                            <span class="hero-proof-kicker text-xs"><i class="fas fa-shield-halved"></i>高可靠</span>
+                            <span class="hero-proof-kicker text-xs"><i class="fas fa-shield-halved" aria-hidden="true"></i> 高可靠</span>
                             <p class="text-slate-400 text-xs mt-2 leading-relaxed">军工、工业、车规、医疗项目经验，适合复杂约束与高稳定性岗位。</p>
                         </div>
                         <div class="p-4 bg-white/[0.03] rounded-xl border border-white/5">
-                            <span class="hero-proof-kicker text-xs"><i class="fas fa-cubes-stacked"></i>硬件 + 嵌入式 + AI</span>
+                            <span class="hero-proof-kicker text-xs"><i class="fas fa-cubes-stacked" aria-hidden="true"></i> 跨域合一</span>
                             <p class="text-slate-400 text-xs mt-2 leading-relaxed">单人覆盖芯片到应用的关键链路，沟通成本更低，落地速度更快。</p>
                         </div>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
-                        <div
-                            class="p-5 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-blue-500/20 transition-colors">
-                            <div class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center mb-3">
-                                <i class="fas fa-shield-halved text-blue-400"></i>
+                        <div class="p-5 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-amber-500/20 transition-colors">
+                            <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center mb-3">
+                                <i class="fas fa-shield-halved text-amber-400" aria-hidden="true"></i>
                             </div>
                             <p class="text-xs text-slate-500 uppercase tracking-wider mb-1">行业标准</p>
                             <p class="text-white font-bold text-sm">GJB / 车规 / 医疗 / 工业</p>
                         </div>
-                        <div
-                            class="p-5 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-cyan-500/20 transition-colors">
-                            <div class="w-10 h-10 rounded-xl bg-cyan-500/10 flex items-center justify-center mb-3">
-                                <i class="fas fa-layer-group text-cyan-400"></i>
+                        <div class="p-5 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-amber-500/20 transition-colors">
+                            <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center mb-3">
+                                <i class="fas fa-layer-group text-amber-400" aria-hidden="true"></i>
                             </div>
                             <p class="text-xs text-slate-500 uppercase tracking-wider mb-1">PCB 设计</p>
                             <p class="text-white font-bold text-sm">16层高密度板 / HDI / FPC</p>
                         </div>
-                        <div
-                            class="p-5 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-purple-500/20 transition-colors">
-                            <div class="w-10 h-10 rounded-xl bg-purple-500/10 flex items-center justify-center mb-3">
-                                <i class="fas fa-microchip text-purple-400"></i>
+                        <div class="p-5 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-amber-500/20 transition-colors">
+                            <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center mb-3">
+                                <i class="fas fa-microchip text-amber-400" aria-hidden="true"></i>
                             </div>
                             <p class="text-xs text-slate-500 uppercase tracking-wider mb-1">核心技术</p>
                             <p class="text-white font-bold text-sm">精密模拟 / 高速数字电路</p>
                         </div>
-                        <div
-                            class="p-5 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-orange-500/20 transition-colors">
-                            <div class="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center mb-3">
-                                <i class="fas fa-wave-square text-orange-400"></i>
+                        <div class="p-5 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-amber-500/20 transition-colors">
+                            <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center mb-3">
+                                <i class="fas fa-wave-square text-amber-400" aria-hidden="true"></i>
                             </div>
                             <p class="text-xs text-slate-500 uppercase tracking-wider mb-1">仿真验证</p>
                             <p class="text-white font-bold text-sm">SI / PI / 时序分析</p>
                         </div>
-                        <div
-                            class="p-5 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-red-500/20 transition-colors">
-                            <div class="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center mb-3">
-                                <i class="fas fa-vial-circle-check text-red-400"></i>
+                        <div class="p-5 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-amber-500/20 transition-colors">
+                            <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center mb-3">
+                                <i class="fas fa-vial-circle-check text-amber-400" aria-hidden="true"></i>
                             </div>
                             <p class="text-xs text-slate-500 uppercase tracking-wider mb-1">合规测试</p>
                             <p class="text-white font-bold text-sm">EMC / EMI / 浪涌防护</p>
                         </div>
-                        <div
-                            class="p-5 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-green-500/20 transition-colors">
-                            <div class="w-10 h-10 rounded-xl bg-green-500/10 flex items-center justify-center mb-3">
-                                <i class="fas fa-truck-fast text-green-400"></i>
+                        <div class="p-5 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-amber-500/20 transition-colors">
+                            <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center mb-3">
+                                <i class="fas fa-truck-fast text-amber-400" aria-hidden="true"></i>
                             </div>
                             <p class="text-xs text-slate-500 uppercase tracking-wider mb-1">全链交付</p>
                             <p class="text-white font-bold text-sm">DFM 优化 / 批量导入</p>
@@ -1380,8 +233,7 @@
     </section>
 
     <!-- Scroll Indicator -->
-    <div
-        class="relative -mt-16 flex flex-col items-center gap-3 text-slate-400 text-sm animate-bounce">
+    <div class="relative -mt-16 flex flex-col items-center gap-3 text-slate-400 text-sm animate-bounce" aria-hidden="true">
         <span class="font-medium">向下滚动</span>
         <i class="fas fa-chevron-down text-lg"></i>
     </div>
@@ -1415,7 +267,7 @@
         <div class="max-w-6xl mx-auto px-6">
             <div class="reveal">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 flex items-center gap-4">
-                    <span class="w-12 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full"></span>
+                    <span class="w-12 h-1 bg-gradient-to-r from-amber-500 to-orange-400 rounded-full"></span>
                     关于我
                 </h2>
                 <p class="text-slate-500 mb-12 ml-16 section-lead">从兴趣出发，用技术说话，也把招聘者最关心的交付能力、稳定性和成长潜力直接摆到台前。</p>
@@ -1423,7 +275,7 @@
             <div class="grid lg:grid-cols-5 gap-12 reveal items-center">
                 <div class="lg:col-span-3 space-y-6">
                     <p class="text-slate-300 leading-relaxed text-base">
-                        十余年深耕，对电子的热爱从未降温。从兴趣出发，将"拆拆装装"的初心熔铸为职业信仰，主导高可靠、高复杂度整机研发，在极限指标与严苛工况下正面攻坚，交付"零妥协"的硬件全栈方案。
+                        十余年深耕，对电子的热爱从未降温。从兴趣出发，将“拆拆装装”的初心熔铸为职业信仰，主导高可靠、高复杂度整机研发，在极限指标与严苛工况下正面攻坚，交付“零妥协”的硬件全栈方案。
                     </p>
                     <p class="text-slate-300 leading-relaxed text-base">
                         技术栈覆盖底层硬件架构、高速 PCB 设计、嵌入式驱动与算法。具备 **TinyML/Edge AI** 落地能力，擅长神经网络量化与模型压缩，在 STM32/ESP32 等 MCU 上实现 **On-device Inference**，让智能在资源受限的边缘端高效运行。
@@ -1438,24 +290,24 @@
                 <div class="lg:col-span-2 space-y-4">
                     <div class="recruiter-panel">
                         <h4 class="text-white font-bold text-base mb-4 flex items-center gap-2">
-                            <i class="fas fa-star text-cyan-300"></i> 为什么适合核心研发岗位
+                            <i class="fas fa-star text-amber-300" aria-hidden="true"></i> 为什么适合核心研发岗位
                         </h4>
                         <div class="recruiter-point">
-                            <div class="recruiter-point-icon"><i class="fas fa-diagram-project text-sm"></i></div>
+                            <div class="recruiter-point-icon"><i class="fas fa-diagram-project text-sm" aria-hidden="true"></i></div>
                             <div>
                                 <p class="text-white font-semibold text-sm mb-1">系统级视角完整</p>
                                 <p class="text-slate-400 text-sm">我关注的不止是单板设计，也关注整机协同、生产测试、交付节奏和后续维护。</p>
                             </div>
                         </div>
                         <div class="recruiter-point">
-                            <div class="recruiter-point-icon"><i class="fas fa-gauge-high text-sm"></i></div>
+                            <div class="recruiter-point-icon"><i class="fas fa-gauge-high text-sm" aria-hidden="true"></i></div>
                             <div>
                                 <p class="text-white font-semibold text-sm mb-1">复杂问题处理稳定</p>
                                 <p class="text-slate-400 text-sm">面对高速信号、电源完整性、现场故障和资源受限平台，我能快速定位主因并推进收敛。</p>
                             </div>
                         </div>
                         <div class="recruiter-point">
-                            <div class="recruiter-point-icon"><i class="fas fa-user-gear text-sm"></i></div>
+                            <div class="recruiter-point-icon"><i class="fas fa-user-gear text-sm" aria-hidden="true"></i></div>
                             <div>
                                 <p class="text-white font-semibold text-sm mb-1">适配团队协作</p>
                                 <p class="text-slate-400 text-sm">适合研发骨干、技术带头人和跨部门接口岗位，能把研发语言转成项目结果。</p>
@@ -1464,17 +316,13 @@
                     </div>
                     <div class="p-5 bg-white/[0.03] rounded-2xl border border-white/5">
                         <h4 class="text-white font-bold text-sm mb-3 flex items-center gap-2">
-                            <i class="fas fa-certificate text-orange-400"></i> 资格证书
+                            <i class="fas fa-certificate text-amber-400" aria-hidden="true"></i> 资格证书
                         </h4>
                         <div class="flex flex-wrap gap-2">
-                            <span
-                                class="text-xs px-3 py-1.5 bg-orange-500/10 text-orange-300 rounded-lg border border-orange-500/15">网络工程师</span>
-                            <span
-                                class="text-xs px-3 py-1.5 bg-orange-500/10 text-orange-300 rounded-lg border border-orange-500/15">计算机硬件工程师</span>
-                            <span
-                                class="text-xs px-3 py-1.5 bg-orange-500/10 text-orange-300 rounded-lg border border-orange-500/15">PCB 设计专项技能证书</span>
+                            <span class="text-xs px-3 py-1.5 bg-amber-500/10 text-amber-300 rounded-lg border border-amber-500/15">网络工程师</span>
+                            <span class="text-xs px-3 py-1.5 bg-amber-500/10 text-amber-300 rounded-lg border border-amber-500/15">计算机硬件工程师</span>
+                            <span class="text-xs px-3 py-1.5 bg-amber-500/10 text-amber-300 rounded-lg border border-amber-500/15">PCB 设计专项技能</span>
                         </div>
-                    </div>
                     </div>
                 </div>
             </div>
@@ -1486,7 +334,7 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="reveal">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 flex items-center gap-4">
-                    <span class="w-12 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full"></span>
+                    <span class="w-12 h-1 bg-gradient-to-r from-amber-500 to-orange-400 rounded-full"></span>
                     技能图谱与工具链
                 </h2>
                 <p class="text-slate-500 mb-16 ml-16">从芯片到云端，全栈技术覆盖</p>
@@ -1494,8 +342,8 @@
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10 reveal">
                 <!-- EDA & 仿真 -->
                 <div>
-                    <h3 class="skill-category-title text-orange-400">
-                        <i class="fas fa-desktop"></i> 设计与仿真软件
+                    <h3 class="skill-category-title text-amber-400">
+                        <i class="fas fa-desktop" aria-hidden="true"></i> 设计与仿真软件
                     </h3>
                     <div class="flex flex-wrap gap-2.5">
                         <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="专业 PCB 设计工具">Altium Designer</span>
@@ -1511,51 +359,35 @@
                 </div>
                 <!-- 硬件协议 -->
                 <div>
-                    <h3 class="skill-category-title text-blue-400">
-                        <i class="fas fa-microchip"></i> 硬件协议与总线
+                    <h3 class="skill-category-title text-amber-400">
+                        <i class="fas fa-microchip" aria-hidden="true"></i> 硬件协议与总线
                     </h3>
                     <div class="flex flex-wrap gap-2.5">
-                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="板级核心外设、传感器低速通信布线与底层驱动时序分析">SPI / I2C
-                            / UART</span>
-                        <span class="skill-tag px-4 py-2 rounded-xl text-sm"
-                            title="高速图像流 (CSI) 与显示 (DSI) 接口阻抗控制与时序调试">MIPI (CSI/DSI)</span>
-
-                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="车载与工业控制总线硬件节点设计及协议栈通讯调试">CAN /
-                            CAN-FD</span>
-                        <span class="skill-tag px-4 py-2 rounded-xl text-sm"
-                            title="工业现场总线隔离通信设计及 Modbus RTU/TCP 多节点组网">RS485 / Modbus</span>
-                        <span class="skill-tag px-4 py-2 rounded-xl text-sm"
-                            title="高实时性工业以太网硬件从站设计与分布式控制系统集成">EtherCAT</span>
-                        <span class="skill-tag px-4 py-2 rounded-xl text-sm"
-                            title="工业过程控制 4-20mA 模拟量与数字信号叠加通信硬件架构">HART</span>
-                        <span class="skill-tag px-4 py-2 rounded-xl text-sm"
-                            title="高可靠性、高带宽工业视觉及航空级高速串行总线硬件设计">IEEE1394B</span>
-                        <span class="skill-tag px-4 py-2 rounded-xl text-sm"
-                            title="基于 FPGA/MCU 的高可靠性同步数据链路层协议开发与硬件实现">HDLC</span>
-
-                        <span class="skill-tag px-4 py-2 rounded-xl text-sm"
-                            title="2.4GHz 射频天线阻抗匹配与低功耗蓝牙 (BLE) 广播/连接状态机及唤醒设计">低功耗蓝牙 (BLE)</span>
-                        <span class="skill-tag px-4 py-2 rounded-xl text-sm"
-                            title="Sub-GHz 远距离射频前端布局与 LoRa Mesh 复杂环境下的多节点自组网调试">LoRa Mesh</span>
-                        <span class="skill-tag px-4 py-2 rounded-xl text-sm"
-                            title="基于 IEEE 802.15.4 的高容量自组网及智能网关节点低功耗设计">Zigbee / Thread</span>
-                        <span class="skill-tag px-4 py-2 rounded-xl text-sm"
-                            title="2.4G/5G 双频 Wi-Fi 硬件射频走线设计与吞吐量、EVM 等指标测试调优">Wi-Fi 射频</span>
+                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="板级核心外设、传感器低速通信布线与底层驱动时序分析">SPI / I2C / UART</span>
+                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="高速图像流 (CSI) 与显示 (DSI) 接口阻抗控制与时序调试">MIPI (CSI/DSI)</span>
+                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="车载与工业控制总线硬件节点设计及协议栈通讯调试">CAN / CAN-FD</span>
+                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="工业现场总线隔离通信设计及 Modbus RTU/TCP 多节点组网">RS485 / Modbus</span>
+                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="高实时性工业以太网硬件从站设计与分布式控制系统集成">EtherCAT</span>
+                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="工业过程控制 4-20mA 模拟量与数字信号叠加通信硬件架构">HART</span>
+                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="高可靠性、高带宽工业视觉及航空级高速串行总线硬件设计">IEEE1394B</span>
+                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="基于 FPGA/MCU 的高可靠性同步数据链路层协议开发与硬件实现">HDLC</span>
+                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="2.4GHz 射频天线阻抗匹配与低功耗蓝牙 (BLE) 广播/连接状态机及唤醒设计">低功耗蓝牙 (BLE)</span>
+                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="Sub-GHz 远距离射频前端布局与 LoRa Mesh 复杂环境下的多节点自组网调试">LoRa Mesh</span>
+                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="基于 IEEE 802.15.4 的高容量自组网及智能网关节点低功耗设计">Zigbee / Thread</span>
+                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="2.4G/5G 双频 Wi-Fi 硬件射频走线设计与吞吐量、EVM 等指标测试调优">Wi-Fi 射频</span>
                     </div>
                 </div>
                 <!-- 嵌入式开发 -->
                 <div>
-                    <h3 class="skill-category-title text-cyan-400">
-                        <i class="fas fa-microchip"></i> 嵌入式与底层开发
+                    <h3 class="skill-category-title text-amber-400">
+                        <i class="fas fa-terminal" aria-hidden="true"></i> 嵌入式与底层开发
                     </h3>
                     <div class="flex flex-wrap gap-2.5">
                         <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="核心编程语言">C / C++</span>
                         <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="主流 MCU 平台">STM32 / GD32 / WCH</span>
-                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="IoT & Wi-Fi/蓝牙模组">ESP32 /
-                            ESP8266</span>
+                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="IoT & Wi-Fi/蓝牙模组">ESP32 / ESP8266</span>
                         <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="经典 8位/51 单片机">C51 / STC</span>
-                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="Linux 单板计算机">树莓派 / Raspberry
-                            Pi</span>
+                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="Linux 单板计算机">树莓派 / Raspberry Pi</span>
                         <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="硬件描述语言">FPGA / Verilog</span>
                         <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="实时操作系统">FreeRTOS / RT-Thread</span>
                         <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="脚本与 GUI 框架">Python / Qt</span>
@@ -1564,8 +396,8 @@
                 </div>
                 <!-- 实验室仪器 -->
                 <div>
-                    <h3 class="skill-category-title text-green-400">
-                        <i class="fas fa-vial"></i> 实验室与调试仪器
+                    <h3 class="skill-category-title text-amber-400">
+                        <i class="fas fa-vial" aria-hidden="true"></i> 实验室与调试仪器
                     </h3>
                     <div class="flex flex-wrap gap-2.5">
                         <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="混合信号示波器">示波器 (混合信号)</span>
@@ -1579,15 +411,14 @@
                 </div>
                 <!-- 云边协同 -->
                 <div>
-                    <h3 class="skill-category-title text-purple-400">
-                        <i class="fas fa-cloud"></i> 云边协同与AI
+                    <h3 class="skill-category-title text-amber-400">
+                        <i class="fas fa-cloud" aria-hidden="true"></i> 云边协同与 AI
                     </h3>
                     <div class="flex flex-wrap gap-2.5">
-                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="消息队列遥测传输协议">MQTT / Iot</span>
+                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="消息队列遥测传输协议">MQTT / IoT</span>
                         <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="容器化与虚拟化技术">Docker / KVM</span>
                         <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="Linux 系统管理">Linux 运维</span>
-                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="大语言模型本地部署">LLM / Agent /
-                            Skills</span>
+                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="大语言模型本地部署">LLM / Agent</span>
                         <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="嵌入式机器学习">TinyML / TFLite</span>
                         <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="计算机视觉库">OpenCV 视觉</span>
                         <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="GPU 并行计算平台">CUDA / Jetson</span>
@@ -1598,26 +429,17 @@
                 </div>
                 <!-- 专业能力 -->
                 <div>
-                    <h3 class="skill-category-title text-rose-400">
-                        <i class="fas fa-star"></i> 核心专业能力
+                    <h3 class="skill-category-title text-amber-400">
+                        <i class="fas fa-shield-halved" aria-hidden="true"></i> 核心专业能力
                     </h3>
                     <div class="flex flex-wrap gap-2.5">
-                        <span class="skill-tag px-4 py-2 rounded-xl text-sm"
-                            title="高速电路信号完整性(SI)与电源完整性(PI)仿真、分析及优化">SI/PI 仿真分析</span>
-                        <span class="skill-tag px-4 py-2 rounded-xl text-sm"
-                            title="系统级电磁兼容(EMC)与电磁干扰(EMI)测试、诊断与对策整改">EMC/EMI 诊断整改</span>
-                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="高速高密 PCB 叠层设计与精密阻抗匹配控制">高速 PCB
-                            阻抗控制</span>
-
-                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="基于串级 PID 的高精度电机驱动与电源闭环控制算法开发">高精度串级
-                            PID</span>
-                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="基于 FIR/IIR 等数字滤波算法的信号提取与抗干扰处理">数字滤波与
-                            DSP</span>
-
-                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="电池管理系统 (BMS) 软硬件整体架构评估与设计">BMS
-                            软硬件架构</span>
-                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="机电协同设计、3D 结构建模及系统级热力学仿真分析">3D
-                            建模与热仿真</span>
+                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="高速电路信号完整性(SI)与电源完整性(PI)仿真、分析及优化">SI/PI 仿真分析</span>
+                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="系统级电磁兼容(EMC)与电磁干扰(EMI)测试、诊断与对策整改">EMC/EMI 诊断整改</span>
+                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="高速高密 PCB 叠层设计与精密阻抗匹配控制">高速 PCB 阻抗控制</span>
+                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="基于串级 PID 的高精度电机驱动与电源闭环控制算法开发">高精度串级 PID</span>
+                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="基于 FIR/IIR 等数字滤波算法的信号提取与抗干扰处理">数字滤波与 DSP</span>
+                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="电池管理系统 (BMS) 软硬件整体架构评估与设计">BMS 软硬件架构</span>
+                        <span class="skill-tag px-4 py-2 rounded-xl text-sm" title="机电协同设计、3D 结构建模及系统级热力学仿真分析">3D 建模与热仿真</span>
                     </div>
                 </div>
             </div>
@@ -1629,7 +451,7 @@
         <div class="max-w-5xl mx-auto px-6">
             <div class="reveal">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 flex items-center gap-4">
-                    <span class="w-12 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full"></span>
+                    <span class="w-12 h-1 bg-gradient-to-r from-amber-500 to-orange-400 rounded-full"></span>
                     工作经历
                 </h2>
                 <p class="text-slate-500 mb-16 ml-16">多年深耕，从硬件到软件全栈</p>
@@ -1657,23 +479,20 @@
                 <!-- Experience 1 -->
                 <div class="timeline-item relative">
                     <div class="timeline-dot"></div>
-                    <div
-                        class="timeline-card p-6 bg-white/[0.02] rounded-2xl border border-white/5 hover:border-blue-500/20 transition-all">
+                    <div class="timeline-card p-6 bg-white/[0.02] rounded-2xl border border-white/5 hover:border-amber-500/20 transition-all">
                         <div class="flex flex-wrap items-center gap-3 mb-3">
-                            <span
-                                class="px-3 py-1 bg-blue-500/10 text-blue-400 text-xs font-bold rounded-lg border border-blue-500/15">当前</span>
+                            <span class="px-3 py-1 bg-amber-500/10 text-amber-300 text-xs font-bold rounded-lg border border-amber-500/15">当前</span>
                             <span class="text-xs text-slate-500">2025.11 - 至今</span>
                         </div>
                         <h3 class="text-white font-bold text-lg mb-1">陕西邦鼎电子科技有限公司</h3>
-                        <p class="text-blue-400 text-sm font-medium mb-3">嵌入式开发工程师 / 硬件工程师</p>
+                        <p class="text-amber-400 text-sm font-medium mb-3">嵌入式开发工程师 / 硬件工程师</p>
                         <p class="text-slate-400 text-sm leading-relaxed">
-                            深耕涉密研发一线，主导多款自研硬件功能板卡的全生命周期开发：从底层外设驱动、高速通讯协议栈到跨平台上位机，一手搭建模块化功能自检与自动化测试平台，实现测试用例一键回归、故障自动定位。
-                            同时承担非标测试设备硬件板卡的“端到端”交付——独立完成需求拆解、器件选型、高速Layout、SI/PI仿真、BOM成本优化、SMT钢网与焊接工艺文件输出，直至产线调试与可靠性验证，确保每一块板卡在极端工况下零缺陷运行。
+                            深耕涉密研发一线，主导多款自研硬件功能板卡的全生命周期开发：从底层外设驱动、高速通讯协议栈到跨平台上位机，一手搭建模块化功能自检与自动化测试平台，实现测试用例一键回归、故障自动定位。同时承担非标测试设备硬件板卡的“端到端”交付——独立完成需求拆解、器件选型、高速Layout、SI/PI仿真、BOM成本优化、SMT钢网与焊接工艺文件输出，直至产线调试与可靠性验证，确保每一块板卡在极端工况下零缺陷运行。
                         </p>
                         <div class="timeline-meta">
-                            <span class="timeline-chip"><i class="fas fa-microchip"></i> 自研板卡</span>
-                            <span class="timeline-chip"><i class="fas fa-vial-circle-check"></i> 自动化测试</span>
-                            <span class="timeline-chip"><i class="fas fa-boxes-stacked"></i> 量产导入</span>
+                            <span class="timeline-chip"><i class="fas fa-microchip" aria-hidden="true"></i> 自研板卡</span>
+                            <span class="timeline-chip"><i class="fas fa-vial-circle-check" aria-hidden="true"></i> 自动化测试</span>
+                            <span class="timeline-chip"><i class="fas fa-boxes-stacked" aria-hidden="true"></i> 量产导入</span>
                         </div>
                     </div>
                 </div>
@@ -1681,22 +500,19 @@
                 <!-- Experience 2 -->
                 <div class="timeline-item relative">
                     <div class="timeline-dot"></div>
-                    <div
-                        class="timeline-card p-6 bg-white/[0.02] rounded-2xl border border-white/5 hover:border-blue-500/20 transition-all">
+                    <div class="timeline-card p-6 bg-white/[0.02] rounded-2xl border border-white/5 hover:border-amber-500/20 transition-all">
                         <div class="flex flex-wrap items-center gap-3 mb-3">
                             <span class="text-xs text-slate-500">2025.02 - 2025.11</span>
                         </div>
                         <h3 class="text-white font-bold text-lg mb-1">陕西华科航电科技有限公司</h3>
-                        <p class="text-cyan-400 text-sm font-medium mb-3">嵌入式软件工程师 / 硬件工程师</p>
+                        <p class="text-amber-400 text-sm font-medium mb-3">嵌入式软件工程师 / 硬件工程师</p>
                         <p class="text-slate-400 text-sm leading-relaxed">
-                            独立主导电喷地测设备多通道异步采集板卡的全栈开发：从底层外设驱动到高可靠协议库，一手打造军工级数据链路；
-                            作为唯一嵌入式软件负责人，为军工某所绝缘测试仪交付整套软件架构——工业电容屏 GUI、自定义通讯协议、实时校准算法全线贯通；
-                            从 0 到 1 编写 HDLC 编解码引擎，实现多节点高速同步与误码重传，保障极端电磁环境下零丢包。
+                            独立主导电喷地测设备多通道异步采集板卡的全栈开发：从底层外设驱动到高可靠协议库，一手打造军工级数据链路；作为唯一嵌入式软件负责人，为军工某所绝缘测试仪交付整套软件架构——工业电容屏 GUI、自定义通讯协议、实时校准算法全线贯通；从 0 到 1 编写 HDLC 编解码引擎，实现多节点高速同步与误码重传，保障极端电磁环境下零丢包。
                         </p>
                         <div class="timeline-meta">
-                            <span class="timeline-chip"><i class="fas fa-link"></i> HDLC 协议栈</span>
-                            <span class="timeline-chip"><i class="fas fa-display"></i> 工业 HMI</span>
-                            <span class="timeline-chip"><i class="fas fa-shield-halved"></i> 军工级可靠性</span>
+                            <span class="timeline-chip"><i class="fas fa-link" aria-hidden="true"></i> HDLC 协议栈</span>
+                            <span class="timeline-chip"><i class="fas fa-display" aria-hidden="true"></i> 工业 HMI</span>
+                            <span class="timeline-chip"><i class="fas fa-shield-halved" aria-hidden="true"></i> 军工级可靠性</span>
                         </div>
                     </div>
                 </div>
@@ -1704,44 +520,39 @@
                 <!-- Experience 3 -->
                 <div class="timeline-item relative">
                     <div class="timeline-dot"></div>
-                    <div
-                        class="timeline-card p-6 bg-white/[0.02] rounded-2xl border border-white/5 hover:border-blue-500/20 transition-all">
+                    <div class="timeline-card p-6 bg-white/[0.02] rounded-2xl border border-white/5 hover:border-amber-500/20 transition-all">
                         <div class="flex flex-wrap items-center gap-3 mb-3">
                             <span class="text-xs text-slate-500">2023.04 - 2025.01</span>
                         </div>
                         <h3 class="text-white font-bold text-lg mb-1">山西物联工业自动化技术研究院&山西运创自动化系统有限公司</h3>
-                        <p class="text-purple-400 text-sm font-medium mb-3">嵌入式软件工程师 / 硬件工程师</p>
+                        <p class="text-amber-400 text-sm font-medium mb-3">嵌入式软件工程师 / 硬件工程师</p>
                         <p class="text-slate-400 text-sm leading-relaxed">
-                            全流程主导工业级高可靠硬件产品的设计、研发与批量制造，涵盖需求拆解、器件选型、原理图设计、高速PCB
-                            Layout、EMC预兼容测试及产线工装开发；主导自动化控制系统通用型PLC核心板卡架构定义，完成双冗余电源、多总线隔离、宽温域（-40~+85℃）设计，单年交付5款以上量产机型。
-                            独立承担多款军工、汽车功能性测试系统PCB的研发与生产调试：完成绝缘耐压、瞬态脉冲、电流电压精度校准等测试模块，均一次性通过GJB151B电磁兼容与震动冲击试验。
-                            作为核心成员参与新能源空调核心控制器项目，负责变频驱动、BMS接口、IoT通信三合一主板设计，支持Modbus、CANopen双协议，量产稳定性>99.5%；主导共享充电核心板及数据采集终端开发，实现AC/DC双向计量、4G远程升级、OTA灰度发布，已在山西、陕西两地规模化部署450+节点，累计无故障运行>5W小时。
+                            全流程主导工业级高可靠硬件产品的设计、研发与批量制造，涵盖需求拆解、器件选型、原理图设计、高速PCB Layout、EMC预兼容测试及产线工装开发；主导自动化控制系统通用型PLC核心板卡架构 definition，完成双冗余电源、多总线隔离、宽温域（-40~+85℃）设计，单年交付5款以上量产机型。独立承担多款军工、汽车功能性测试系统PCB的研发与生产调试：完成绝缘耐压、瞬态脉冲、电流电压精度校准等测试模块，均一次性通过GJB151B电磁兼容与震动冲击试验。作为核心成员参与新能源空调核心控制器项目，负责变频驱动、BMS接口、IoT通信三合一主板设计，支持Modbus、CANopen双协议，量产稳定性>99.5%；主导共享充电核心板及数据采集终端开发，实现AC/DC双向计量、4G远程升级、OTA灰度发布，已在山西、陕西两地规模化部署450+节点，累计无故障运行>5W小时。
                         </p>
                         <div class="timeline-meta">
-                            <span class="timeline-chip"><i class="fas fa-bolt"></i> 5+ 量产机型</span>
-                            <span class="timeline-chip"><i class="fas fa-tower-cell"></i> 450+ 节点部署</span>
-                            <span class="timeline-chip"><i class="fas fa-clock"></i> 5W+ 运行小时</span>
+                            <span class="timeline-chip"><i class="fas fa-bolt" aria-hidden="true"></i> 5+ 量产机型</span>
+                            <span class="timeline-chip"><i class="fas fa-tower-cell" aria-hidden="true"></i> 450+ 节点部署</span>
+                            <span class="timeline-chip"><i class="fas fa-clock" aria-hidden="true"></i> 5W+ 运行小时</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Experience 5 -->
+                <!-- Experience 4 -->
                 <div class="timeline-item relative">
                     <div class="timeline-dot"></div>
-                    <div
-                        class="timeline-card p-6 bg-white/[0.02] rounded-2xl border border-white/5 hover:border-blue-500/20 transition-all">
+                    <div class="timeline-card p-6 bg-white/[0.02] rounded-2xl border border-white/5 hover:border-amber-500/20 transition-all">
                         <div class="flex flex-wrap items-center gap-3 mb-3">
                             <span class="text-xs text-slate-500">2013.06 - 至今</span>
                         </div>
                         <h3 class="text-white font-bold text-lg mb-1">华视嘉德国际文化传媒(北京)有限公司</h3>
-                        <p class="text-orange-400 text-sm font-medium mb-3">网络工程师</p>
+                        <p class="text-amber-400 text-sm font-medium mb-3">网络工程师</p>
                         <p class="text-slate-400 text-sm leading-relaxed">
                             负责IDC机房及云平台的网络架构规划、核心交换与路由策略调优，独立完成Web服务器、数据库、中间件的高可用集群部署及重要数据自动化备份；主导业务系统CI/CD流水线搭建，办公设备、门禁、监控等IoT系统的安装维护及网络安全加固；7×24小时监控服务器运行状态，快速定位并解决网络故障与系统异常。期间沉淀扎实的网络工程与IT基础设施运维经验，并深入实践大数据云计算：基于Linux（CentOS/Ubuntu）构建KVM虚拟化资源池，利用Kubernetes+Docker实现微服务弹性伸缩；在阿里云、腾讯云、华为云完成IaaS/PaaS混合云部署，通过Prometheus+Grafana实现云资源与业务指标统一观测；使用Ansible+Terraform做基础设施即代码（IaC）交付，日均处理日志>500GB，基于ELK/ClickHouse完成实时数仓与离线计算，支撑峰值10W级并发，保障全年SLA>99.9%。
                         </p>
                         <div class="timeline-meta">
-                            <span class="timeline-chip"><i class="fas fa-server"></i> 混合云部署</span>
-                            <span class="timeline-chip"><i class="fas fa-chart-line"></i> 10W 级并发</span>
-                            <span class="timeline-chip"><i class="fas fa-database"></i> 500GB 日志处理</span>
+                            <span class="timeline-chip"><i class="fas fa-server" aria-hidden="true"></i> 混合云部署</span>
+                            <span class="timeline-chip"><i class="fas fa-chart-line" aria-hidden="true"></i> 10W 级并发</span>
+                            <span class="timeline-chip"><i class="fas fa-database" aria-hidden="true"></i> 500GB 日志处理</span>
                         </div>
                     </div>
                 </div>
@@ -1756,29 +567,26 @@
                 <div class="flex flex-col md:flex-row md:justify-between md:items-end mb-12 gap-4">
                     <div>
                         <h2 class="text-3xl md:text-4xl font-bold text-white mb-2 flex items-center gap-4">
-                            <span class="w-12 h-1 bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full"></span>
+                            <span class="w-12 h-1 bg-gradient-to-r from-amber-500 to-orange-400 rounded-full"></span>
                             研发项目精选
                         </h2>
                         <p class="text-slate-500 ml-16 section-lead">精选项目覆盖军工航电、工业控制、物联网与医疗检测，突出复杂场景下的方案能力与交付能力。</p>
                     </div>
-            <div class="flex gap-2 ml-16 md:ml-0" id="filterBtns" role="group" aria-label="项目筛选">
-                <button class="filter-btn active px-4 py-2 text-xs font-bold rounded-xl transition-all"
-                    data-filter="all" aria-pressed="true">全部</button>
-                <button class="filter-btn px-4 py-2 text-xs font-bold rounded-xl transition-all"
-                    data-filter="hw" aria-pressed="false">硬件</button>
-                <button class="filter-btn px-4 py-2 text-xs font-bold rounded-xl transition-all"
-                    data-filter="sw" aria-pressed="false">软件</button>
-            </div>
+                    <div class="flex gap-2 ml-16 md:ml-0" id="filterBtns" role="group" aria-label="项目筛选">
+                        <button class="filter-btn active px-4 py-2 text-xs font-bold rounded-xl transition-all" data-filter="all" aria-pressed="true">全部</button>
+                        <button class="filter-btn px-4 py-2 text-xs font-bold rounded-xl transition-all" data-filter="hw" aria-pressed="false">硬件</button>
+                        <button class="filter-btn px-4 py-2 text-xs font-bold rounded-xl transition-all" data-filter="sw" aria-pressed="false">软件</button>
+                    </div>
                 </div>
             </div>
             <div class="project-showcase-header reveal">
                 <p class="project-showcase-note">每个项目卡片都优先展示场景、角色、核心成果和技术关键词，让招聘者快速判断我是否适合他们的岗位强度。</p>
                 <div class="contact-actions !justify-start !m-0">
                     <button id="downloadResumeBtn" type="button" class="contact-action-btn">
-                        <i class="fas fa-file-arrow-down"></i> 下载简历
+                        <i class="fas fa-file-arrow-down" aria-hidden="true"></i> 下载简历
                     </button>
                     <a href="#contact" class="contact-action-btn nav-scroll" data-target="contact">
-                        <i class="fas fa-comments"></i> 在线沟通
+                        <i class="fas fa-comments" aria-hidden="true"></i> 在线沟通
                     </a>
                 </div>
             </div>
@@ -1793,7 +601,7 @@
         <div class="max-w-6xl mx-auto px-6">
             <div class="reveal">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 flex items-center gap-4">
-                    <span class="w-12 h-1 bg-gradient-to-r from-orange-500 to-amber-400 rounded-full"></span>
+                    <span class="w-12 h-1 bg-gradient-to-r from-amber-500 to-orange-400 rounded-full"></span>
                     荣誉与成就
                 </h2>
                 <p class="text-slate-500 mb-16 ml-16">开源精神驱动，持续精进</p>
@@ -1801,8 +609,8 @@
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 reveal">
                 <div class="award-badge">
                     <div class="flex items-center gap-3 mb-3">
-                        <div class="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center">
-                            <i class="fas fa-trophy text-orange-400"></i>
+                        <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
+                            <i class="fas fa-trophy text-amber-400" aria-hidden="true"></i>
                         </div>
                         <div>
                             <h4 class="text-white font-bold text-sm">硬件开源达人</h4>
@@ -1813,8 +621,8 @@
                 </div>
                 <div class="award-badge">
                     <div class="flex items-center gap-3 mb-3">
-                        <div class="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center">
-                            <i class="fas fa-medal text-orange-400"></i>
+                        <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
+                            <i class="fas fa-medal text-amber-400" aria-hidden="true"></i>
                         </div>
                         <div>
                             <h4 class="text-white font-bold text-sm">开源项目自由组二等奖</h4>
@@ -1825,8 +633,8 @@
                 </div>
                 <div class="award-badge">
                     <div class="flex items-center gap-3 mb-3">
-                        <div class="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center">
-                            <i class="fas fa-chalkboard-teacher text-orange-400"></i>
+                        <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
+                            <i class="fas fa-chalkboard-teacher text-amber-400" aria-hidden="true"></i>
                         </div>
                         <div>
                             <h4 class="text-white font-bold text-sm">EDA校园培训讲师</h4>
@@ -1837,8 +645,8 @@
                 </div>
                 <div class="award-badge">
                     <div class="flex items-center gap-3 mb-3">
-                        <div class="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center">
-                            <i class="fas fa-award text-orange-400"></i>
+                        <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
+                            <i class="fas fa-award text-amber-400" aria-hidden="true"></i>
                         </div>
                         <div>
                             <h4 class="text-white font-bold text-sm">全国电子大赛山西省F组第二名</h4>
@@ -1849,8 +657,8 @@
                 </div>
                 <div class="award-badge">
                     <div class="flex items-center gap-3 mb-3">
-                        <div class="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center">
-                            <i class="fas fa-flask text-orange-400"></i>
+                        <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
+                            <i class="fas fa-flask text-amber-400" aria-hidden="true"></i>
                         </div>
                         <div>
                             <h4 class="text-white font-bold text-sm">山西省科技进步奖</h4>
@@ -1861,15 +669,15 @@
                 </div>
                 <div class="award-badge">
                     <div class="flex items-center gap-3 mb-3">
-                        <div class="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center">
-                            <i class="fas fa-city text-orange-400"></i>
+                        <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
+                            <i class="fas fa-city text-amber-400" aria-hidden="true"></i>
                         </div>
                         <div>
                             <h4 class="text-white font-bold text-sm">城市部署</h4>
                             <p class="text-xs text-slate-500">运城市及周边</p>
                         </div>
                     </div>
-                    <p class="text-slate-400 text-sm">独立完成多项主控板核心电路设计、生产测试、调试量产，山西运城市公共设施已部署共享充电节点约450个；新能源能源控制器批量装机</p>
+                    <p class="text-slate-400 text-sm">独立完成多项主控板核心电路设计、生产测试、调试量产，山西运城市公共设施已部署共享充电节点约450个；新能源变频控制器批量装机。</p>
                 </div>
             </div>
         </div>
@@ -1877,61 +685,55 @@
 
     <!-- ===== CONTACT SECTION ===== -->
     <footer id="contact" class="py-24 border-t border-white/5 relative overflow-hidden">
-        <div
-            class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-blue-500/5 rounded-full blur-[120px] pointer-events-none">
-        </div>
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-amber-500/5 rounded-full blur-[120px] pointer-events-none" aria-hidden="true"></div>
         <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
             <div class="reveal">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
-                    "交付不仅是产品的完成，<br class="hidden md:block">更是对可靠性的终极承诺。"
+                    “交付不仅是产品的完成，<br class="hidden md:block">更是对可靠性的终极承诺。”
                 </h2>
                 <p class="text-slate-500 mb-16 max-w-lg mx-auto">如果您正在寻找一位能从硬件到软件提供整体解决方案的工程师，欢迎随时联系我。</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal">
-                <a href="mailto:43823845@qq.com"
-                    class="group p-6 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-blue-500/20 transition-all hover:-translate-y-1">
-                    <div
-                        class="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-500/20 transition-colors">
-                        <i class="fas fa-envelope text-blue-400 text-lg"></i>
+                <!-- 邮箱链接混淆优化：Crawl-proof for spambots, resolves #15 -->
+                <a href="#" data-user="43823845" data-domain="qq.com" onclick="this.href='mailto:'+this.dataset.user+'@'+this.dataset.domain"
+                   class="group p-6 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-amber-500/20 transition-all hover:-translate-y-1 text-center block">
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-amber-500/20 transition-colors">
+                        <i class="fas fa-envelope text-amber-400 text-lg" aria-hidden="true"></i>
                     </div>
-                    <p class="text-sm font-medium text-white">43823845@qq.com</p>
+                    <p class="text-sm font-medium text-white select-all">
+                        <span>43823845</span><span class="sr-only">antispam</span><span>@qq.com</span>
+                    </p>
                     <p class="text-xs text-slate-500 mt-1">发送面试邀请或合作邮件</p>
                 </a>
-                <button id="wechatCard" type="button"
-                    class="group p-6 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-green-500/20 transition-all hover:-translate-y-1 cursor-pointer select-none w-full text-left">
-                    <div
-                        class="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-green-500/20 transition-colors">
-                        <i class="fab fa-weixin text-green-500 text-lg"></i>
+                
+                <button id="wechatCard" type="button" class="group p-6 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-amber-500/20 transition-all hover:-translate-y-1 cursor-pointer w-full text-center">
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-amber-500/20 transition-colors">
+                        <i class="fab fa-weixin text-amber-400 text-lg" aria-hidden="true"></i>
                     </div>
                     <p class="text-sm font-medium text-white">微信号: 43823845</p>
                     <p class="text-xs text-slate-500 mt-1">点击查看二维码并快速沟通</p>
                 </button>
-                <button id="easterEggCard" type="button"
-                    class="group p-6 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-amber-400/20 transition-all hover:-translate-y-1 w-full text-left relative overflow-hidden">
-                    <div
-                        class="absolute inset-0 bg-gradient-to-br from-amber-400/0 via-amber-400/0 to-amber-400/0 group-hover:from-amber-400/5 group-hover:via-transparent group-hover:to-amber-400/5 transition-all duration-500"></div>
-                    <div
-                        class="w-12 h-12 rounded-xl bg-amber-400/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-amber-400/20 transition-all group-hover:scale-110 relative z-10">
-                        <i class="fas fa-magic text-amber-400 text-lg group-hover:animate-pulse"></i>
+                
+                <button id="easterEggCard" type="button" class="group p-6 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-amber-500/20 transition-all hover:-translate-y-1 w-full text-center relative overflow-hidden">
+                    <div class="absolute inset-0 bg-gradient-to-br from-amber-500/0 via-amber-500/0 to-amber-500/0 group-hover:from-amber-500/5 group-hover:via-transparent group-hover:to-amber-500/5 transition-all duration-500" aria-hidden="true"></div>
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-amber-500/20 transition-all group-hover:scale-110 relative z-10">
+                        <i class="fas fa-magic text-amber-400 text-lg group-hover:animate-pulse" aria-hidden="true"></i>
                     </div>
                     <p class="text-sm font-medium text-white relative z-10">发现彩蛋</p>
                     <p class="text-xs text-slate-500 mt-1 relative z-10">点击触发隐藏特效</p>
                 </button>
             </div>
-            <div id="easterEggModal"
-                class="fixed inset-0 z-[10000] flex items-center justify-center p-4 opacity-0 invisible transition-all duration-300"
-                style="background: rgba(0,0,0,0.85); backdrop-filter: blur(12px);">
-                <div class="relative max-w-xs w-full transform scale-90 transition-transform duration-300"
-                    id="easterEggModalContent">
-                    <button id="closeEasterEgg" type="button"
-                        class="absolute -top-3 -right-3 w-9 h-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-red-500/80 text-white transition-all z-10">
-                        <i class="fas fa-times text-sm"></i>
+            
+            <div id="easterEggModal" class="fixed inset-0 z-[10000] flex items-center justify-center p-4 opacity-0 invisible transition-all duration-300" style="background: rgba(0,0,0,0.85); backdrop-filter: blur(12px);" role="dialog" aria-modal="true" aria-label="浪漫彩蛋">
+                <div class="relative max-w-xs w-full transform scale-90 transition-transform duration-300" id="easterEggModalContent">
+                    <button id="closeEasterEgg" type="button" class="absolute -top-3 -right-3 w-9 h-9 flex items-center justify-center rounded-full bg-white/10 hover:bg-red-500/80 text-white transition-all z-10" aria-label="关闭彩蛋">
+                        <i class="fas fa-times text-sm" aria-hidden="true"></i>
                     </button>
-                    <img id="easterEggGif" src="img/easter-egg.gif" alt="彩蛋"
-                        class="w-full rounded-2xl shadow-2xl border border-white/10">
+                    <img id="easterEggGif" src="img/easter-egg.gif" alt="硬件工程师的浪漫彩蛋动画" loading="lazy" decoding="async" width="286" height="286" class="w-full rounded-2xl shadow-2xl border border-white/10">
                     <p class="text-center text-slate-400 text-xs mt-4">硬件工程师的浪漫</p>
                 </div>
             </div>
+            
             <div class="mt-16 pt-8 border-t border-white/5 text-center">
                 <p class="text-xs text-slate-600">&copy; 2026 杨杰 · 全栈工程师 · All Rights Reserved</p>
             </div>
@@ -1939,53 +741,42 @@
     </footer>
 
     <!-- ===== PROJECT MODAL ===== -->
-    <div id="projectModal" class="items-center justify-center p-4" role="dialog" aria-modal="true"
-        aria-labelledby="modalTitle">
-        <div
-            class="modal-content bg-slate-900 w-full max-w-5xl rounded-3xl overflow-hidden shadow-[0_0_80px_rgba(0,0,0,0.6)] flex flex-col md:flex-row relative max-h-[90vh] border border-white/5">
-            <!-- Close Button -->
-            <button id="closeModalBtn"
-                class="absolute top-5 right-5 w-11 h-11 bg-white/10 hover:bg-red-500/90 text-white rounded-full z-[10001] transition-all flex items-center justify-center hover:scale-110"
-                aria-label="关闭">
-                <i class="fas fa-times text-lg"></i>
+    <div id="projectModal" class="items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+        <div class="modal-content bg-slate-900 w-full max-w-5xl rounded-3xl overflow-hidden shadow-[0_0_80px_rgba(0,0,0,0.6)] flex flex-col md:flex-row relative max-h-[90vh] border border-white/5">
+            <!-- Close Button (a11y focus target) -->
+            <button id="closeModalBtn" class="absolute top-5 right-5 w-11 h-11 bg-white/10 hover:bg-red-500/90 text-white rounded-full z-[10001] transition-all flex items-center justify-center hover:scale-110 focus:outline-none focus:ring-2 focus:ring-amber-500" aria-label="关闭详情弹窗">
+                <i class="fas fa-times text-lg" aria-hidden="true"></i>
             </button>
 
             <!-- Image Area -->
             <div class="md:w-1/2 bg-slate-800 relative flex items-center justify-center overflow-hidden flex-shrink-0" style="max-height: 90vh;">
-                <img id="modalImg" src="" alt="" class="max-w-full max-h-full object-contain" loading="lazy">
-                <div class="absolute inset-0 bg-gradient-to-r from-transparent to-slate-900/20 hidden md:block pointer-events-none"></div>
+                <img id="modalImg" src="" alt="项目大图预览" loading="lazy" decoding="async" width="600" height="400" class="max-w-full max-h-full object-contain">
+                <div class="absolute inset-0 bg-gradient-to-r from-transparent to-slate-900/20 hidden md:block pointer-events-none" aria-hidden="true"></div>
             </div>
 
             <!-- Content Area -->
             <div class="md:w-1/2 p-8 md:p-12 overflow-y-auto no-scrollbar">
                 <div id="modalTags" class="flex flex-wrap gap-2 mb-5"></div>
                 <h3 id="modalTitle" class="text-2xl md:text-3xl font-bold text-white mb-2"></h3>
-                <p id="modalRole" class="text-blue-400 text-sm font-medium mb-6"></p>
+                <p id="modalRole" class="text-amber-400 text-sm font-medium mb-6"></p>
                 <div class="space-y-8">
                     <div>
-                        <h4
-                            class="text-blue-400 text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-2">
-                            <i class="fas fa-crosshairs"></i> 核心挑战与攻克
+                        <h4 class="text-amber-400 text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-2">
+                            <i class="fas fa-crosshairs" aria-hidden="true"></i> 核心挑战与攻克
                         </h4>
-                        <ul id="modalChallenges" class="space-y-3 text-slate-300 text-sm list-none"></ul>
+                        <ul id="modalChallenges" class="space-y-3 text-slate-300 text-sm list-none p-0 m-0"></ul>
                     </div>
                     <div>
-                        <h4
-                            class="text-orange-400 text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-2">
-                            <i class="fas fa-cog"></i> 技术细节
+                        <h4 class="text-amber-400 text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-2">
+                            <i class="fas fa-cog" aria-hidden="true"></i> 技术细节
                         </h4>
-                        <p id="modalTech"
-                            class="text-slate-400 text-sm leading-relaxed bg-white/[0.03] p-5 rounded-xl border border-white/5">
-                        </p>
+                        <p id="modalTech" class="text-slate-400 text-sm leading-relaxed bg-white/[0.03] p-5 rounded-xl border border-white/5"></p>
                     </div>
                     <div id="modalAchievements" class="hidden">
-                        <h4
-                            class="text-green-400 text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-2">
-                            <i class="fas fa-check-circle"></i> 项目成果
+                        <h4 class="text-amber-400 text-xs font-bold uppercase tracking-widest mb-4 flex items-center gap-2">
+                            <i class="fas fa-check-circle" aria-hidden="true"></i> 项目成果
                         </h4>
-                        <p id="modalAchText"
-                            class="text-slate-400 text-sm leading-relaxed bg-green-500/[0.03] p-5 rounded-xl border border-green-500/10">
-                        </p>
+                        <p id="modalAchText" class="text-slate-400 text-sm leading-relaxed bg-green-500/[0.03] p-5 rounded-xl border border-green-500/10"></p>
                     </div>
                 </div>
             </div>
@@ -1993,23 +784,19 @@
     </div>
 
     <!-- ===== WECHAT QR MODAL ===== -->
-    <div id="wechatModal"
-        class="fixed inset-0 z-[1000] flex items-center justify-center p-4 opacity-0 invisible transition-all duration-300"
-        style="background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);">
-        <div class="relative bg-[#0c1424] rounded-2xl border border-white/10 shadow-2xl p-8 max-w-sm w-full transform scale-90 transition-transform duration-300"
-            id="wechatModalContent">
-            <button id="closeWechatModal" type="button" onclick="hideWechatQR(event)"
-                class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all">
-                <i class="fas fa-times text-sm"></i>
+    <div id="wechatModal" class="fixed inset-0 z-[1000] flex items-center justify-center p-4 opacity-0 invisible transition-all duration-300" style="background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);" role="dialog" aria-modal="true" aria-labelledby="wechatModalTitle">
+        <div class="relative bg-[#0c1424] rounded-2xl border border-white/10 shadow-2xl p-8 max-w-sm w-full transform scale-90 transition-transform duration-300" id="wechatModalContent">
+            <button id="closeWechatModal" type="button" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all" aria-label="关闭微信二维码">
+                <i class="fas fa-times text-sm" aria-hidden="true"></i>
             </button>
             <div class="text-center">
                 <div class="w-14 h-14 rounded-xl bg-green-500/10 flex items-center justify-center mx-auto mb-4">
-                    <i class="fab fa-weixin text-green-500 text-2xl"></i>
+                    <i class="fab fa-weixin text-green-500 text-2xl" aria-hidden="true"></i>
                 </div>
-                <h3 class="text-white font-bold text-lg mb-1">微信扫码添加好友</h3>
+                <h3 id="wechatModalTitle" class="text-white font-bold text-lg mb-1">微信扫码添加好友</h3>
                 <p class="text-slate-500 text-sm mb-6">微信号: 43823845</p>
                 <div class="bg-white rounded-xl p-3 inline-block shadow-lg">
-                    <img id="wechatQRImg" src="" alt="微信二维码" class="w-52 h-52 object-contain rounded-lg">
+                    <img id="wechatQRImg" src="" alt="微信二维码名片" loading="lazy" decoding="async" width="208" height="208" class="w-52 h-52 object-contain rounded-lg">
                 </div>
                 <p class="text-slate-600 text-xs mt-4">打开微信扫一扫，即可添加好友</p>
             </div>
@@ -2017,540 +804,14 @@
     </div>
 
     <!-- ===== BACK TO TOP ===== -->
-    <button id="backToTop"
-        class="fixed bottom-8 right-8 w-12 h-12 bg-blue-600 hover:bg-blue-500 text-white rounded-full shadow-lg shadow-blue-600/25 z-[999] flex items-center justify-center transition-all hover:-translate-y-1"
-        aria-label="回到顶部">
-        <i class="fas fa-arrow-up"></i>
+    <button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 bg-amber-600 hover:bg-amber-500 text-white rounded-full shadow-lg shadow-amber-600/25 z-[999] flex items-center justify-center transition-all hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-amber-500" aria-label="回到顶部">
+        <i class="fas fa-arrow-up" aria-hidden="true"></i>
     </button>
 
     <!-- ===== JAVASCRIPT ===== -->
-    <script>
-        (function () {
-            'use strict';
-
-            // ===== Project Data =====
-            const projects = [
-                {
-                    id: 1, title: "军品绝缘自动测试系统", cat: "军工/航电", filter: "mil", type: "hw",
-                    img: "img/jytest_th.jpg",
-                    tags: ["12层板", "精密采样", "FPGA"],
-                    role: "项目负责人 · 2025.11 - 2026.01",
-                    tech: "使用FPGA完成硬件电路开发工作，实现数据同步、解码、校验、数据发送及回采等相关软件部分的开发与调试。实现自动化测量产品内部信号对地绝缘阻抗、线路电阻等电气性能测试。",
-                    challenges: ["微弱漏电流环境下的低噪PCB布局", "高低压物理隔离安规间距设计", "通过严苛的军用环境应力测试", "独立完成方案设计及实施规划、航插及板卡器件选型"],
-                    achievements: "独立完成自研板卡原理设计以及PCB设计绘制、嵌入式程序开发调试及焊接、测试设备线缆设计焊接及生产、交互上位机开发及协议编写。输出测试规范、校准规范等交付资料。"
-                },
-                {
-                    id: 2, title: "机载配电系统地面测试设备", cat: "军工/航电", filter: "mil", type: "hw",
-                    img: "img/jzpdtest_th.jpg",
-                    tags: ["AVIC", "机载", "配电系统"],
-                    role: "项目经理 · 2025.02 - 2025.07",
-                    tech: "AVIC某机载一次配电系统地面检测设备。独立完成离散量采集单元、配电负载单元、115V状态采集单元、差分高共模电压电流采集等集成控制板的设计开发。",
-                    challenges: ["115V多路异步控制板卡的硬件设计开发", "机载环境下高可靠性要求", "全系统综合布线与军标级航空连接器设计", "独立完成115V多路异步控制板卡的嵌入式程序开发"],
-                    achievements: "独立完成方案设计、航插及板卡选型、自研板卡原理及PCB设计、嵌入式程序开发调试、测试设备线缆设计焊接、交互上位机开发及协议编写。输出全套交付资料。"
-                },
-                {
-                    id: 3, title: "机载电加热组件测试设备", cat: "军工/航电", filter: "mil", type: "hw",
-                    img: "img/jrqtest_th.jpg",
-                    tags: ["AVIC", "宽温域", "自动化测试"],
-                    role: "项目经理 · 2025.08 - 2025.11",
-                    tech: "用于测试高空低温环境下电加热系统的电性能参数。独立完成航插及板卡器件选型、自研板卡原理设计以及PCB设计绘制、嵌入式程序开发调试及焊接。",
-                    challenges: ["高空低温环境模拟与测试", "电加热系统多参数同步采集", "测试柜内部组件安装电气布线", "配套工业电容屏UI及通讯协议设计开发"],
-                    achievements: "独立完成全套方案设计至交付，包括测试设备线缆设计焊接及生产、测试柜内部组件安装电气布线、交互上位机开发及协议编写。输出测试规范、校准规范等交付资料。"
-                },
-                {
-                    id: 4, title: "航发电喷测试工装", cat: "军工/航电", filter: "mil", type: "hw",
-                    img: "img/dptest_th.jpg",
-                    tags: ["航发", "ECU", "信号调理"],
-                    role: "项目负责人 · 2025.12 - 2026.03",
-                    tech: "针对航发特定指标数据下位机进行信号编码调理送ECU，并进行数据回采并解析解码至上位机。涵盖进排气压力、进排气温、转速、缸温、主副油泵、旁通阀、节气门等相关电性能指标测试。",
-                    challenges: ["多路传感器信号同步采集与调理", "EMI干扰环境下信号采集异常解决", "调理卡设计缺陷修复与功能扩展", "信号板卡重绘生产与故障修复"],
-                    achievements: "独立完成测试工装的问题修复工作，解决EMI干扰、信号采集异常、调理卡设计缺陷等问题。完成客户新增功能并对硬件及软件进行更新工作，完成交付文档的编写与输出。"
-                },
-                {
-                    id: 5, title: "某型无人机滤波器", cat: "军工/航电", filter: "mil", type: "hw",
-                    img: "img/lbqtest_th.jpg",
-                    tags: ["无人机", "电源滤波", "项目总包"],
-                    role: "项目总包 · 2025.02 - 至今",
-                    tech: "为某型无人机提供专用电源滤波器，对整机电源提供高可靠性保障。全流程主导产品需求设计至样品交付。",
-                    challenges: ["高可靠性电源滤波器设计", "模块量产定稿与模具加工工艺", "质检报告审核与生产一致性保障", "军工级环境适应性要求"],
-                    achievements: "全流程主导产品需求设计至样品交付，确保项目按时高质量完成。主导模块量产定稿，制定模具加工工艺并审核质检报告，保障产品性能与生产一致性。"
-                },
-                {
-                    id: 6, title: "非标量产型采集模组", cat: "工业/能源", filter: "ind", type: "hw",
-                    img: "img/cvtest_th.jpg",
-                    tags: ["AC/DC", "多模态", "动态校准"],
-                    role: "研发负责人 · 2026.01 - 2026.03",
-                    tech: "AC/DC多模态电参测量功能，V:1-150V可调，I:0.1A-20A可调，P:偏移自算，T:内部动态补偿。具有动态增益、动态校准、各通道独立设置、标准RTU、并行采集等功能。",
-                    challenges: ["AC/DC多模态电参精确测量", "动态增益与动态校准算法实现", "各通道独立设置与并行采集", "测量误差控制在正负0.01以内"],
-                    achievements: "负责功能板卡硬件实现、原理设计、PCB设计及Layout、焊接调试。嵌入式软件程序编写与协议开发联调联试，配套上位机逻辑功能编写与调试含UI设计。"
-                },
-                {
-                    id: 7, title: "军工型CV测试系统", cat: "军工/航电", filter: "mil", type: "hw",
-                    img: "img/jgtest_th.jpg",
-                    tags: ["军工", "电流电压", "数据采集"],
-                    role: "硬件工程师 · 2023.07 - 2024.10",
-                    tech: "根据客户提供的自研电流电压传感器，设计研发配套的数字及逻辑处理电路，并进行压力耐久测试。独立完成硬件设计和嵌入式软件编写并交付测试。",
-                    challenges: ["自研传感器信号调理电路设计", "压力耐久测试与可靠性验证", "上位机数据采集客户端开发", "军工级保密要求下的独立开发"],
-                    achievements: "独立完成硬件设计和嵌入式软件编写并交付测试，独立完成上位机数据采集客户端的编写。项目已通过验收并成功交付。"
-                },
-                {
-                    id: 8, title: "通用型4G数据采集模组", cat: "物联网", filter: "iot", type: "hw",
-                    img: "img/txtest_th.jpg",
-                    tags: ["4G", "远程数传", "批量投产"],
-                    role: "硬件工程师 · 2023.08 - 2024.11",
-                    tech: "完成通用型4G数采模组，标准通讯接口包含TTL、RS485、RS232、CAN等通讯方式。模组目前已批量投产，并且已在公司客户项目中广泛采用。",
-                    challenges: ["多协议通讯接口集成设计", "EMI认证与高低温耐久性测试", "配套3D外壳独立设计", "批量投产一致性保障"],
-                    achievements: "模组已批量投产并在公司客户项目中广泛采用，独立设计了相关的配套3D外壳。通过了EMI认证及高低温耐久性测试。"
-                },
-                {
-                    id: 9, title: "新能源地源热泵控制板", cat: "工业/能源", filter: "ind", type: "hw",
-                    img: "img/dytest_th.jpg",
-                    tags: ["新能源", "热泵", "物联网"],
-                    role: "硬件设计研发 · 2023.08 - 2024.01",
-                    tech: "独立完成地源热泵空调机组核心控制板的硬件设计开发。包含单压机冷热一体控制器和双压机冷热一体控制器两款核心板，以及具有物联功能的机组控制面板。",
-                    challenges: ["双压机冷热一体控制器设计", "热泵空调机组状态远程数据采集", "物联功能控制面板开发", "产线全线采用的质量一致性"],
-                    achievements: "客户单位热泵机组产线目前已全线采用自研发设计的空调主控板。独立完成热泵空调机组状态远程数据采集核心模组及具有物联功能的机组控制面板。"
-                },
-                {
-                    id: 10, title: "共享充电控制器", cat: "物联网", filter: "iot", type: "hw",
-                    img: "img/gxtest_th.jpg",
-                    tags: ["共享经济", "充电桩", "TCP通讯"],
-                    role: "硬件工程师 · 2023.05 - 2023.08",
-                    tech: "独立完成共享充电远端数据收发模组和共享充电主控板的核心电路设计、生产测试、调试量产。参与完成共享充电嵌入式代码编写，包括电功率检测处理、TCP通讯协议编写及定义。",
-                    challenges: ["共享充电主控板核心电路设计", "电功率检测与TCP通讯协议实现", "远端数据收发模组开发", "大规模城市部署的可靠性保障"],
-                    achievements: "山西运城市公共设施已部署共享充电节点约450个。独立完成从核心电路设计到量产调试的全流程开发。"
-                },
-                {
-                    id: 11, title: "军用脉冲时间同步器", cat: "军工/航电", filter: "mil", type: "hw",
-                    img: "img/sztest_th.jpg",
-                    tags: ["FPGA", "光电信号", "多协处理"],
-                    role: "硬件工程师 · 2023.04 - 2023.09",
-                    tech: "基于FPGA的开发项目，光电信号采集处理。多协处理方案，进行各项数据互补。",
-                    challenges: ["FPGA光电信号采集处理", "多协处理方案数据互补", "高速时序精度保障", "军工级环境适应性设计"],
-                    achievements: "成功完成基于FPGA的光电信号采集处理系统开发，多协处理方案有效实现各项数据互补。"
-                },
-                {
-                    id: 12, title: "某装备车载测试电源", cat: "军工/航电", filter: "mil", type: "hw",
-                    img: "img/cztest_th.jpg",
-                    tags: ["28V/11A", "车载", "全周期"],
-                    role: "硬件工程师 · 2025",
-                    tech: "独立完成某装备车载测试电源28V11A的研发与交付，涵盖硬件选型、装配工艺、测试流程及高低温试验等全周期开发。",
-                    challenges: ["28V/11A大功率电源设计", "车载环境高低温试验", "装配工艺与测试流程制定", "全周期独立开发与交付"],
-                    achievements: "项目已通过验收并成功交付。从方案设计原理到PCB设计样机制作全程独立设计研发及后期装配调试，结合HMI实现自动化控制，提升测试效率与操作便捷性。"
-                },
-                {
-                    id: 13, title: "115V 军用三相电源控制器", cat: "软件", filter: "sw", type: "sw",
-                    img: "img/soft1.png",
-                    tags: ["三相电源", "军用标准", "电源管理"],
-                    role: "嵌入式软件开发 · 2025",
-                    tech: "115V 军用三相电源控制器软件系统，实现三相交流电源的智能控制与保护。支持相序检测、过压/欠压保护、过载保护、温度监控等功能，符合军用电源设备标准。",
-                    challenges: ["三相交流电参数精确采集与算法优化", "军用级 EMI/EMC 环境下的软件抗干扰设计", "实时保护逻辑的响应速度与稳定性平衡", "宽温域 (-40°C~+85°C) 环境下的可靠性保障"],
-                    achievements: "完成三相电源控制器嵌入式软件开发，实现智能控制与多重保护功能。通过军标级 EMI/EMC 测试，已在某型军用设备中批量应用。"
-                },
-                {
-                    id: 14, title: "直流交流多功能电功率采集系统", cat: "软件", filter: "sw", type: "sw",
-                    img: "img/soft2.png",
-                    tags: ["功率采集", "交直流兼容", "高精度测量"],
-                    role: "全栈开发 · 2025",
-                    tech: "直流/交流多功能电功率采集系统，支持宽范围电压 (1-500V) 和电流 (0.01-50A) 精确测量。具备实时功率、电能、功率因数、频率等多参数采集，支持数据记录与远程传输。",
-                    challenges: ["交直流信号自适应识别与高精度采样算法", "多通道同步采集与数据一致性保障", "宽动态范围内的测量精度优化", "实时数据处理与存储效率平衡"],
-                    achievements: "实现交直流兼容的高精度功率采集系统，测量精度达±0.1%。支持多通道并发采集与数据云端同步，已应用于工业能源监测系统。"
-                },
-                {
-                    id: 15, title: "北斗与 GPS 定位管理系统", cat: "软件", filter: "sw", type: "sw",
-                    img: "img/gps_tracking_sw.png",
-                    tags: ["北斗/GPS", "实时定位", "Web 平台"],
-                    role: "全栈开发 · 2025",
-                    tech: "基于 Web 的北斗与 GPS 双模定位管理平台，实现多设备实时定位、轨迹查询、设备状态监控等功能。集成高德地图，支持多设备同时在线追踪，实时显示电压、温度、速度等遥测数据。",
-                    challenges: ["多设备并发实时数据接入", "GPS/北斗双模数据解析与融合", "WebSocket 实时通信与数据推送", "地图可视化与设备状态实时刷新"],
-                    achievements: "独立完成系统前后端开发，实现 TCP/HTTP 双协议设备接入，支持实时定位与轨迹回放。系统已在实际场景中部署运行，支持多设备同时在线监控。"
-                }
-            ];
-
-            // ===== DOM Ready =====
-            document.addEventListener('DOMContentLoaded', function () {
-
-                // ===== Loading Screen =====
-                setTimeout(function () {
-                    document.getElementById('loader').classList.add('hidden');
-                }, 600);
-
-                // ===== Particles =====
-                createParticles();
-
-                // ===== Render Project Cards =====
-                renderProjects('all');
-
-                // ===== Filter Buttons =====
-                var filterButtons = document.querySelectorAll('.filter-btn');
-                filterButtons.forEach(function (btn) {
-                    btn.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setActiveFilterButton(filterButtons, this);
-                        this.classList.add('active');
-                        this.setAttribute('aria-pressed', 'true');
-                        renderProjects(this.dataset.filter);
-                    });
-                });
-
-                // ===== Smooth Scroll Navigation =====
-                document.querySelectorAll('.nav-scroll, .mobile-nav-link').forEach(function (link) {
-                    link.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        var targetId = this.getAttribute('data-target') || this.getAttribute('href').replace('#', '');
-                        var target = document.getElementById(targetId);
-                        if (target) {
-                            window.scrollTo({
-                                top: target.offsetTop - 80,
-                                behavior: 'smooth'
-                            });
-                            history.pushState(null, null, '#' + targetId);
-                        }
-                        // Close mobile menu
-                        closeMobileMenu();
-                    });
-                });
-
-                // ===== Mobile Menu =====
-                var menuToggle = document.getElementById('menuToggle');
-                var mobileMenu = document.getElementById('mobileMenu');
-                var menuOverlay = document.getElementById('menuOverlay');
-
-                menuToggle.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    toggleMobileMenu();
-                });
-                menuOverlay.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    closeMobileMenu();
-                });
-
-                function toggleMobileMenu() {
-                    mobileMenu.classList.toggle('open');
-                    menuOverlay.classList.toggle('hidden');
-                    var isOpen = mobileMenu.classList.contains('open');
-                    document.body.style.overflow = isOpen ? 'hidden' : '';
-                    menuToggle.setAttribute('aria-expanded', String(isOpen));
-                }
-                function closeMobileMenu() {
-                    mobileMenu.classList.remove('open');
-                    menuOverlay.classList.add('hidden');
-                    document.body.style.overflow = '';
-                    menuToggle.setAttribute('aria-expanded', 'false');
-                }
-
-                // ===== Modal =====
-                var modal = document.getElementById('projectModal');
-                var closeBtn = document.getElementById('closeModalBtn');
-
-                window.openModal = function (id) {
-                    var p = projects.find(function (item) { return item.id === id; });
-                    if (!p) return;
-                    document.getElementById('modalImg').src = p.img;
-                    document.getElementById('modalImg').alt = p.title;
-                    document.getElementById('modalTitle').innerText = p.title;
-                    document.getElementById('modalRole').innerText = p.role;
-                    document.getElementById('modalTags').innerHTML = p.tags.map(function (t) {
-                        return '<span class="px-3 py-1 bg-blue-500/10 text-blue-400 rounded-full text-[10px] font-bold border border-blue-500/20">' + t + '</span>';
-                    }).join('');
-                    document.getElementById('modalChallenges').innerHTML = p.challenges.map(function (c) {
-                        return '<li class="flex items-start gap-2"><i class="fas fa-check text-blue-400 mt-1 text-xs flex-shrink-0"></i><span>' + c + '</span></li>';
-                    }).join('');
-                    document.getElementById('modalTech').innerText = p.tech;
-
-                    var achSection = document.getElementById('modalAchievements');
-                    var achText = document.getElementById('modalAchText');
-                    if (p.achievements) {
-                        achText.innerText = p.achievements;
-                        achSection.classList.remove('hidden');
-                    } else {
-                        achSection.classList.add('hidden');
-                    }
-
-                    modal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                };
-
-                window.closeModal = function () {
-                    modal.classList.remove('active');
-                    document.body.style.overflow = '';
-                };
-
-                closeBtn.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    closeModal();
-                });
-
-                modal.addEventListener('click', function (e) {
-                    if (e.target === modal) {
-                        e.preventDefault();
-                        closeModal();
-                    }
-                });
-
-                document.addEventListener('keydown', function (e) {
-                    if (e.key === 'Escape' && modal.classList.contains('active')) {
-                        closeModal();
-                    }
-                });
-
-                // ===== Nav Scroll Effect =====
-                var nav = document.getElementById('mainNav');
-                window.addEventListener('scroll', function () {
-                    if (window.scrollY > 50) {
-                        nav.classList.add('scrolled');
-                    } else {
-                        nav.classList.remove('scrolled');
-                    }
-                });
-
-                // ===== Back to Top =====
-                var backToTop = document.getElementById('backToTop');
-                window.addEventListener('scroll', function () {
-                    if (window.scrollY > 600) {
-                        backToTop.classList.add('show');
-                    } else {
-                        backToTop.classList.remove('show');
-                    }
-                });
-                backToTop.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                });
-
-                // ===== Scroll Reveal =====
-                var reveals = document.querySelectorAll('.reveal');
-                var observer = new IntersectionObserver(function (entries) {
-                    entries.forEach(function (entry) {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('visible');
-                        }
-                    });
-                }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-                reveals.forEach(function (el) { observer.observe(el); });
-
-                // ===== Stat Counter Animation =====
-                var statCards = document.querySelectorAll('[data-count]');
-                var statObserver = new IntersectionObserver(function (entries) {
-                    entries.forEach(function (entry) {
-                        if (entry.isIntersecting) {
-                            animateCounter(entry.target);
-                            statObserver.unobserve(entry.target);
-                        }
-                    });
-                }, { threshold: 0.5 });
-                statCards.forEach(function (el) { statObserver.observe(el); });
-
-                var downloadResumeBtn = document.getElementById('downloadResumeBtn');
-
-                function triggerResumeExport(e) {
-                    if (e) {
-                        e.preventDefault();
-                    }
-                    window.print();
-                }
-
-                if (downloadResumeBtn) {
-                    downloadResumeBtn.addEventListener('click', triggerResumeExport);
-                }
-
-                // ===== Easter Egg: Show GIF =====
-                var easterEggCard = document.getElementById('easterEggCard');
-                var easterEggModal = document.getElementById('easterEggModal');
-                var easterEggContent = document.getElementById('easterEggModalContent');
-                var closeEasterEgg = document.getElementById('closeEasterEgg');
-
-                function showEasterEgg(e) {
-                    if (e) { e.preventDefault(); e.stopPropagation(); }
-                    easterEggModal.style.opacity = '1';
-                    easterEggModal.style.visibility = 'visible';
-                    easterEggContent.style.transform = 'scale(1)';
-                    document.body.style.overflow = 'hidden';
-                }
-
-                function hideEasterEgg(e) {
-                    if (e) { e.preventDefault(); e.stopPropagation(); }
-                    easterEggModal.style.opacity = '0';
-                    easterEggModal.style.visibility = 'hidden';
-                    easterEggContent.style.transform = 'scale(0.9)';
-                    document.body.style.overflow = '';
-                }
-
-                if (easterEggCard) {
-                    easterEggCard.addEventListener('click', showEasterEgg);
-                }
-                if (closeEasterEgg) {
-                    closeEasterEgg.addEventListener('click', hideEasterEgg);
-                }
-                if (easterEggModal) {
-                    easterEggModal.addEventListener('click', function (e) {
-                        if (e.target === easterEggModal) hideEasterEgg(e);
-                    });
-                }
-                document.addEventListener('keydown', function (e) {
-                    if (e.key === 'Escape' && easterEggModal && easterEggModal.style.visibility === 'visible') {
-                        hideEasterEgg(e);
-                    }
-                });
-            });
-
-            // ===== Render Projects =====
-            function renderProjects(filter) {
-                var grid = document.getElementById('projectGrid');
-                grid.innerHTML = '';
-                var filtered = filter === 'all' ? projects : projects.filter(function (p) { return p.type === filter; });
-                filtered.forEach(function (p, index) {
-                    var card = document.createElement('div');
-                    card.className = 'project-card';
-                    card.setAttribute('data-id', p.id);
-                    card.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        openModal(p.id);
-                    });
-                    var summary = getProjectSummary(p);
-                    card.innerHTML = renderProjectCardMarkup(p, index, summary);
-                    grid.appendChild(card);
-                });
-            }
-
-            function renderProjectCardMarkup(project, index, summary) {
-                return [
-                    '<div class="h-52 overflow-hidden relative">',
-                    '<img src="' + project.img + '" alt="' + project.title + '" loading="lazy" class="card-img w-full h-full object-cover opacity-50">',
-                    '<div class="card-overlay"></div>',
-                    '<div class="card-frame"></div>',
-                    '<div class="absolute top-4 left-4 px-3 py-1 bg-amber-700/90 text-[10px] font-bold rounded-lg text-white uppercase tracking-wider">' + project.cat + '</div>',
-                    '<div class="card-number">' + String(index + 1).padStart(2, '0') + '</div>',
-                    '<div class="view-btn absolute bottom-4 right-4 px-4 py-2 bg-white/10 backdrop-blur-sm text-white text-xs font-bold rounded-lg border border-white/20">',
-                    '<i class="fas fa-expand mr-1"></i> 查看详情',
-                    '</div>',
-                    '</div>',
-                    '<div class="p-6">',
-                    '<h3 class="text-white font-bold mb-2 text-base">' + project.title + '</h3>',
-                    '<p class="text-slate-500 text-xs mb-4">' + project.role + '</p>',
-                    '<div class="card-proof">核心成果摘要</div>',
-                    '<p class="card-summary">' + summary + '</p>',
-                    '<div class="flex flex-wrap gap-2">',
-                    project.tags.map(function (tag) {
-                        return '<span class="text-[10px] text-slate-400 bg-white/[0.04] px-2.5 py-1 rounded-lg border border-white/5">#' + tag + '</span>';
-                    }).join(''),
-                    '</div>',
-                    '</div>'
-                ].join('');
-            }
-
-            function setActiveFilterButton(buttons, activeButton) {
-                buttons.forEach(function (button) {
-                    button.classList.remove('active');
-                    button.setAttribute('aria-pressed', 'false');
-                });
-                activeButton.classList.add('active');
-            }
-
-            function getProjectSummary(project) {
-                if (project.achievements && project.achievements.length > 68) {
-                    return project.achievements.slice(0, 68) + '...';
-                }
-
-                if (project.tech && project.tech.length > 68) {
-                    return project.tech.slice(0, 68) + '...';
-                }
-
-                return project.tech || '';
-            }
-
-            // ===== Animate Counter =====
-            function animateCounter(el) {
-                var target = parseInt(el.getAttribute('data-count'));
-                var duration = 2000;
-                var start = 0;
-                var startTime = null;
-                function step(timestamp) {
-                    if (!startTime) startTime = timestamp;
-                    var progress = Math.min((timestamp - startTime) / duration, 1);
-                    var eased = 1 - Math.pow(1 - progress, 3);
-                    el.textContent = Math.floor(eased * target);
-                    if (progress < 1) {
-                        requestAnimationFrame(step);
-                    } else {
-                        el.textContent = target;
-                    }
-                }
-                requestAnimationFrame(step);
-            }
-
-            // ===== Create Particles =====
-            function createParticles() {
-                var container = document.getElementById('particles');
-                if (!container) return;
-                for (var i = 0; i < 30; i++) {
-                    var particle = document.createElement('div');
-                    particle.className = 'particle';
-                    var size = Math.random() * 3 + 1;
-                    particle.style.width = size + 'px';
-                    particle.style.height = size + 'px';
-                    particle.style.left = Math.random() * 100 + '%';
-                    particle.style.bottom = '-10px';
-                    particle.style.background = Math.random() > 0.5 ? 'rgba(56,189,248,0.4)' : 'rgba(167,139,250,0.3)';
-                    particle.style.animationDuration = (Math.random() * 15 + 10) + 's';
-                    particle.style.animationDelay = (Math.random() * 10) + 's';
-                    container.appendChild(particle);
-                }
-            }
-
-        })();
-
-        // ===== WeChat QR Code Functions =====
-        (function () {
-            var modal = document.getElementById('wechatModal');
-            var content = document.getElementById('wechatModalContent');
-            var qrImg = document.getElementById('wechatQRImg');
-            var wechatCard = document.getElementById('wechatCard');
-            var closeWechatModalBtn = document.getElementById('closeWechatModal');
-
-            // Load QR image from file
-            qrImg.src = 'img/wechat-qr.jpg';
-
-            window.showWechatQR = function (e) {
-                if (e) { e.preventDefault(); e.stopPropagation(); }
-                modal.style.opacity = '1';
-                modal.style.visibility = 'visible';
-                content.style.transform = 'scale(1)';
-                document.body.style.overflow = 'hidden';
-            };
-
-            window.hideWechatQR = function (e) {
-                if (e) { e.preventDefault(); e.stopPropagation(); }
-                modal.style.opacity = '0';
-                modal.style.visibility = 'hidden';
-                content.style.transform = 'scale(0.9)';
-                document.body.style.overflow = '';
-            };
-
-            wechatCard.addEventListener('click', showWechatQR);
-            closeWechatModalBtn.addEventListener('click', hideWechatQR);
-
-            // Close on backdrop click
-            modal.addEventListener('click', function (e) {
-                if (e.target === modal) hideWechatQR(e);
-            });
-
-            // Close on ESC
-            document.addEventListener('keydown', function (e) {
-                if (e.key === 'Escape' && modal.style.visibility === 'visible') {
-                    hideWechatQR(e);
-                }
-            });
-        })();
-
-    </script>
+    <!-- 引入独立的项目数据和应用逻辑脚本文件，支持二次访问强缓存，极大缩减首次 HTML 体积 -->
+    <script src="src/projects.js" defer></script>
+    <script src="src/app.js" defer></script>
 
 </body>
 

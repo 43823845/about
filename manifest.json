@@ -1,0 +1,16 @@
+{
+  "name": "杨杰 | 软硬件研发全栈工程师作品集",
+  "short_name": "杨杰作品集",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#14110f",
+  "theme_color": "#14110f",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "img/wechat-qr.jpg",
+      "sizes": "256x256",
+      "type": "image/jpeg"
+    }
+  ]
+}

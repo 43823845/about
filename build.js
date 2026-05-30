@@ -1,44 +1,51 @@
 const fs = require('fs');
 const path = require('path');
 
-// 确保 dist 目录存在
-if (!fs.existsSync('dist')) {
-  fs.mkdirSync('dist', { recursive: true });
-}
+/** 确保目录存在 */
+const ensureDir = (dir) => {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+};
 
-// 复制 index.html
-fs.copyFileSync('index.html', path.join('dist', 'index.html'));
-console.log('✓ Copied index.html to dist/');
-
-// 复制编译后的 CSS
-if (fs.existsSync('output.css')) {
-  fs.copyFileSync('output.css', path.join('dist', 'output.css'));
-  console.log('✓ Copied output.css to dist/');
-}
-
-// 复制 img 目录（如果存在）
-if (fs.existsSync('img')) {
-  const copyDir = (src, dest) => {
-    if (!fs.existsSync(dest)) {
-      fs.mkdirSync(dest, { recursive: true });
+/** 递归克隆目录 */
+const copyDir = (src, dest) => {
+  ensureDir(dest);
+  const entries = fs.readdirSync(src, { withFileTypes: true });
+  for (const entry of entries) {
+    const srcPath = path.join(src, entry.name);
+    const destPath = path.join(dest, entry.name);
+    if (entry.isDirectory()) {
+      copyDir(srcPath, destPath);
+    } else {
+      fs.copyFileSync(srcPath, destPath);
     }
-    
-    const entries = fs.readdirSync(src, { withFileTypes: true });
-    
-    for (const entry of entries) {
-      const srcPath = path.join(src, entry.name);
-      const destPath = path.join(dest, entry.name);
-      
-      if (entry.isDirectory()) {
-        copyDir(srcPath, destPath);
-      } else {
-        fs.copyFileSync(srcPath, destPath);
-      }
-    }
-  };
-  
-  copyDir('img', path.join('dist', 'img'));
-  console.log('✓ Copied img/ to dist/img/');
-}
+  }
+};
 
-console.log('✓ Build completed successfully!');
+console.log('🚀 开始项目构建与打包...');
+ensureDir('dist');
+
+// 需要复制的单文件
+const filesToCopy = ['index.html', 'manifest.json', 'output.css'];
+filesToCopy.forEach(file => {
+  if (fs.existsSync(file)) {
+    fs.copyFileSync(file, path.join('dist', file));
+    console.log(`✓ 已成功拷贝文件 ${file} 至 dist/`);
+  } else {
+    console.log(`⚠️  警告: 未找到 ${file} 文件，跳过。`);
+  }
+});
+
+// 需要深度复制的子目录
+const dirsToCopy = ['src', 'img'];
+dirsToCopy.forEach(dir => {
+  if (fs.existsSync(dir)) {
+    copyDir(dir, path.join('dist', dir));
+    console.log(`✓ 已成功深度拷贝子目录 ${dir}/ 至 dist/${dir}/`);
+  } else {
+    console.log(`⚠️  警告: 未找到 ${dir}/ 目录，跳过。`);
+  }
+});
+
+console.log('🎉 项目打包成功！所有静态资源均已收敛至 dist/ 目录。');
