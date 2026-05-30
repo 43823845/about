@@ -70,6 +70,14 @@
     ───────────────────────────────────────── */
     document.addEventListener('DOMContentLoaded', function () {
 
+        // 动态加载 PWA manifest (避开本地 file:// 协议引发的 CORS 控制台警告)
+        if (window.location.protocol !== 'file:') {
+            var link = document.createElement('link');
+            link.rel = 'manifest';
+            link.href = 'manifest.json';
+            document.head.appendChild(link);
+        }
+
         // 备份原始静态项目列表用于重置
         if (!window.DEFAULT_PROJECTS && window.PROJECTS) {
             window.DEFAULT_PROJECTS = JSON.parse(JSON.stringify(window.PROJECTS));
