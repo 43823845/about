@@ -726,6 +726,8 @@
         filtered.forEach(function (p, index) {
             var card = document.createElement('div');
             card.className = 'project-card';
+            // 采用极客感的高阶交错(staggered)入场动画延迟
+            card.style.animationDelay = (index * 0.05) + 's';
             card.setAttribute('data-id', String(p.id));
             card.setAttribute('role', 'button');
             card.setAttribute('tabindex', '0');

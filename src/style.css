@@ -239,7 +239,20 @@ section { scroll-margin-top: 90px; }
 .skill-category-title:hover::after { width: 60px; }
 
 /* ===== 项目卡片 ===== */
+@keyframes cardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .project-card {
+    opacity: 0;
+    animation: cardFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     background:
         linear-gradient(180deg, rgba(255, 246, 230, 0.06), rgba(255, 255, 255, 0.015)),
         rgba(38, 29, 26, 0.74);
@@ -248,7 +261,7 @@ section { scroll-margin-top: 90px; }
     overflow: hidden;
     cursor: pointer;
     box-shadow: 0 22px 70px rgba(0, 0, 0, 0.28);
-    transition: all 0.4s var(--ease-out);
+    transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out), border-color 0.4s var(--ease-out);
     position: relative;
     -webkit-tap-highlight-color: transparent;
 }
