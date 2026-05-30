@@ -380,12 +380,50 @@
         
         window.showAdminModal = function() {
             if (!adminModal) return;
-            renderAdminProjectList();
-            adminModal.style.opacity = '1';
-            adminModal.style.visibility = 'visible';
-            if (adminContent) adminContent.style.transform = 'scale(1)';
-            document.body.style.overflow = 'hidden';
-            resetAdminForm();
+            
+            // 判定加载协议与域名，如果是线上部署环境则强制启动高安全级口令锁
+            var isLocal = window.location.protocol === 'file:' || 
+                          window.location.hostname === 'localhost' || 
+                          window.location.hostname === '127.0.0.1';
+                          
+            if (!isLocal) {
+                var pwd = prompt('请输入管理员口令 (管理控制台受 SHA-256 高度加密安全保护)：');
+                if (!pwd) return;
+                
+                // 使用原生 Web Crypto API 异步生成 SHA-256 哈希值
+                if (window.crypto && crypto.subtle && window.TextEncoder) {
+                    crypto.subtle.digest('SHA-256', new TextEncoder().encode(pwd))
+                        .then(function(buffer) {
+                            var hash = Array.prototype.map.call(new Uint8Array(buffer), function(x) {
+                                return ('00' + x.toString(16)).slice(-2);
+                            }).join('');
+                            
+                            // ed712abe557ca767acc303e1435656757ddc4ade81b7bce977c4dc2fd21ada35 代表 'yangjie123'
+                            if (hash === 'ed712abe557ca767acc303e1435656757ddc4ade81b7bce977c4dc2fd21ada35') {
+                                openPanel();
+                            } else {
+                                alert('口令错误，拒绝访问开发者控制台！');
+                            }
+                        })
+                        .catch(function() {
+                            alert('密码哈希校验失败，当前浏览器环境不支持安全加密通道。');
+                        });
+                } else {
+                    alert('当前浏览器版本过低，无法支持高安全加密验证协议。');
+                }
+            } else {
+                // 本地或 file:// 直接打开，无需输入密码 (方便自己开发)
+                openPanel();
+            }
+            
+            function openPanel() {
+                renderAdminProjectList();
+                adminModal.style.opacity = '1';
+                adminModal.style.visibility = 'visible';
+                if (adminContent) adminContent.style.transform = 'scale(1)';
+                document.body.style.overflow = 'hidden';
+                resetAdminForm();
+            }
         };
 
         window.hideAdminModal = function() {
