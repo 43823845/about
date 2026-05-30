@@ -82,9 +82,18 @@
         if (!window.DEFAULT_PROJECTS && window.PROJECTS) {
             window.DEFAULT_PROJECTS = JSON.parse(JSON.stringify(window.PROJECTS));
         }
-        // 从 localStorage 融合加载自定义修改后的项目列表
+        // 从 localStorage 融合加载自定义修改后的项目列表 (加入 Safe-Parse 确保移动端容错)
         var customProjs = SafeStorage.getItem('yj_custom_projects');
-        var projects = customProjs ? JSON.parse(customProjs) : (window.PROJECTS || []);
+        var projects = window.PROJECTS || [];
+        if (customProjs) {
+            try {
+                projects = JSON.parse(customProjs);
+            } catch (e) {
+                console.error('[SafeStorage] 解析自定义项目失败，已恢复默认值：', e);
+                SafeStorage.removeItem('yj_custom_projects');
+                projects = window.DEFAULT_PROJECTS || [];
+            }
+        }
         window.PROJECTS = projects;
 
         /* ── Loading Screen ── */
@@ -391,8 +400,8 @@
                 if (!pwd) return;
                 
                 // 使用原生 Web Crypto API 异步生成 SHA-256 哈希值
-                if (window.crypto && crypto.subtle && window.TextEncoder) {
-                    crypto.subtle.digest('SHA-256', new TextEncoder().encode(pwd))
+                if (window.crypto && window.crypto.subtle && window.TextEncoder) {
+                    window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(pwd))
                         .then(function(buffer) {
                             var hash = Array.prototype.map.call(new Uint8Array(buffer), function(x) {
                                 return ('00' + x.toString(16)).slice(-2);
@@ -409,7 +418,7 @@
                             alert('密码哈希校验失败，当前浏览器环境不支持安全加密通道。');
                         });
                 } else {
-                    alert('当前浏览器版本过低，无法支持高安全加密验证协议。');
+                    alert('当前浏览器版本过低或未使用 HTTPS 安全连接，无法支持高安全加密验证协议。');
                 }
             } else {
                 // 本地或 file:// 直接打开，无需输入密码 (方便自己开发)
