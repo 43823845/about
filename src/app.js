@@ -353,6 +353,9 @@
             });
         }
 
+        /* ── 极客系统调试面板 (控制台与示波器) ── */
+        initSystemDebugger();
+
     }); // end DOMContentLoaded
 
     /* ─────────────────────────────────────────
@@ -556,6 +559,282 @@
             var now = Date.now();
             if (now - last >= delay) { last = now; fn.apply(this, arguments); }
         };
+    }
+
+    /* ─────────────────────────────────────────
+       极客系统调试面板 (Console & Oscilloscope)
+    ───────────────────────────────────────── */
+    function initSystemDebugger() {
+        var tabConsoleBtn = document.getElementById('tabConsoleBtn');
+        var tabOscilloscopeBtn = document.getElementById('tabOscilloscopeBtn');
+        var debugConsolePanel = document.getElementById('debugConsolePanel');
+        var debugOscilloscopePanel = document.getElementById('debugOscilloscopePanel');
+
+        if (!tabConsoleBtn || !tabOscilloscopeBtn || !debugConsolePanel || !debugOscilloscopePanel) return;
+
+        // 1. Tab 切换逻辑
+        var activeTab = 'console'; // 'console' | 'oscilloscope'
+        var oscAnimationFrame = null;
+
+        tabConsoleBtn.addEventListener('click', function () {
+            if (activeTab === 'console') return;
+            activeTab = 'console';
+            tabConsoleBtn.setAttribute('aria-selected', 'true');
+            tabConsoleBtn.classList.add('active');
+            tabOscilloscopeBtn.setAttribute('aria-selected', 'false');
+            tabOscilloscopeBtn.classList.remove('active');
+
+            debugConsolePanel.classList.remove('hidden');
+            debugOscilloscopePanel.classList.add('hidden');
+
+            if (oscAnimationFrame) {
+                cancelAnimationFrame(oscAnimationFrame);
+                oscAnimationFrame = null;
+            }
+            
+            // 自动聚焦输入框
+            var consoleInput = document.getElementById('consoleInput');
+            if (consoleInput) consoleInput.focus();
+        });
+
+        tabOscilloscopeBtn.addEventListener('click', function () {
+            if (activeTab === 'oscilloscope') return;
+            activeTab = 'oscilloscope';
+            tabOscilloscopeBtn.setAttribute('aria-selected', 'true');
+            tabOscilloscopeBtn.classList.add('active');
+            tabConsoleBtn.setAttribute('aria-selected', 'false');
+            tabConsoleBtn.classList.remove('active');
+
+            debugOscilloscopePanel.classList.remove('hidden');
+            debugConsolePanel.classList.add('hidden');
+
+            startOscilloscope();
+        });
+
+        // 2. 终端控制台逻辑
+        var consoleHistory = document.getElementById('consoleHistory');
+        var consoleInput = document.getElementById('consoleInput');
+
+        var initialLogs = [
+            'YJ-SYSTEM Core v1.0.0 initializing...',
+            '[  OK  ] Load 16-layer HDI PCB parameters',
+            '[  OK  ] Precision Analog Signal Conditioning: Stable',
+            '[ INFO ] Main Power Rail Check: 28.00V @ 11.00A OK',
+            '[  OK  ] Embedded TinyML neural network inference engine loaded',
+            '[ INFO ] GJB151B electro-magnetic compatibility verified',
+            '==================================================',
+            '杨杰全栈研发核心系统已就绪。输入 "help" 调取指令菜单。',
+            ''
+        ];
+
+        var logIndex = 0;
+        function printNextLog() {
+            if (logIndex < initialLogs.length) {
+                printRow(initialLogs[logIndex]);
+                logIndex++;
+                setTimeout(printNextLog, Math.random() * 200 + 100);
+            } else {
+                // 加一个闪烁的光标
+                var cursor = document.createElement('span');
+                cursor.className = 'console-cursor';
+                cursor.id = 'consoleCursor';
+                consoleHistory.appendChild(cursor);
+                scrollToBottom();
+            }
+        }
+
+        function printRow(text, type) {
+            var row = document.createElement('div');
+            row.className = 'console-row';
+            if (type === 'error') row.style.color = '#f87171';
+            else if (type === 'warn') row.style.color = '#fbbf24';
+            else if (type === 'info') row.style.color = '#60a5fa';
+            else if (type === 'success') row.style.color = '#34d399';
+            row.textContent = text;
+            
+            // 如果光标存在，插在光标前面，否则插在末尾
+            var cursor = document.getElementById('consoleCursor');
+            if (cursor) {
+                consoleHistory.insertBefore(row, cursor);
+            } else {
+                consoleHistory.appendChild(row);
+            }
+            scrollToBottom();
+        }
+
+        function scrollToBottom() {
+            consoleHistory.scrollTop = consoleHistory.scrollHeight;
+        }
+
+        // 开始打印初始化日志
+        printNextLog();
+
+        // 键盘输入命令监听
+        if (consoleInput) {
+            consoleInput.addEventListener('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    var val = consoleInput.value.trim();
+                    consoleInput.value = '';
+                    if (val.length === 0) return;
+
+                    printRow('yj_core:~$ ' + val);
+                    parseCommand(val);
+                }
+            });
+        }
+
+        function parseCommand(cmd) {
+            var parts = cmd.toLowerCase().split(' ');
+            var core = parts[0];
+
+            setTimeout(function () {
+                if (core === 'help') {
+                    printRow('可用指令列表:', 'info');
+                    printRow('  help      - 显示本指令菜单');
+                    printRow('  status    - 输出硬件核心系统实时健康诊断');
+                    printRow('  projects  - 列出杨杰全栈研发项目分类简报');
+                    printRow('  egg       - 触发隐藏的极客专属彩蛋');
+                    printRow('  clear     - 清空终端历史记录');
+                } else if (core === 'clear') {
+                    // 保留光标并清空其他
+                    consoleHistory.innerHTML = '';
+                    var cursor = document.createElement('span');
+                    cursor.className = 'console-cursor';
+                    cursor.id = 'consoleCursor';
+                    consoleHistory.appendChild(cursor);
+                } else if (core === 'status') {
+                    printRow('[ DIAGNOSTICS REPORT ]', 'info');
+                    printRow('CPU Temp  : 41.5 °C (MCU Overclock 240MHz)', 'success');
+                    printRow('Voltage   : 28.02 V (Ripple < 10mV SI/PI OK)', 'success');
+                    printRow('Current   : 11.04 A (Dynamic Power Balanced)', 'success');
+                    printRow('Edge AI   : TinyML Inference delay < 12ms', 'success');
+                    printRow('Status    : Ready for deployment (开箱即用)', 'success');
+                } else if (core === 'projects') {
+                    printRow('[ PROJECT CATEGORIES ]', 'info');
+                    printRow('1. 军品/航电 (mil) - 7个高可靠整机测试设备项目');
+                    printRow('2. 工业/能源 (ind) - 新能源地源热泵等量产控制板项目');
+                    printRow('3. 物联网 (iot)    - 450+城市共享充电控制节点项目');
+                    printRow('4. 嵌入式软件 (sw)  - 北斗/GPS, 三相电源软件系统项目');
+                    printRow('提示: 输入 "egg" 可触发彩蛋体验。', 'info');
+                } else if (core === 'egg') {
+                    printRow('>> 正在启动极客浪漫彩蛋系统...', 'success');
+                    var eggBtn = document.getElementById('easterEggCard');
+                    if (eggBtn) {
+                        eggBtn.click();
+                    } else {
+                        printRow('抱歉，未能检测到彩蛋入口组件。', 'error');
+                    }
+                } else {
+                    printRow('指令未识别: "' + esc(core) + '". 输入 "help" 获取帮助手册。', 'error');
+                }
+            }, 100);
+        }
+
+        // 3. 示波器 Canvas 逻辑
+        var canvas = document.getElementById('oscilloscopeCanvas');
+        var freqSlider = document.getElementById('oscFreqSlider');
+        var ampSlider = document.getElementById('oscAmpSlider');
+        var waveSelect = document.getElementById('oscWaveSelect');
+
+        function startOscilloscope() {
+            if (!canvas) return;
+            var ctx = canvas.getContext('2d');
+            
+            function resizeCanvas() {
+                canvas.width = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+            }
+            resizeCanvas();
+
+            var offset = 0;
+            function draw() {
+                if (activeTab !== 'oscilloscope') return;
+
+                var w = canvas.width;
+                var h = canvas.height;
+                var midY = h / 2;
+
+                ctx.fillStyle = '#050a12';
+                ctx.fillRect(0, 0, w, h);
+
+                // 绘制 CRT 绿/黄细格网格线
+                ctx.strokeStyle = 'rgba(232, 176, 79, 0.08)';
+                ctx.lineWidth = 1;
+                var gridSize = 20;
+
+                // 横线
+                for (var y = 0; y < h; y += gridSize) {
+                    ctx.beginPath();
+                    ctx.moveTo(0, y);
+                    ctx.lineTo(w, y);
+                    ctx.stroke();
+                }
+                // 竖线
+                for (var x = 0; x < w; x += gridSize) {
+                    ctx.beginPath();
+                    ctx.moveTo(x, 0);
+                    ctx.lineTo(x, h);
+                    ctx.stroke();
+                }
+
+                // 绘制中心偏置水平基准线和刻度线
+                ctx.strokeStyle = 'rgba(232, 176, 79, 0.25)';
+                ctx.beginPath();
+                ctx.moveTo(0, midY);
+                ctx.lineTo(w, midY);
+                ctx.stroke();
+
+                // 读取滑块参数
+                var freq = parseFloat(freqSlider.value) * 0.01;
+                var amp = parseFloat(ampSlider.value);
+                var waveType = waveSelect.value;
+
+                // 绘制流动波形辉光
+                ctx.strokeStyle = 'rgba(232, 176, 79, 0.95)';
+                ctx.shadowColor = 'rgba(232, 176, 79, 0.8)';
+                ctx.shadowBlur = 10;
+                ctx.lineWidth = 2.5;
+                ctx.beginPath();
+
+                for (var i = 0; i < w; i++) {
+                    var xVal = i;
+                    var angle = i * freq + offset;
+                    var yVal = 0;
+
+                    if (waveType === 'sine') {
+                        yVal = Math.sin(angle) * amp;
+                    } else if (waveType === 'square') {
+                        yVal = Math.sin(angle) >= 0 ? amp : -amp;
+                    } else if (waveType === 'triangle') {
+                        yVal = (Math.abs((angle % (Math.PI * 2)) - Math.PI) / Math.PI - 0.5) * 2 * amp;
+                    }
+
+                    if (i === 0) {
+                        ctx.moveTo(xVal, midY + yVal);
+                    } else {
+                        ctx.lineTo(xVal, midY + yVal);
+                    }
+                }
+                ctx.stroke();
+
+                // 重置阴影防污染
+                ctx.shadowBlur = 0;
+
+                // 滚动步长，产生正向流速
+                offset += 0.08;
+
+                oscAnimationFrame = requestAnimationFrame(draw);
+            }
+
+            // 监听窗口缩放重新适应 Canvas 尺寸
+            window.addEventListener('resize', throttle(function () {
+                if (activeTab === 'oscilloscope') resizeCanvas();
+            }, 250));
+
+            // 开始循环
+            if (oscAnimationFrame) cancelAnimationFrame(oscAnimationFrame);
+            draw();
+        }
     }
 
 })();

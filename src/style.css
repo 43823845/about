@@ -875,3 +875,73 @@ footer .group {
     .timeline-dot { left: 8px; }
     #experience .relative.pl-16 { padding-left: 2.5rem; }
 }
+
+/* ===== 极客多功能系统调试面板附加样式 ===== */
+button[role="tab"][aria-selected="true"] {
+    background: rgba(232, 176, 79, 0.12) !important;
+    border-color: rgba(232, 176, 79, 0.35) !important;
+    color: #f0cf93 !important;
+    box-shadow: 0 0 10px rgba(232, 176, 79, 0.08) !important;
+}
+
+#consoleHistory {
+    text-shadow: 0 0 2px rgba(52, 211, 153, 0.3);
+}
+
+/* 控制台光标闪烁效果 */
+.console-cursor {
+    display: inline-block;
+    width: 6px;
+    height: 12px;
+    background-color: var(--accent-gold);
+    animation: cursor-blink 1s steps(2, start) infinite;
+    vertical-align: middle;
+    margin-left: 2px;
+}
+
+@keyframes cursor-blink {
+    to { visibility: hidden; }
+}
+
+/* 控制台行显示动画 */
+.console-row {
+    animation: console-fade-in 0.2s ease-out forwards;
+}
+
+@keyframes console-fade-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 自定义示波器滑块 */
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent-gold);
+    cursor: pointer;
+    box-shadow: 0 0 6px rgba(232, 176, 79, 0.6);
+    transition: transform 0.1s ease;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.3);
+}
+
+input[type="range"]::-moz-range-thumb {
+    width: 10px;
+    height: 10px;
+    border: 0;
+    border-radius: 50%;
+    background: var(--accent-gold);
+    cursor: pointer;
+    box-shadow: 0 0 6px rgba(232, 176, 79, 0.6);
+    transition: transform 0.1s ease;
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+    transform: scale(1.3);
+}
+
