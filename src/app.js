@@ -901,17 +901,6 @@
     }
 
     /* ─────────────────────────────────────────
-       节流（暴露给 resize）
-    ───────────────────────────────────────── */
-    function throttle(fn, delay) {
-        var last = 0;
-        return function () {
-            var now = Date.now();
-            if (now - last >= delay) { last = now; fn.apply(this, arguments); }
-        };
-    }
-
-    /* ─────────────────────────────────────────
        极客系统调试面板 (Console & Oscilloscope)
     ───────────────────────────────────────── */
     function initSystemDebugger() {
