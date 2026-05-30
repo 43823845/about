@@ -616,14 +616,14 @@
         var consoleInput = document.getElementById('consoleInput');
 
         var initialLogs = [
-            'YJ-SYSTEM Core v1.0.0 initializing...',
-            '[  OK  ] Load 16-layer HDI PCB parameters',
-            '[  OK  ] Precision Analog Signal Conditioning: Stable',
-            '[ INFO ] Main Power Rail Check: 28.00V @ 11.00A OK',
-            '[  OK  ] Embedded TinyML neural network inference engine loaded',
-            '[ INFO ] GJB151B electro-magnetic compatibility verified',
+            '[系统] 杨杰全栈开发核心诊断系统 v1.0.0 正在初始化...',
+            '[ 正常 ] 成功加载 16层板 HDI 高密 PCB 叠层硬件设计参数',
+            '[ 正常 ] 精密模拟信号调理采集单元就绪，检测状态：稳定',
+            '[ 信息 ] 28V/11A 装备车载测试主电源供电轨：28.00V 供电正常',
+            '[ 正常 ] 嵌入式 TinyML 神经网络端侧轻量化推理引擎挂载成功',
+            '[ 信息 ] 国家军用标准 GJB151B 电磁兼容(EMC)防护验证完毕',
             '==================================================',
-            '杨杰全栈研发核心系统已就绪。输入 "help" 调取指令菜单。',
+            '杨杰软硬件全栈研发系统已稳定就绪。输入 "help" 获取指令菜单。',
             ''
         ];
 
@@ -689,12 +689,12 @@
 
             setTimeout(function () {
                 if (core === 'help') {
-                    printRow('可用指令列表:', 'info');
-                    printRow('  help      - 显示本指令菜单');
-                    printRow('  status    - 输出硬件核心系统实时健康诊断');
-                    printRow('  projects  - 列出杨杰全栈研发项目分类简报');
-                    printRow('  egg       - 触发隐藏的极客专属彩蛋');
-                    printRow('  clear     - 清空终端历史记录');
+                    printRow('可用指令菜单:', 'info');
+                    printRow('  help      - 显示此指令菜单');
+                    printRow('  status    - 查看硬件系统实时健康诊断报告');
+                    printRow('  projects  - 查看全栈研发项目分类列表');
+                    printRow('  egg       - 启动隐藏的极客浪漫彩蛋');
+                    printRow('  clear     - 清空终端屏幕历史记录');
                 } else if (core === 'clear') {
                     // 保留光标并清空其他
                     consoleHistory.innerHTML = '';
@@ -703,19 +703,19 @@
                     cursor.id = 'consoleCursor';
                     consoleHistory.appendChild(cursor);
                 } else if (core === 'status') {
-                    printRow('[ DIAGNOSTICS REPORT ]', 'info');
-                    printRow('CPU Temp  : 41.5 °C (MCU Overclock 240MHz)', 'success');
-                    printRow('Voltage   : 28.02 V (Ripple < 10mV SI/PI OK)', 'success');
-                    printRow('Current   : 11.04 A (Dynamic Power Balanced)', 'success');
-                    printRow('Edge AI   : TinyML Inference delay < 12ms', 'success');
-                    printRow('Status    : Ready for deployment (开箱即用)', 'success');
+                    printRow('[ 系统实时诊断健康报告 ]', 'info');
+                    printRow('处理器温度 : 41.5 °C (MCU 超频至 240MHz 正常)', 'success');
+                    printRow('主线电压   : 28.02 V (波纹小于 10mV，SI/PI 稳定)', 'success');
+                    printRow('系统电流   : 11.04 A (动态功耗负载均衡 OK)', 'success');
+                    printRow('边缘端 AI  : TinyML 神经网络推理延迟 < 12ms', 'success');
+                    printRow('核心状态   : 系统稳定，开箱即用，支持极限工况', 'success');
                 } else if (core === 'projects') {
-                    printRow('[ PROJECT CATEGORIES ]', 'info');
-                    printRow('1. 军品/航电 (mil) - 7个高可靠整机测试设备项目');
-                    printRow('2. 工业/能源 (ind) - 新能源地源热泵等量产控制板项目');
-                    printRow('3. 物联网 (iot)    - 450+城市共享充电控制节点项目');
-                    printRow('4. 嵌入式软件 (sw)  - 北斗/GPS, 三相电源软件系统项目');
-                    printRow('提示: 输入 "egg" 可触发彩蛋体验。', 'info');
+                    printRow('[ 全栈研发精选项目列表 ]', 'info');
+                    printRow('1. 军品/航电 (mil) - 包含军品绝缘/机载配电等 7 个高可靠测试设备项目');
+                    printRow('2. 工业/能源 (ind) - 包含非标采集模组、新能源地源热泵控制板等量产项目');
+                    printRow('3. 物联网 (iot)    - 包含通用 4G 数采模组、450个共享充电控制器等项目');
+                    printRow('4. 嵌入式软件 (sw) - 包含115V电源软件、交直流数采、北斗定位系统等项目');
+                    printRow('提示: 输入 "egg" 即可触发彩蛋体验。', 'info');
                 } else if (core === 'egg') {
                     printRow('>> 正在启动极客浪漫彩蛋系统...', 'success');
                     var eggBtn = document.getElementById('easterEggCard');
@@ -725,7 +725,7 @@
                         printRow('抱歉，未能检测到彩蛋入口组件。', 'error');
                     }
                 } else {
-                    printRow('指令未识别: "' + esc(core) + '". 输入 "help" 获取帮助手册。', 'error');
+                    printRow('无法识别指令: "' + esc(core) + '"。请输入 "help" 获取帮助菜单。', 'error');
                 }
             }, 100);
         }
