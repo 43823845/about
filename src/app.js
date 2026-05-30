@@ -39,7 +39,14 @@
     ───────────────────────────────────────── */
     document.addEventListener('DOMContentLoaded', function () {
 
-        var projects = window.PROJECTS || [];
+        // 备份原始静态项目列表用于重置
+        if (!window.DEFAULT_PROJECTS && window.PROJECTS) {
+            window.DEFAULT_PROJECTS = JSON.parse(JSON.stringify(window.PROJECTS));
+        }
+        // 从 localStorage 融合加载自定义修改后的项目列表
+        var customProjs = localStorage.getItem('yj_custom_projects');
+        var projects = customProjs ? JSON.parse(customProjs) : (window.PROJECTS || []);
+        window.PROJECTS = projects;
 
         /* ── Loading Screen ── */
         var loader = document.getElementById('loader');
@@ -270,6 +277,7 @@
             if (modal && modal.classList.contains('active')) closeModal();
             if (wechatModal && wechatModal.style.visibility === 'visible') hideWechatQR();
             if (easterEggModal && easterEggModal.style.visibility === 'visible') hideEasterEgg();
+            if (adminModal && adminModal.style.visibility === 'visible') hideAdminModal();
         });
 
         /* ── 简历下载（#10 优化：优先寻找 PDF，降级到打印）── */
@@ -326,6 +334,36 @@
             });
         }
 
+        /* ── 管理控制台 Modal 逻辑 ── */
+        var adminModal = document.getElementById('adminModal');
+        var adminContent = document.getElementById('adminModalContent');
+        var closeAdmin = document.getElementById('closeAdminModal');
+        
+        window.showAdminModal = function() {
+            if (!adminModal) return;
+            renderAdminProjectList();
+            adminModal.style.opacity = '1';
+            adminModal.style.visibility = 'visible';
+            if (adminContent) adminContent.style.transform = 'scale(1)';
+            document.body.style.overflow = 'hidden';
+            resetAdminForm();
+        };
+
+        window.hideAdminModal = function() {
+            if (!adminModal) return;
+            adminModal.style.opacity = '0';
+            adminModal.style.visibility = 'hidden';
+            if (adminContent) adminContent.style.transform = 'scale(0.9)';
+            document.body.style.overflow = '';
+        };
+
+        if (closeAdmin) closeAdmin.addEventListener('click', hideAdminModal);
+        if (adminModal) {
+            adminModal.addEventListener('click', function (e) {
+                if (e.target === adminModal) hideAdminModal();
+            });
+        }
+
         /* ── 微信二维码 ── */
         var wechatModal   = document.getElementById('wechatModal');
         var wechatContent = document.getElementById('wechatModalContent');
@@ -358,6 +396,222 @@
         if (wechatModal) {
             wechatModal.addEventListener('click', function (e) {
                 if (e.target === wechatModal) hideWechatQR(e);
+            });
+        }
+
+        /* ── 可视化项目管理台 核心交互与 CRUD 逻辑 ── */
+        var adminSaveBtn = document.getElementById('adminSaveBtn');
+        var adminClearBtn = document.getElementById('adminClearBtn');
+        var adminExportBtn = document.getElementById('adminExportBtn');
+        var adminResetBtn = document.getElementById('adminResetBtn');
+        var brandLogo = document.querySelector('#mainNav .nav-scroll');
+
+        // 双击导航 Logo 快捷开启管理台
+        if (brandLogo) {
+            brandLogo.addEventListener('dblclick', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                showAdminModal();
+            });
+        }
+
+        function renderAdminProjectList() {
+            var listContainer = document.getElementById('adminProjectList');
+            var countLabel = document.getElementById('adminProjCount');
+            if (!listContainer) return;
+            listContainer.innerHTML = '';
+            countLabel.textContent = projects.length;
+            
+            projects.forEach(function (p, index) {
+                var item = document.createElement('div');
+                item.className = 'admin-proj-item';
+                
+                item.innerHTML = [
+                    '<div class="flex items-center gap-3 overflow-hidden">',
+                    '  <div class="admin-proj-num">' + String(index + 1).padStart(2, '0') + '</div>',
+                    '  <div class="overflow-hidden">',
+                    '    <p class="text-xs font-bold text-white truncate">' + esc(p.title) + '</p>',
+                    '    <p class="text-[10px] text-slate-500 truncate">' + esc(p.cat) + ' · ' + esc(p.role) + '</p>',
+                    '  </div>',
+                    '</div>',
+                    '<div class="flex gap-2 flex-shrink-0">',
+                    '  <button type="button" class="admin-proj-btn admin-proj-btn-edit" data-idx="' + index + '" title="编辑">',
+                    '    <i class="fas fa-edit text-xs"></i>',
+                    '  </button>',
+                    '  <button type="button" class="admin-proj-btn admin-proj-btn-del" data-idx="' + index + '" title="删除">',
+                    '    <i class="fas fa-trash-alt text-xs"></i>',
+                    '  </button>',
+                    '</div>'
+                ].join('');
+                
+                item.querySelector('.admin-proj-btn-edit').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    editAdminProject(index);
+                });
+                item.querySelector('.admin-proj-btn-del').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    deleteAdminProject(index);
+                });
+                
+                listContainer.appendChild(item);
+            });
+        }
+
+        function resetAdminForm() {
+            document.getElementById('editIndex').value = '-1';
+            document.getElementById('adminForm').reset();
+            if (adminSaveBtn) {
+                adminSaveBtn.innerHTML = '<i class="fas fa-save mr-1"></i>保存并应用项目';
+                adminSaveBtn.className = "flex-grow py-3 bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs rounded-xl transition-all shadow-lg shadow-amber-600/20 cursor-pointer";
+            }
+        }
+
+        function editAdminProject(index) {
+            var p = projects[index];
+            if (!p) return;
+            document.getElementById('editIndex').value = String(index);
+            document.getElementById('adminTitle').value = p.title;
+            document.getElementById('adminRole').value = p.role;
+            document.getElementById('adminCat').value = p.cat;
+            document.getElementById('adminFilter').value = p.filter;
+            document.getElementById('adminType').value = p.type;
+            document.getElementById('adminImg').value = p.img;
+            document.getElementById('adminTags').value = p.tags ? p.tags.join(', ') : '';
+            document.getElementById('adminTech').value = p.tech;
+            document.getElementById('adminChallenges').value = p.challenges ? p.challenges.join('\n') : '';
+            document.getElementById('adminAchievements').value = p.achievements || '';
+            
+            if (adminSaveBtn) {
+                adminSaveBtn.innerHTML = '<i class="fas fa-edit mr-1"></i>更新项目内容';
+                adminSaveBtn.className = "flex-grow py-3 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl transition-all shadow-lg shadow-blue-600/20 cursor-pointer";
+            }
+        }
+
+        function deleteAdminProject(index) {
+            if (!confirm('确定要删除项目 "' + projects[index].title + '" 吗？')) return;
+            projects.splice(index, 1);
+            localStorage.setItem('yj_custom_projects', JSON.stringify(projects));
+            renderProjects('all');
+            renderAdminProjectList();
+            resetAdminForm();
+        }
+
+        if (adminClearBtn) {
+            adminClearBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                resetAdminForm();
+            });
+        }
+
+        if (adminSaveBtn) {
+            adminSaveBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                var title = document.getElementById('adminTitle').value.trim();
+                var role = document.getElementById('adminRole').value.trim();
+                var cat = document.getElementById('adminCat').value;
+                var filter = document.getElementById('adminFilter').value;
+                var type = document.getElementById('adminType').value;
+                var img = document.getElementById('adminImg').value.trim();
+                var tagsStr = document.getElementById('adminTags').value.trim();
+                var tech = document.getElementById('adminTech').value.trim();
+                var challengesStr = document.getElementById('adminChallenges').value.trim();
+                var achievements = document.getElementById('adminAchievements').value.trim();
+
+                if (!title || !role || !img || !tech || !challengesStr) {
+                    alert('请完整填写项目信息（标题、角色、图片路径、技术核心、核心挑战为必填项）！');
+                    return;
+                }
+
+                var tags = tagsStr ? tagsStr.split(/[,,，，]/).map(function(t){ return t.trim(); }).filter(Boolean) : [];
+                var challenges = challengesStr.split('\n').map(function(c){ return c.trim(); }).filter(Boolean);
+
+                var editIndex = parseInt(document.getElementById('editIndex').value, 10);
+                if (editIndex === -1) {
+                    // 新建
+                    var nextId = projects.length > 0 ? Math.max.apply(null, projects.map(function(p){ return p.id; })) + 1 : 1;
+                    var newProj = {
+                        id: nextId,
+                        title: title,
+                        cat: cat,
+                        filter: filter,
+                        type: type,
+                        img: img,
+                        tags: tags,
+                        role: role,
+                        tech: tech,
+                        challenges: challenges,
+                        achievements: achievements
+                    };
+                    projects.push(newProj);
+                } else {
+                    // 更新
+                    var targetProj = projects[editIndex];
+                    targetProj.title = title;
+                    targetProj.role = role;
+                    targetProj.cat = cat;
+                    targetProj.filter = filter;
+                    targetProj.type = type;
+                    targetProj.img = img;
+                    targetProj.tags = tags;
+                    targetProj.tech = tech;
+                    targetProj.challenges = challenges;
+                    targetProj.achievements = achievements;
+                }
+
+                localStorage.setItem('yj_custom_projects', JSON.stringify(projects));
+                renderProjects('all');
+                renderAdminProjectList();
+                resetAdminForm();
+                alert('项目已成功保存并即时发布应用！');
+            });
+        }
+
+        if (adminResetBtn) {
+            adminResetBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                if (!confirm('确定要清除所有自定义修改，恢复为系统出厂配置吗？')) return;
+                localStorage.removeItem('yj_custom_projects');
+                if (window.DEFAULT_PROJECTS) {
+                    projects = JSON.parse(JSON.stringify(window.DEFAULT_PROJECTS));
+                    window.PROJECTS = projects;
+                }
+                renderProjects('all');
+                renderAdminProjectList();
+                resetAdminForm();
+                alert('系统项目数据已成功恢复出厂默认值！');
+            });
+        }
+
+        if (adminExportBtn) {
+            adminExportBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                var jsContent = [
+                    '/**',
+                    ' * projects.js — 项目数据源',
+                    ' * 由 智能项目管理控制台 自动导出生成，支持零代码动态编辑',
+                    ' */',
+                    '',
+                    '/* global window */',
+                    '(function () {',
+                    "    'use strict';",
+                    '',
+                    '    var PROJECTS = ' + JSON.stringify(projects, null, 4) + ';',
+                    '',
+                    '    // 挂载到全局，供 app.js 使用',
+                    '    window.PROJECTS = PROJECTS;',
+                    '})();',
+                    ''
+                ].join('\n');
+                
+                var blob = new Blob([jsContent], { type: 'application/javascript;charset=utf-8' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = 'projects.js';
+                a.click();
+                URL.revokeObjectURL(url);
             });
         }
 
@@ -702,6 +956,7 @@
                     printRow('  help      - 显示此指令菜单');
                     printRow('  ls        - 列出虚拟内核工作目录');
                     printRow('  cat <file>- 查看指定文本文件内容');
+                    printRow('  admin     - 启动可视化项目管理后台');
                     printRow('  status    - 查看硬件系统实时健康诊断报告');
                     printRow('  projects  - 查看全栈研发项目分类列表');
                     printRow('  egg       - 启动隐藏的极客浪漫彩蛋');
@@ -773,6 +1028,11 @@
                     } else {
                         printRow('抱歉，未能检测到彩蛋入口组件。', 'error');
                     }
+                } else if (core === 'admin' || core === 'manage') {
+                    printRow('>> 正在启动项目可视化管理控制台...', 'success');
+                    setTimeout(function() {
+                        if (window.showAdminModal) window.showAdminModal();
+                    }, 500);
                 } else {
                     printRow('无法识别指令: "' + esc(core) + '"。请输入 "help" 获取帮助菜单。', 'error');
                 }

@@ -1307,3 +1307,94 @@ input[type="range"]::-moz-range-thumb:hover {
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
 }
+
+/* ===== 可视化项目管理后台 豪华毛玻璃样式 ===== */
+#adminModal {
+    transition: opacity var(--dur-normal) ease, visibility var(--dur-normal) ease;
+}
+
+#adminModalContent {
+    background: rgba(15, 23, 42, 0.95) !important;
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+#adminForm input,
+#adminForm select,
+#adminForm textarea {
+    background: rgba(5, 8, 16, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff !important;
+    transition: all 0.2s ease;
+}
+
+#adminForm input:focus,
+#adminForm select:focus,
+#adminForm textarea:focus {
+    border-color: var(--accent-gold) !important;
+    box-shadow: 0 0 10px rgba(232, 176, 79, 0.15);
+    background: rgba(5, 8, 16, 0.8) !important;
+}
+
+/* 列表内项目条目样式 */
+.admin-proj-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1rem;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.2s ease;
+}
+
+.admin-proj-item:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(232, 176, 79, 0.2);
+}
+
+.admin-proj-num {
+    background: rgba(232, 176, 79, 0.1);
+    color: var(--accent-gold);
+    font-weight: 700;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    flex-shrink: 0;
+}
+
+.admin-proj-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.admin-proj-btn-edit {
+    background: rgba(96, 165, 250, 0.1);
+    color: #60a5fa;
+}
+
+.admin-proj-btn-edit:hover {
+    background: #60a5fa;
+    color: #fff;
+}
+
+.admin-proj-btn-del {
+    background: rgba(248, 113, 113, 0.1);
+    color: #f87171;
+}
+
+.admin-proj-btn-del:hover {
+    background: #f87171;
+    color: #fff;
+}
