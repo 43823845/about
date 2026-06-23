@@ -236,6 +236,7 @@ section { scroll-margin-top: 90px; }
 .skill-category-title.text-green-400::after  { background: linear-gradient(90deg, #4ade80, rgba(74,222,128,0.3)); }
 .skill-category-title.text-purple-400::after { background: linear-gradient(90deg, #f2d6a2, rgba(242,214,162,0.3)); }
 .skill-category-title.text-rose-400::after   { background: linear-gradient(90deg, #fb7185, rgba(251,113,133,0.3)); }
+.skill-category-title.text-amber-400::after  { background: linear-gradient(90deg, #e8b04f, rgba(232,176,79,0.3)); }
 .skill-category-title:hover::after { width: 60px; }
 
 /* ===== 项目卡片 ===== */
