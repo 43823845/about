@@ -4,25 +4,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="杨杰的个人作品集与求职主页，聚焦硬件研发、嵌入式系统、PCB 设计、工业控制与高可靠产品交付。">
-    <meta name="keywords" content="杨杰,硬件工程师,嵌入式工程师,PCB设计,工业控制,物联网,作品集,个人主页">
+    <meta name="description" content="杨杰的个人作品集与求职主页，13年软硬件研发全栈工程师，聚焦硬件研发、16层HDI PCB、FPGA、嵌入式系统、工业控制与军工高可靠产品0→1全周期交付。">
+    <meta name="keywords" content="杨杰,硬件工程师,嵌入式工程师,全栈研发,PCB设计,FPGA,工业控制,军工航电,物联网,作品集,个人主页">
     <meta name="author" content="杨杰">
     <meta name="robots" content="index,follow">
-    <meta name="theme-color" content="#14110f">
+    <meta name="theme-color" content="#120f0d">
     
     <!-- Open Graph / SEO -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="杨杰 | 软硬件研发全栈工程师">
-    <meta property="og:description" content="聚焦硬件研发、嵌入式系统、PCB 设计、工业控制与高可靠交付方向的个人作品集与求职主页。">
+    <meta property="og:title" content="杨杰 | 13年软硬件研发全栈架构师 · 0→1高可靠交付专家">
+    <meta property="og:description" content="一人贯通原理图/16层PCB、FPGA/MCU固件、端侧TinyML、上位机与军标ATE量产治具的软硬件全栈作品集。">
     <meta property="og:locale" content="zh_CN">
     <meta property="og:site_name" content="杨杰作品集">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="杨杰 | 软硬件研发全栈工程师">
-    <meta name="twitter:description" content="硬件研发、嵌入式系统、工业控制与高可靠交付方向的个人作品集与求职主页。">
+    <meta name="twitter:title" content="杨杰 | 13年软硬件研发全栈架构师">
+    <meta name="twitter:description" content="硬件研发、嵌入式系统、工业控制与军工级高可靠交付方向的个人作品集与求职主页。">
     
-    <title>杨杰 | 软硬件研发全栈工程师</title>
+    <title>杨杰 | 13年软硬件研发全栈架构师 · 0→1高可靠交付专家</title>
 
-    <!-- PWA 支持 (根据协议动态加载，防止本地 file:// 协议抛出 CORS 警告) -->
+    <!-- PWA 支持 -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="杨杰作品集">
@@ -32,20 +32,17 @@
     <link rel="stylesheet" href="./output.css">
     <link rel="stylesheet" href="src/style.css">
 
-    <!-- 异步加载外部字体与图标库 (非阻塞) -->
+    <!-- 异步加载外部字体与图标库 -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
 
-    <!-- 预加载核心字体 -->
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+SC:wght@400;700&display=swap">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+SC:wght@400;700&display=swap" media="print" onload="this.media='all'">
-    
-    <!-- 异步加载 Font Awesome -->
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" media="print" onload="this.media='all'">
 
     <noscript>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Noto+Sans+SC:wght@400;700&display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     </noscript>
 </head>
@@ -65,18 +62,32 @@
 
     <!-- Navigation -->
     <nav id="mainNav" class="fixed top-0 w-full z-[1000] glass-nav">
-        <!-- 顶部滚动进度条 (微光金色渐变) -->
+        <!-- 顶部滚动进度条 -->
         <div id="scrollProgress" class="absolute top-0 left-0 h-0.5 w-0 z-[1002]"></div>
         <div class="max-w-7xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
-            <a href="#hero" class="nav-scroll flex items-center gap-3 group" data-target="hero">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-400 flex items-center justify-center font-bold text-white text-sm shadow-lg shadow-amber-500/20 group-hover:shadow-amber-500/40 transition-shadow">
-                    YJ
-                </div>
-                <span class="text-xl font-bold tracking-tight text-white">杨杰</span>
-            </a>
-            <div class="hidden md:flex items-center space-x-7 text-sm font-medium">
+            <div class="flex items-center gap-3">
+                <a href="#hero" class="nav-scroll flex items-center gap-3 group" data-target="hero" title="双击可打开项目可视化管理后台">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-orange-400 flex items-center justify-center font-bold text-white text-sm shadow-lg shadow-amber-500/20 group-hover:shadow-amber-500/40 transition-shadow">
+                        YJ
+                    </div>
+                    <div>
+                        <span class="text-lg font-bold tracking-tight text-white block leading-none">杨杰</span>
+                        <span class="text-[10px] font-mono text-amber-400/90 tracking-wider uppercase block mt-1">13Y Full-Stack R&amp;D</span>
+                    </div>
+                </a>
+                <span class="nav-status-pill hidden xl:inline-flex ml-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    开放核心岗位 / 技术合作
+                </span>
+            </div>
+
+            <div class="hidden md:flex items-center space-x-6 text-sm font-medium">
                 <a href="#hero" class="nav-scroll text-slate-400 hover:text-white transition-colors relative group" data-target="hero">
                     首页
+                    <span class="nav-underline"></span>
+                </a>
+                <a href="#value-loop" class="nav-scroll text-amber-300/90 hover:text-white transition-colors relative group font-semibold" data-target="value-loop">
+                    全栈价值
                     <span class="nav-underline"></span>
                 </a>
                 <a href="#about" class="nav-scroll text-slate-400 hover:text-white transition-colors relative group" data-target="about">
@@ -87,12 +98,12 @@
                     技能矩阵
                     <span class="nav-underline"></span>
                 </a>
-                <a href="#experience" class="nav-scroll text-slate-400 hover:text-white transition-colors relative group" data-target="experience">
-                    工作经历
-                    <span class="nav-underline"></span>
-                </a>
                 <a href="#projects" class="nav-scroll text-slate-400 hover:text-white transition-colors relative group" data-target="projects">
                     研发项目
+                    <span class="nav-underline"></span>
+                </a>
+                <a href="#experience" class="nav-scroll text-slate-400 hover:text-white transition-colors relative group" data-target="experience">
+                    工作经历
                     <span class="nav-underline"></span>
                 </a>
                 <a href="#awards" class="nav-scroll text-slate-400 hover:text-white transition-colors relative group" data-target="awards">
@@ -100,11 +111,11 @@
                     <span class="nav-underline"></span>
                 </a>
                 <div class="flex items-center gap-2.5 ml-2">
-                    <button id="navResumeBtn" type="button" class="px-4 py-2 bg-white/5 hover:bg-white/10 text-slate-200 hover:text-white border border-white/10 rounded-xl transition-all text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
-                        <i class="fas fa-file-pdf text-amber-400" aria-hidden="true"></i> 简历
+                    <button id="navResumeBtn" type="button" class="px-3.5 py-2 bg-white/5 hover:bg-white/10 text-slate-200 hover:text-white border border-white/10 rounded-xl transition-all text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
+                        <i class="fas fa-file-pdf text-amber-400" aria-hidden="true"></i> A4简历
                     </button>
                     <a href="#contact" class="nav-scroll px-4 py-2 bg-amber-600 hover:bg-amber-500 text-white font-semibold rounded-xl transition-all shadow-lg shadow-amber-600/20 hover:shadow-amber-500/30 text-xs" data-target="contact">
-                        联系我
+                        立即联系
                     </a>
                 </div>
             </div>
@@ -123,27 +134,30 @@
             <a href="#hero" class="mobile-nav-link block px-4 py-3 text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition-all" data-target="hero">
                 <i class="fas fa-home w-6 text-amber-400" aria-hidden="true"></i> 首页
             </a>
+            <a href="#value-loop" class="mobile-nav-link block px-4 py-3 text-amber-300 font-semibold hover:text-white hover:bg-white/5 rounded-xl transition-all" data-target="value-loop">
+                <i class="fas fa-layer-group w-6 text-amber-400" aria-hidden="true"></i> 全栈价值闭环
+            </a>
             <a href="#about" class="mobile-nav-link block px-4 py-3 text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition-all" data-target="about">
                 <i class="fas fa-user w-6 text-amber-400" aria-hidden="true"></i> 关于我
             </a>
             <a href="#skills" class="mobile-nav-link block px-4 py-3 text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition-all" data-target="skills">
                 <i class="fas fa-microchip w-6 text-amber-400" aria-hidden="true"></i> 技能矩阵
             </a>
+            <a href="#projects" class="mobile-nav-link block px-4 py-3 text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition-all" data-target="projects">
+                <i class="fas fa-rocket w-6 text-amber-400" aria-hidden="true"></i> 研发项目 (18)
+            </a>
             <a href="#experience" class="mobile-nav-link block px-4 py-3 text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition-all" data-target="experience">
                 <i class="fas fa-briefcase w-6 text-amber-400" aria-hidden="true"></i> 工作经历
             </a>
-            <a href="#projects" class="mobile-nav-link block px-4 py-3 text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition-all" data-target="projects">
-                <i class="fas fa-rocket w-6 text-amber-400" aria-hidden="true"></i> 研发项目
-            </a>
             <a href="#awards" class="mobile-nav-link block px-4 py-3 text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition-all" data-target="awards">
-                <i class="fas fa-trophy w-6 text-amber-400" aria-hidden="true"></i> 荣誉
+                <i class="fas fa-trophy w-6 text-amber-400" aria-hidden="true"></i> 荣誉与开源
             </a>
             <a href="#contact" class="mobile-nav-link block px-4 py-3 text-slate-300 hover:text-white hover:bg-white/5 rounded-xl transition-all" data-target="contact">
                 <i class="fas fa-envelope w-6 text-amber-400" aria-hidden="true"></i> 联系我
             </a>
             <div class="pt-4 mt-2 border-t border-white/10">
-                <button id="mobileResumeBtn" type="button" class="w-full py-3 bg-amber-600 hover:bg-amber-500 text-white font-bold rounded-xl transition-all text-xs flex items-center justify-center gap-2">
-                    <i class="fas fa-file-pdf" aria-hidden="true"></i> 下载完整简历 (PDF)
+                <button id="mobileResumeBtn" type="button" class="w-full py-3 bg-amber-600 hover:bg-amber-500 text-white font-bold rounded-xl transition-all text-xs flex items-center justify-center gap-2 cursor-pointer">
+                    <i class="fas fa-file-pdf" aria-hidden="true"></i> 预览 / 打印 A4 简历 (PDF)
                 </button>
             </div>
         </div>
@@ -152,74 +166,106 @@
 
     <!-- ===== HERO SECTION ===== -->
     <section id="hero" class="min-h-screen flex items-center px-4 sm:px-6 py-20 sm:py-24 relative overflow-hidden hero-grid">
-        <!-- Canvas Particles (替代原本 30个高开销 DOM 元素) -->
+        <!-- Canvas Particles -->
         <canvas id="particles-canvas" class="absolute inset-0 pointer-events-none w-full h-full"></canvas>
         
-        <!-- Gradient Orbs (包裹在 overflow-hidden 容器内防止 iOS Safari 异常横向撑开) -->
+        <!-- Gradient Orbs -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
             <div class="absolute top-1/4 -left-32 w-96 h-96 bg-amber-500/10 rounded-full blur-[120px]"></div>
             <div class="absolute bottom-1/4 -right-32 w-96 h-96 bg-orange-500/8 rounded-full blur-[120px]"></div>
         </div>
 
-        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-10 lg:gap-16 items-center relative z-10 w-full">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-10 lg:gap-12 items-center relative z-10 w-full">
             <div>
-                <div class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-full bg-amber-500/10 text-amber-400 text-xs font-bold mb-5 sm:mb-6 border border-amber-500/20 max-w-full">
-                    <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse flex-shrink-0"></span>
-                    <span class="truncate">软硬件研发全栈工程师 · 13年行业经验</span>
+                <div class="inline-flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-full bg-amber-500/10 text-amber-400 text-xs font-bold mb-4 sm:mb-5 border border-amber-500/20 max-w-full">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0"></span>
+                    <span class="truncate">软硬件研发全栈架构师 · 13年实战经验 · 0→1 量产交付专家</span>
                 </div>
-                <h1 class="hero-title text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-white mb-5 sm:mb-6 leading-tight tracking-tight">
+                <h1 class="hero-title text-3xl sm:text-5xl md:text-6xl font-black text-white mb-3 leading-tight tracking-tight">
                     你永远无法优化一个不存在的东西。
                 </h1>
+                <p class="hero-subtitle-tagline">
+                    <i class="fas fa-bolt text-amber-400 text-sm" aria-hidden="true"></i>
+                    <span>先从 0 到 1 造出高可靠“真家伙”，再以军标级精度打磨至量产最优解</span>
+                </p>
                 
                 <!-- 核心高光能力胶囊 -->
-                <div class="flex flex-wrap gap-2 mb-6">
-                    <span class="hero-highlight-capsule"><i class="fas fa-microchip text-xs"></i> 13年硬核研发</span>
-                    <span class="hero-highlight-capsule"><i class="fas fa-cube text-xs"></i> 0→1 全周期交付</span>
-                    <span class="hero-highlight-capsule"><i class="fas fa-shield-alt text-xs"></i> 军工/车规高可靠</span>
-                    <span class="hero-highlight-capsule"><i class="fas fa-brain text-xs"></i> TinyML 边缘AI</span>
+                <div class="flex flex-wrap gap-2 mb-5">
+                    <span class="hero-highlight-capsule"><i class="fas fa-layer-group text-xs"></i> 1人=5岗全栈闭环</span>
+                    <span class="hero-highlight-capsule"><i class="fas fa-shield-halved text-xs"></i> GJB151B 军标高可靠</span>
+                    <span class="hero-highlight-capsule"><i class="fas fa-microchip text-xs"></i> 16层HDI / FPGA / MCU</span>
+                    <span class="hero-highlight-capsule"><i class="fas fa-brain text-xs"></i> TinyML 边缘端AI</span>
+                    <span class="hero-highlight-capsule"><i class="fas fa-industry text-xs"></i> ATE治具 &amp; 批量量产</span>
                 </div>
 
-                <p class="text-sm sm:text-base md:text-lg text-slate-400 mb-7 sm:mb-8 leading-relaxed max-w-xl">
-                    学历不是光环，儿时的“破坏大王”对电子的热爱才是。把童年“拆拆装装”的热忱炼成硬核实力，十余年深耕军工、工业、车规、医疗等严苛场景，从 0 到 1 全程交付。信奉“先做出来，再细细打磨”——快速验证核心功能，持续迭代优化细节，在实战中打磨出可量产、可落地的全栈最优解。
+                <p class="text-sm sm:text-base text-slate-300/90 mb-5 leading-relaxed max-w-xl">
+                    学历不是光环，把童年“拆拆装装”的热忱炼成解决极限工程难题的硬核实力才是。十余年深耕**军工航电、工业控制、能源物联**等严苛场景，我不仅能独立完成**高速多层原理图与PCB、FPGA/MCU底层固件、PID/TinyML算法**，更能直接交付**跨平台上位机、微信小程序与产线ATE测试治具**——以“一人成军”的系统级工程闭环，为团队省去跨部门推诿损耗。
                 </p>
-                <div class="flex flex-wrap gap-3 sm:gap-4">
-                    <a href="#projects" class="nav-scroll inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3.5 bg-gradient-to-r from-amber-600 to-orange-500 hover:from-amber-500 hover:to-orange-400 text-white font-bold rounded-2xl transition-all shadow-xl shadow-amber-600/25 hover:shadow-amber-500/40 hover:-translate-y-0.5" data-target="projects">
-                        <i class="fas fa-rocket text-sm" aria-hidden="true"></i> 查看项目集
+
+                <!-- 新增：首屏三维核心价值背书卡 (让HR与技术总监3秒抓取核心竞争力) -->
+                <div class="hero-proof-grid">
+                    <div class="hero-proof-card">
+                        <div class="hero-proof-kicker"><i class="fas fa-cubes" aria-hidden="true"></i> 全栈单兵闭环</div>
+                        <div class="hero-proof-value">1人贯通 5 岗</div>
+                        <p class="hero-proof-desc">独立包干硬件PCB、FPGA、嵌入式、上位机与ATE治具，软硬联调效率提升300%</p>
+                    </div>
+                    <div class="hero-proof-card">
+                        <div class="hero-proof-kicker"><i class="fas fa-jet-fighter" aria-hidden="true"></i> 军工航电品质</div>
+                        <div class="hero-proof-value">GJB151B 认证</div>
+                        <p class="hero-proof-desc">主导中航AVIC机载、航发ECU及115V/28V装备研发，严苛EMC与宽温域一次通过</p>
+                    </div>
+                    <div class="hero-proof-card">
+                        <div class="hero-proof-kicker"><i class="fas fa-tower-broadcast" aria-hidden="true"></i> 规模量产验证</div>
+                        <div class="hero-proof-value">450+ 城市节点</div>
+                        <p class="hero-proof-desc">超50,000小时真实环境无故障运行，多款工业主控板实现客户产线100%全线导入</p>
+                    </div>
+                </div>
+
+                <div class="flex flex-wrap gap-3">
+                    <a href="#projects" class="nav-scroll inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-gradient-to-r from-amber-600 to-orange-500 hover:from-amber-500 hover:to-orange-400 text-white font-bold rounded-2xl transition-all shadow-xl shadow-amber-600/25 hover:shadow-amber-500/40 hover:-translate-y-0.5 text-sm" data-target="projects">
+                        <i class="fas fa-rocket text-xs" aria-hidden="true"></i> 浏览 18 个实战项目
                     </a>
-                    <a href="#contact" class="nav-scroll inline-flex items-center justify-center gap-2 px-6 sm:px-7 py-3.5 bg-white/5 hover:bg-white/10 text-white font-bold rounded-2xl transition-all border border-white/10 hover:border-white/20 hover:-translate-y-0.5" data-target="contact">
-                        <i class="fas fa-paper-plane text-sm" aria-hidden="true"></i> 建立联系
+                    <button id="heroResumeBtn" type="button" class="inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 font-bold rounded-2xl transition-all border border-amber-500/30 hover:-translate-y-0.5 text-sm cursor-pointer">
+                        <i class="fas fa-file-pdf text-xs" aria-hidden="true"></i> 预览 A4 精装简历
+                    </button>
+                    <a href="#value-loop" class="nav-scroll inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-white/5 hover:bg-white/10 text-white font-bold rounded-2xl transition-all border border-white/10 hover:border-white/20 hover:-translate-y-0.5 text-sm" data-target="value-loop">
+                        <i class="fas fa-chart-pie text-xs text-amber-400" aria-hidden="true"></i> 了解全栈赋能价值
                     </a>
                 </div>
             </div>
             
+            <!-- 右侧：三模合一交互式系统调试与战力分析仪 -->
             <div class="relative w-full">
                 <div class="absolute -inset-8 bg-gradient-to-br from-amber-500/15 via-orange-500/10 to-yellow-500/10 blur-3xl rounded-full pointer-events-none" aria-hidden="true"></div>
-                <div class="relative bg-gradient-to-br from-slate-900 to-slate-800/90 border border-white/10 rounded-3xl p-4 sm:p-6 shadow-2xl w-full min-h-[420px] sm:min-h-[440px] flex flex-col backdrop-blur-md">
-                    <!-- 头部：标题与标签切换器 -->
-                    <div class="flex items-center justify-between border-b border-white/10 pb-3 mb-3 flex-shrink-0 gap-2">
+                <div class="relative bg-gradient-to-br from-slate-900 to-slate-800/95 border border-white/10 rounded-3xl p-4 sm:p-6 shadow-2xl w-full min-h-[450px] flex flex-col backdrop-blur-md">
+                    <!-- 头部：标题与三模标签切换器 -->
+                    <div class="flex flex-wrap items-center justify-between border-b border-white/10 pb-3 mb-3 flex-shrink-0 gap-2">
                         <div class="flex items-center gap-2 relative min-w-0">
                             <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping absolute"></span>
                             <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 relative flex-shrink-0"></span>
-                            <span class="text-xs font-bold text-slate-300 tracking-wider ml-1 truncate">系统调试分析仪</span>
+                            <span class="text-xs font-bold text-slate-200 tracking-wider ml-1 truncate">全栈工程诊断 &amp; 战力分析仪</span>
                         </div>
                         <div class="flex gap-1.5 flex-shrink-0" role="tablist" aria-label="调试面板切换">
-                            <button id="tabConsoleBtn" class="px-2.5 py-1 text-[11px] rounded-lg font-semibold bg-amber-500/10 text-amber-300 border border-amber-500/20 transition-all cursor-pointer focus:outline-none whitespace-nowrap" role="tab" aria-selected="true" aria-controls="debugConsolePanel">📟 终端</button>
-                            <button id="tabOscilloscopeBtn" class="px-2.5 py-1 text-[11px] rounded-lg font-semibold bg-white/5 text-slate-400 border border-white/5 hover:text-white transition-all cursor-pointer focus:outline-none whitespace-nowrap" role="tab" aria-selected="false" aria-controls="debugOscilloscopePanel">📊 示波器</button>
+                            <button id="tabConsoleBtn" type="button" class="px-2.5 py-1 text-[11px] rounded-lg font-semibold bg-amber-500/10 text-amber-300 border border-amber-500/20 transition-all cursor-pointer focus:outline-none whitespace-nowrap" role="tab" aria-selected="true" aria-controls="debugConsolePanel">📟 终端</button>
+                            <button id="tabOscilloscopeBtn" type="button" class="px-2.5 py-1 text-[11px] rounded-lg font-semibold bg-white/5 text-slate-400 border border-white/5 hover:text-white transition-all cursor-pointer focus:outline-none whitespace-nowrap" role="tab" aria-selected="false" aria-controls="debugOscilloscopePanel">📊 示波器</button>
+                            <button id="tabRadarBtn" type="button" class="px-2.5 py-1 text-[11px] rounded-lg font-semibold bg-white/5 text-slate-400 border border-white/5 hover:text-white transition-all cursor-pointer focus:outline-none whitespace-nowrap" role="tab" aria-selected="false" aria-controls="debugRadarPanel">🎯 战力雷达</button>
                         </div>
                     </div>
+
                     <!-- 面板主区域 -->
                     <div class="flex-grow flex flex-col justify-between">
-                        <!-- 终端控制台界面 -->
+                        <!-- Mode 1: 终端控制台界面 -->
                         <div id="debugConsolePanel" class="flex-grow flex flex-col justify-between" role="tabpanel" aria-labelledby="tabConsoleBtn">
-                            <div id="consoleHistory" class="font-mono text-[11px] text-emerald-400/90 leading-relaxed overflow-y-auto max-h-[220px] h-[220px] space-y-1.5 select-text no-scrollbar scroll-smooth"></div>
+                            <div id="consoleHistory" class="font-mono text-[11px] text-emerald-400/90 leading-relaxed overflow-y-auto max-h-[235px] h-[235px] space-y-1.5 select-text no-scrollbar scroll-smooth"></div>
                             
-                            <!-- 终端快捷命令 Chips (融入工程师浪漫与极客情怀) -->
+                            <!-- 终端快捷命令 Chips -->
                             <div class="terminal-chips-bar" aria-label="终端快捷命令">
                                 <span class="text-[10px] text-slate-500 self-center mr-1">快捷指令:</span>
+                                <button type="button" class="terminal-chip !bg-amber-500/20 !border-amber-400/40 !text-amber-200" data-cmd="roi">💎 价值评估(roi)</button>
                                 <button type="button" class="terminal-chip" data-cmd="status">status</button>
+                                <button type="button" class="terminal-chip" data-cmd="radar">🎯 六维雷达</button>
                                 <button type="button" class="terminal-chip !bg-rose-500/10 !border-rose-500/25 !text-rose-300 hover:!bg-rose-500/25" data-cmd="love">💖 工程师浪漫</button>
                                 <button type="button" class="terminal-chip" data-cmd="blink">✨ 点亮LED</button>
-                                <button type="button" class="terminal-chip" data-cmd="matrix">matrix 代码雨</button>
                                 <button type="button" class="terminal-chip" data-cmd="projects">projects</button>
                                 <button type="button" class="terminal-chip" data-cmd="cat 儿时初心.txt">cat 初心</button>
                                 <button type="button" class="terminal-chip" data-cmd="clear">clear</button>
@@ -227,36 +273,83 @@
 
                             <div class="flex items-center gap-2 border-t border-white/5 pt-2.5 mt-2 flex-shrink-0">
                                 <span class="font-mono text-xs text-amber-400">yj_core:~$</span>
-                                <input type="text" id="consoleInput" class="bg-transparent border-0 outline-none text-xs text-white font-mono flex-grow focus:ring-0" placeholder="输入 help 或点击上方浪漫指令..." autocomplete="off">
+                                <input type="text" id="consoleInput" class="bg-transparent border-0 outline-none text-xs text-white font-mono flex-grow focus:ring-0" placeholder="输入 roi / help 或点击上方指令胶囊..." autocomplete="off">
                             </div>
                         </div>
                         
-                        <!-- 示波器界面 -->
+                        <!-- Mode 2: 示波器界面 -->
                         <div id="debugOscilloscopePanel" class="flex-grow flex flex-col justify-between hidden" role="tabpanel" aria-labelledby="tabOscilloscopeBtn">
-                            <div class="relative bg-black/60 rounded-xl overflow-hidden border border-white/10 h-[190px] flex items-center justify-center flex-shrink-0">
-                                <canvas id="oscilloscopeCanvas" class="w-full h-full block"></canvas>
-                                <div class="absolute bottom-2 right-2 text-[9px] font-mono text-amber-400/60 pointer-events-none" id="oscModeLabel">MODE: CH1 DC-COUPLING</div>
+                            <div class="telemetry-strip">
+                                <div class="telemetry-pill">
+                                    <span class="telemetry-pill-label">CH1 峰峰值</span>
+                                    <span class="telemetry-pill-val" id="oscVppVal">28.0 Vpp</span>
+                                </div>
+                                <div class="telemetry-pill">
+                                    <span class="telemetry-pill-label">主频 / 采样</span>
+                                    <span class="telemetry-pill-val" id="oscFreqVal">400 Hz</span>
+                                </div>
+                                <div class="telemetry-pill">
+                                    <span class="telemetry-pill-label">谐波失真 THD</span>
+                                    <span class="telemetry-pill-val text-emerald-400" id="oscThdVal">&lt; 0.8%</span>
+                                </div>
+                                <div class="telemetry-pill">
+                                    <span class="telemetry-pill-label">信噪比 SNR</span>
+                                    <span class="telemetry-pill-val text-amber-300" id="oscSnrVal">94.2 dB</span>
+                                </div>
                             </div>
-                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3 border-t border-white/5 pt-3 mt-3 flex-shrink-0">
+                            <div class="relative bg-black/70 rounded-xl overflow-hidden border border-white/10 h-[175px] flex items-center justify-center flex-shrink-0">
+                                <canvas id="oscilloscopeCanvas" class="w-full h-full block"></canvas>
+                                <div class="absolute bottom-2 right-2 text-[9px] font-mono text-amber-400/70 pointer-events-none" id="oscModeLabel">MODE: CH1 DC-COUPLING</div>
+                            </div>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3 border-t border-white/5 pt-3 mt-2.5 flex-shrink-0">
                                 <div>
-                                    <label class="block text-[9px] text-slate-400 uppercase tracking-wider mb-1 font-bold">频率 (Hz)</label>
+                                    <label for="oscFreqSlider" class="block text-[9px] text-slate-400 uppercase tracking-wider mb-1 font-bold">频率调节 (Hz)</label>
                                     <input type="range" id="oscFreqSlider" min="1" max="10" step="0.5" value="3.5" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500">
                                 </div>
                                 <div>
-                                    <label class="block text-[9px] text-slate-400 uppercase tracking-wider mb-1 font-bold">振幅 (V)</label>
+                                    <label for="oscAmpSlider" class="block text-[9px] text-slate-400 uppercase tracking-wider mb-1 font-bold">振幅增益 (V)</label>
                                     <input type="range" id="oscAmpSlider" min="5" max="45" step="1" value="25" class="w-full h-1 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-amber-500">
                                 </div>
                                 <div class="col-span-2 sm:col-span-1">
-                                    <label class="block text-[9px] text-slate-400 uppercase tracking-wider mb-1 font-bold">硬件测试信号</label>
-                                    <select id="oscWaveSelect" class="bg-slate-800 border border-white/10 rounded-lg px-2 py-1 sm:py-0.5 text-[11px] text-slate-300 w-full focus:outline-none focus:border-amber-500 cursor-pointer">
+                                    <label for="oscWaveSelect" class="block text-[9px] text-slate-400 uppercase tracking-wider mb-1 font-bold">硬件测试信号源</label>
+                                    <select id="oscWaveSelect" class="bg-slate-800 border border-white/10 rounded-lg px-2 py-1 text-[11px] text-slate-200 w-full focus:outline-none focus:border-amber-500 cursor-pointer">
                                         <option value="heart">💖 工程师之吻 (心形线)</option>
                                         <option value="ecg">💓 生命体征 (ECG心跳)</option>
                                         <option value="blink">✨ 点亮第一颗 LED (PWM呼吸)</option>
                                         <option value="lissajous">🌀 李萨如图形 (Lissajous)</option>
-                                        <option value="sine">正弦波 (Sine)</option>
-                                        <option value="square">方波 (Square)</option>
-                                        <option value="filtered">带噪信号 + 硬件滤波</option>
+                                        <option value="sine">正弦波 (115V 400Hz航空基准)</option>
+                                        <option value="square">方波 (FPGA高速时钟边沿)</option>
+                                        <option value="filtered">带噪信号 + 硬件卡尔曼滤波</option>
                                     </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mode 3: 新增 六维全栈战力雷达界面 -->
+                        <div id="debugRadarPanel" class="flex-grow flex flex-col justify-between hidden" role="tabpanel" aria-labelledby="tabRadarBtn">
+                            <div class="flex items-center justify-between text-[11px] px-1 mb-1">
+                                <span class="inline-flex items-center gap-1.5 text-amber-300 font-semibold">
+                                    <span class="w-2.5 h-2.5 rounded-sm bg-amber-400 inline-block"></span> 杨杰 · 13年软硬件全栈闭环
+                                </span>
+                                <span class="inline-flex items-center gap-1.5 text-slate-400">
+                                    <span class="w-2.5 h-0.5 bg-slate-400 inline-block"></span> 传统单一岗位工程师基准
+                                </span>
+                            </div>
+                            <div class="relative bg-black/50 rounded-xl border border-white/10 h-[230px] flex items-center justify-center overflow-hidden">
+                                <canvas id="radarCanvas" class="w-full h-full block"></canvas>
+                            </div>
+                            <div class="grid grid-cols-3 gap-2 pt-2.5 mt-2 border-t border-white/5 text-center">
+                                <div class="bg-white/[0.03] rounded-lg py-1.5 px-2 border border-white/5">
+                                    <span class="block text-[9px] text-slate-400">全栈覆盖广度</span>
+                                    <span class="text-xs font-black text-amber-300">93.5 / 100</span>
+                                </div>
+                                <div class="bg-white/[0.03] rounded-lg py-1.5 px-2 border border-white/5">
+                                    <span class="block text-[9px] text-slate-400">跨界沟通损耗</span>
+                                    <span class="text-xs font-black text-emerald-400">降低 80%</span>
+                                </div>
+                                <div class="bg-white/[0.03] rounded-lg py-1.5 px-2 border border-white/5">
+                                    <span class="block text-[9px] text-slate-400">0→1 交付确定性</span>
+                                    <span class="text-xs font-black text-amber-300">100% 验收</span>
                                 </div>
                             </div>
                         </div>
@@ -266,31 +359,182 @@
         </div>
     </section>
 
-    <!-- Scroll Indicator -->
-    <div class="relative -mt-16 flex flex-col items-center gap-3 text-slate-400 text-sm animate-bounce" aria-hidden="true">
-        <span class="font-medium">向下滚动</span>
-        <i class="fas fa-chevron-down text-lg"></i>
-    </div>
-
     <!-- ===== STATS SECTION ===== -->
-    <section class="py-20 relative">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 reveal">
+    <section class="py-14 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 reveal">
                 <div class="stat-card">
-                    <div class="text-4xl md:text-5xl font-black text-gradient mb-2" data-count="13">0</div>
-                    <p class="text-slate-500 text-sm font-medium">年行业经验</p>
+                    <span class="text-[10px] font-mono uppercase tracking-widest text-amber-400/80 mb-1">Seniority</span>
+                    <div class="flex items-baseline justify-center gap-0.5 mb-1">
+                        <div class="text-4xl md:text-5xl font-black text-gradient" data-count="13">0</div>
+                        <span class="text-xl font-black text-amber-400">年</span>
+                    </div>
+                    <p class="text-white text-sm font-bold">软硬件全栈实战</p>
+                    <p class="text-slate-500 text-xs mt-1">从板级电路到上位机/云平台</p>
                 </div>
                 <div class="stat-card">
-                    <div class="text-4xl md:text-5xl font-black text-gradient mb-2" data-count="70">0</div>
-                    <p class="text-slate-500 text-sm font-medium">+ 开源作品</p>
+                    <span class="text-[10px] font-mono uppercase tracking-widest text-amber-400/80 mb-1">Open Source</span>
+                    <div class="flex items-baseline justify-center gap-0.5 mb-1">
+                        <div class="text-4xl md:text-5xl font-black text-gradient" data-count="70">0</div>
+                        <span class="text-xl font-black text-amber-400">+</span>
+                    </div>
+                    <p class="text-white text-sm font-bold">开源软硬件作品</p>
+                    <p class="text-slate-500 text-xs mt-1">连续两年获评“硬件开源达人”</p>
                 </div>
                 <div class="stat-card">
-                    <div class="text-4xl md:text-5xl font-black text-gradient mb-2" data-count="20">0</div>
-                    <p class="text-slate-500 text-sm font-medium">+ 研发项目</p>
+                    <span class="text-[10px] font-mono uppercase tracking-widest text-amber-400/80 mb-1">Delivery Track</span>
+                    <div class="flex items-baseline justify-center gap-0.5 mb-1">
+                        <div class="text-4xl md:text-5xl font-black text-gradient" data-count="20">0</div>
+                        <span class="text-xl font-black text-amber-400">+</span>
+                    </div>
+                    <p class="text-white text-sm font-bold">军工/工业核心项目</p>
+                    <p class="text-slate-500 text-xs mt-1">涵盖AVIC机载、航发、能源物联</p>
                 </div>
                 <div class="stat-card">
-                    <div class="text-4xl md:text-5xl font-black text-gradient mb-2" data-count="5">0</div>
-                    <p class="text-slate-500 text-sm font-medium">家企业服务</p>
+                    <span class="text-[10px] font-mono uppercase tracking-widest text-amber-400/80 mb-1">Field Proven</span>
+                    <div class="flex items-baseline justify-center gap-0.5 mb-1">
+                        <div class="text-4xl md:text-5xl font-black text-gradient" data-count="450">0</div>
+                        <span class="text-xl font-black text-amber-400">+</span>
+                    </div>
+                    <p class="text-white text-sm font-bold">规模化量产部署节点</p>
+                    <p class="text-slate-500 text-xs mt-1">累计 &gt;50,000 小时稳定运行</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== 新增：全栈研发价值闭环 & 商业赋能矩阵 (#value-loop) ===== -->
+    <section id="value-loop" class="value-loop-section">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6">
+            <div class="reveal">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+                    <div>
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-bold mb-3">
+                            <i class="fas fa-gem" aria-hidden="true"></i> 核心商业价值 · 为什么我能实现“1人抵5岗”的交付效能
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-bold text-white flex items-center gap-4">
+                            <span class="w-12 h-1 bg-gradient-to-r from-amber-500 to-orange-400 rounded-full"></span>
+                            0→1 全栈研发价值闭环
+                        </h2>
+                    </div>
+                    <p class="text-slate-400 text-sm max-w-md">
+                        点击下方任意研发阶段，查看我在该环节独立交付的**工程产物、关键指标与代表项目**。
+                    </p>
+                </div>
+            </div>
+
+            <!-- 6阶段交互式全栈链路 -->
+            <div class="pipeline-grid reveal" role="tablist" aria-label="全栈研发六大阶段">
+                <button type="button" class="pipeline-step-btn active" data-step="0" role="tab" aria-selected="true">
+                    <div>
+                        <div class="pipeline-step-num"><span>STAGE 01</span> <i class="fas fa-compass-drafting"></i></div>
+                        <div class="pipeline-step-title">需求拆解与系统架构</div>
+                    </div>
+                    <div class="pipeline-step-sub">航插/器件选型 · 功率预算 · 军标安规设计</div>
+                </button>
+                <button type="button" class="pipeline-step-btn" data-step="1" role="tab" aria-selected="false">
+                    <div>
+                        <div class="pipeline-step-num"><span>STAGE 02</span> <i class="fas fa-microchip"></i></div>
+                        <div class="pipeline-step-title">高速原理图与16层PCB</div>
+                    </div>
+                    <div class="pipeline-step-sub">16层HDI · 差分阻抗控制 · Sigrity SI/PI仿真</div>
+                </button>
+                <button type="button" class="pipeline-step-btn" data-step="2" role="tab" aria-selected="false">
+                    <div>
+                        <div class="pipeline-step-num"><span>STAGE 03</span> <i class="fas fa-code"></i></div>
+                        <div class="pipeline-step-title">FPGA逻辑与MCU固件</div>
+                    </div>
+                    <div class="pipeline-step-sub">Verilog同步解码 · STM32/RISC-V · RTOS/Linux驱动</div>
+                </button>
+                <button type="button" class="pipeline-step-btn" data-step="3" role="tab" aria-selected="false">
+                    <div>
+                        <div class="pipeline-step-num"><span>STAGE 04</span> <i class="fas fa-wave-square"></i></div>
+                        <div class="pipeline-step-title">精密算法与端侧AI</div>
+                    </div>
+                    <div class="pipeline-step-sub">±0.01动态校准 · 无超调PID · TinyML端侧推理</div>
+                </button>
+                <button type="button" class="pipeline-step-btn" data-step="4" role="tab" aria-selected="false">
+                    <div>
+                        <div class="pipeline-step-num"><span>STAGE 05</span> <i class="fas fa-desktop"></i></div>
+                        <div class="pipeline-step-title">测控上位机与云边端</div>
+                    </div>
+                    <div class="pipeline-step-sub">Qt6/Tauri上位机 · 电容屏HMI · 小程序/Web平台</div>
+                </button>
+                <button type="button" class="pipeline-step-btn" data-step="5" role="tab" aria-selected="false">
+                    <div>
+                        <div class="pipeline-step-num"><span>STAGE 06</span> <i class="fas fa-vial-circle-check"></i></div>
+                        <div class="pipeline-step-title">军标EMC与ATE量产</div>
+                    </div>
+                    <div class="pipeline-step-sub">GJB151B整改 · ATE治具机台 · 450+节点批量交付</div>
+                </button>
+            </div>
+
+            <!-- 动态阶段详情展示舱 -->
+            <div id="pipelineDetailBox" class="pipeline-detail-box reveal">
+                <div class="grid lg:grid-cols-3 gap-6 items-center">
+                    <div class="lg:col-span-2 space-y-3">
+                        <div class="flex flex-wrap items-center gap-2.5">
+                            <span id="pipeRoleBadge" class="px-3 py-1 rounded-lg bg-amber-500/20 border border-amber-500/40 text-amber-300 text-xs font-bold">相当于：硬件系统架构师</span>
+                            <span id="pipeMetricBadge" class="px-3 py-1 rounded-lg bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs font-bold">核心指标：1000V高低压安规隔离 · 零返工架构定型</span>
+                        </div>
+                        <h3 id="pipeStageTitle" class="text-xl sm:text-2xl font-bold text-white">Stage 01 · 从模糊需求到可量产的系统级总体方案</h3>
+                        <p id="pipeStageDesc" class="text-slate-300 text-sm leading-relaxed">
+                            面对军工所、中航工业(AVIC)或工业客户的非标复杂指标，我能独立完成总体方案论证、关键元器件与军标航空连接器选型、多路电源树功率分配及高低压物理隔离规划，从源头规避后期软硬件架构推倒重来的风险。
+                        </p>
+                        <div id="pipeDeliverables" class="flex flex-wrap gap-2 pt-1">
+                            <span class="skill-tag px-3 py-1 text-xs">《系统总体技术方案》</span>
+                            <span class="skill-tag px-3 py-1 text-xs">《关键器件与航插选型BOM》</span>
+                            <span class="skill-tag px-3 py-1 text-xs">《高低压安规与功率预算表》</span>
+                            <span class="skill-tag px-3 py-1 text-xs">《软硬件接口通讯协议规范》</span>
+                        </div>
+                    </div>
+                    <div class="bg-black/30 rounded-2xl p-5 border border-white/10 flex flex-col justify-between space-y-4">
+                        <div>
+                            <div class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-1">
+                                <i class="fas fa-chart-line mr-1"></i> 为企业创造的直接价值
+                            </div>
+                            <p id="pipeBusinessValue" class="text-xs text-slate-300 leading-relaxed">
+                                在设计初期即实现“硬件电路 + 固件算力 + 结构散热 + BOM成本”四维平衡，将原型机一次打样成功率提升至 95% 以上。
+                            </p>
+                        </div>
+                        <button type="button" id="pipeJumpProjectBtn" data-proj-id="2" class="w-full py-2.5 px-4 bg-amber-600/90 hover:bg-amber-500 text-white font-bold text-xs rounded-xl transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-amber-600/20">
+                            <i class="fas fa-arrow-up-right-from-square"></i> 查看该阶段代表作：机载配电测试设备
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 商业赋能对比三栏卡片 -->
+            <div class="roi-comparison-grid reveal">
+                <div class="roi-card">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-amber-400 font-bold text-sm"><i class="fas fa-bolt mr-1.5"></i> 联调与排障效率</span>
+                        <span class="roi-badge">提效 300%+</span>
+                    </div>
+                    <p class="text-white font-bold text-base mb-2">终结“硬件怪软件、软件怪硬件”的联调内耗</p>
+                    <p class="text-slate-400 text-xs leading-relaxed">
+                        当出现复杂 EMI 干扰、偶发通信丢包或采样跳变时，我能同时拿起示波器测眼图/电源纹波、抓逻辑分析仪看 FPGA/MCU 时序、改写滤波算法与上位机状态机，单人闭环快速锁定根因。
+                    </p>
+                </div>
+                <div class="roi-card">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-amber-400 font-bold text-sm"><i class="fas fa-coins mr-1.5"></i> 软硬协同成本优化</span>
+                        <span class="roi-badge">BOM 降本 15%~25%</span>
+                    </div>
+                    <p class="text-white font-bold text-base mb-2">用软件算法弥补硬件公差，精简冗余外围电路</p>
+                    <p class="text-slate-400 text-xs leading-relaxed">
+                        深谙软硬件边界：通过嵌入式端“动态增益与温度偏移自校准算法”，在保证 ±0.01 严苛测量精度的同时，大幅降低模拟前端对天价低温漂器件的依赖，显著压缩量产 BOM 成本。
+                    </p>
+                </div>
+                <div class="roi-card">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="text-amber-400 font-bold text-sm"><i class="fas fa-shield-check mr-1.5"></i> 量产与验收确定性</span>
+                        <span class="roi-badge">GJB151B 一次通过</span>
+                    </div>
+                    <p class="text-white font-bold text-base mb-2">不只做实验室 Demo，更包干产线工装与交付标准</p>
+                    <p class="text-slate-400 text-xs leading-relaxed">
+                        从板卡 DFM/DFT 设计、线缆航插工艺、ATE 自动化自检治具到全套《测试规范》《校准规范》文档输出全程包干，交付即可直接上产线或交军代表验收。
+                    </p>
                 </div>
             </div>
         </div>
@@ -302,60 +546,91 @@
             <div class="reveal">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 flex items-center gap-4">
                     <span class="w-12 h-1 bg-gradient-to-r from-amber-500 to-orange-400 rounded-full"></span>
-                    关于我
+                    关于我 · 工程师底色与岗位赋能
                 </h2>
-                <p class="text-slate-500 mb-12 ml-16 section-lead">从兴趣出发，用技术说话，也把招聘者最关心的交付能力、稳定性和成长潜力直接摆到台前。</p>
+                <p class="text-slate-400 mb-12 ml-0 md:ml-16 section-lead">从儿时拆装收音机的纯粹热爱出发，用 13 年严苛场景实战，把招聘方最关心的交付确定性、系统排障力与跨界领导力摆到台前。</p>
             </div>
-            <div class="grid lg:grid-cols-5 gap-12 reveal items-center">
-                <div class="lg:col-span-3 space-y-6">
-                    <p class="text-slate-300 leading-relaxed text-base">
-                        十余年深耕，对电子的热爱从未降温。从兴趣出发，将“拆拆装装”的初心熔铸为职业信仰，主导高可靠、高复杂度整机研发，在极限指标与严苛工况下正面攻坚，交付“零妥协”的硬件全栈方案。
-                    </p>
-                    <p class="text-slate-300 leading-relaxed text-base">
-                        技术栈覆盖底层硬件架构、高速 PCB 设计、嵌入式驱动与算法。具备 **TinyML/Edge AI** 落地能力，擅长神经网络量化与模型压缩，在 STM32/ESP32 等 MCU 上实现 **On-device Inference**，让智能在资源受限的边缘端高效运行。
-                    </p>
-                    <p class="text-slate-300 leading-relaxed text-base">
-                        积极探索 **AI 驱动的 EDA 新范式**：将深度学习融入 SI/PI 仿真决策与 PCB 布局优化，结合 **异构计算** 与 **AI 加速核** 实现硬件系统的预测性维护与智能故障诊断，提升设计效率与可靠性。
-                    </p>
-                    <p class="text-slate-300 leading-relaxed text-base">
-                        深度排障与 **云边端协同**：熟练操作示波器、频谱仪，掌握眼图测试、时序分析等进阶技能；独立完成 Docker/KVM 容器化部署与私有化 LLM 服务调优，实现从传感器到云端的端到端交付。
-                    </p>
+            <div class="grid lg:grid-cols-5 gap-10 lg:gap-12 reveal items-start">
+                <div class="lg:col-span-3 space-y-5">
+                    <div class="p-5 rounded-2xl bg-white/[0.025] border border-white/5 hover:border-amber-500/25 transition-all">
+                        <h3 class="text-amber-300 font-bold text-sm mb-2 flex items-center gap-2">
+                            <i class="fas fa-fire-flame-curved"></i> 硬核初心与“零妥协”工程信仰
+                        </h3>
+                        <p class="text-slate-300 leading-relaxed text-sm">
+                            十余年深耕，对电子与代码的热爱从未降温。我将儿时“拆拆装装”的好奇心熔铸为职业信仰，长期在**涉密军工、航空机载、工业能源**研发一线正面攻坚，习惯在极限温湿度、强电磁干扰与紧张交付周期下交付“零妥协”的软硬件全栈方案。
+                        </p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-white/[0.025] border border-white/5 hover:border-amber-500/25 transition-all">
+                        <h3 class="text-amber-300 font-bold text-sm mb-2 flex items-center gap-2">
+                            <i class="fas fa-microchip"></i> 底层硬件 + 嵌入式固件 + 边缘端 TinyML 贯通
+                        </h3>
+                        <p class="text-slate-300 leading-relaxed text-sm">
+                            技术栈完整覆盖 16 层高密 HDI 板卡设计、GaN/SiC 大功率电源拓扑、FPGA 高速并行采集及 STM32/ESP32/RISC-V 固件开发。同时具备 **TinyML / Edge AI** 落地能力，擅长神经网络模型量化压缩 (INT8/FP16)，在资源受限的 MCU 上实现微秒级端侧推理与设备早期故障预测。
+                        </p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-white/[0.025] border border-white/5 hover:border-amber-500/25 transition-all">
+                        <h3 class="text-amber-300 font-bold text-sm mb-2 flex items-center gap-2">
+                            <i class="fas fa-Cloud-arrow-up"></i> 仪器级深度排障与“云-边-端”大闭环
+                        </h3>
+                        <p class="text-slate-300 leading-relaxed text-sm">
+                            熟练运用高带宽混合信号示波器、矢量网络分析仪(VNA)、频谱仪与近场探头进行眼图分析与 EMI 摸底定位；向上更能独立开发 **Qt6/Tauri 工业上位机、微信小程序(BLE)及高并发 Web 监控平台（支持 Docker/K8s 容器化部署）**，真正打通从物理传感器到云端大屏的每一个字节。
+                        </p>
+                    </div>
                 </div>
+
+                <!-- 右侧：交互式决策者视角切换面板 -->
                 <div class="lg:col-span-2 space-y-4">
                     <div class="recruiter-panel">
-                        <h4 class="text-white font-bold text-base mb-4 flex items-center gap-2">
-                            <i class="fas fa-star text-amber-300" aria-hidden="true"></i> 为什么适合核心研发岗位
-                        </h4>
-                        <div class="recruiter-point">
-                            <div class="recruiter-point-icon"><i class="fas fa-diagram-project text-sm" aria-hidden="true"></i></div>
-                            <div>
-                                <p class="text-white font-semibold text-sm mb-1">系统级视角完整</p>
-                                <p class="text-slate-400 text-sm">我关注的不止是单板设计，也关注整机协同、生产测试、交付节奏和后续维护。</p>
-                            </div>
+                        <div class="flex items-center justify-between mb-3">
+                            <h4 class="text-white font-bold text-base flex items-center gap-2">
+                                <i class="fas fa-user-check text-amber-300" aria-hidden="true"></i> 岗位赋能视角切换
+                            </h4>
+                            <span class="text-[10px] text-amber-300/80 font-mono">点击切换角色视角</span>
                         </div>
-                        <div class="recruiter-point">
-                            <div class="recruiter-point-icon"><i class="fas fa-gauge-high text-sm" aria-hidden="true"></i></div>
-                            <div>
-                                <p class="text-white font-semibold text-sm mb-1">复杂问题处理稳定</p>
-                                <p class="text-slate-400 text-sm">面对高速信号、电源完整性、现场故障和资源受限平台，我能快速定位主因并推进收敛。</p>
-                            </div>
+
+                        <!-- 视角切换按钮 -->
+                        <div class="role-switch-tabs" role="tablist" aria-label="招聘视角切换">
+                            <button type="button" class="role-switch-btn active" data-role="cto" role="tab" aria-selected="true">致 技术总监/CTO</button>
+                            <button type="button" class="role-switch-btn" data-role="pm" role="tab" aria-selected="false">致 项目/业务总</button>
+                            <button type="button" class="role-switch-btn" data-role="hr" role="tab" aria-selected="false">致 HR/招聘专家</button>
                         </div>
-                        <div class="recruiter-point">
-                            <div class="recruiter-point-icon"><i class="fas fa-user-gear text-sm" aria-hidden="true"></i></div>
-                            <div>
-                                <p class="text-white font-semibold text-sm mb-1">适配团队协作</p>
-                                <p class="text-slate-400 text-sm">适合研发骨干、技术带头人和跨部门接口岗位，能把研发语言转成项目结果。</p>
+
+                        <!-- 动态视角内容容器 -->
+                        <div id="rolePerspectiveContent">
+                            <div class="recruiter-point">
+                                <div class="recruiter-point-icon"><i class="fas fa-diagram-project text-sm" aria-hidden="true"></i></div>
+                                <div>
+                                    <p class="text-white font-semibold text-sm mb-1">系统级架构视野，消除跨界盲区</p>
+                                    <p class="text-slate-300 text-xs leading-relaxed">既懂 16 层高速 PCB 的信号回流与阻抗匹配，又懂 FreeRTOS/Linux 内核调度与 FPGA 时序，在架构设计期即可规避 90% 的软硬件接口隐患。</p>
+                                </div>
+                            </div>
+                            <div class="recruiter-point">
+                                <div class="recruiter-point-icon"><i class="fas fa-gauge-high text-sm" aria-hidden="true"></i></div>
+                                <div>
+                                    <p class="text-white font-semibold text-sm mb-1">专啃 EMI/EMC 与现场疑难杂症硬骨头</p>
+                                    <p class="text-slate-300 text-xs leading-relaxed">曾多次临危受命修复航发电喷工装 EMI 异常、1000V 高压漏电流干扰等棘手问题，能快速收敛历史遗留技术债。</p>
+                                </div>
+                            </div>
+                            <div class="recruiter-point">
+                                <div class="recruiter-point-icon"><i class="fas fa-vial-circle-check text-sm" aria-hidden="true"></i></div>
+                                <div>
+                                    <p class="text-white font-semibold text-sm mb-1">自带自动化测试平台与工具链基因</p>
+                                    <p class="text-slate-300 text-xs leading-relaxed">习惯同步搭建上位机自检与 ATE 自动化回归测试台，让团队硬件迭代有据可依、固件发布零回归故障。</p>
+                                </div>
                             </div>
                         </div>
                     </div>
+
                     <div class="p-5 bg-white/[0.03] rounded-2xl border border-white/5">
-                        <h4 class="text-white font-bold text-sm mb-3 flex items-center gap-2">
-                            <i class="fas fa-certificate text-amber-400" aria-hidden="true"></i> 资格证书
+                        <h4 class="text-white font-bold text-sm mb-3 flex items-center justify-between">
+                            <span class="flex items-center gap-2"><i class="fas fa-certificate text-amber-400" aria-hidden="true"></i> 专业资质与讲师认证</span>
+                            <span class="text-[11px] text-emerald-400 font-semibold">持证上岗</span>
                         </h4>
                         <div class="flex flex-wrap gap-2">
-                            <span class="text-xs px-3 py-1.5 bg-amber-500/10 text-amber-300 rounded-lg border border-amber-500/15">网络工程师</span>
-                            <span class="text-xs px-3 py-1.5 bg-amber-500/10 text-amber-300 rounded-lg border border-amber-500/15">计算机硬件工程师</span>
-                            <span class="text-xs px-3 py-1.5 bg-amber-500/10 text-amber-300 rounded-lg border border-amber-500/15">PCB 设计专项技能</span>
+                            <span class="text-xs px-3 py-1.5 bg-amber-500/10 text-amber-300 rounded-lg border border-amber-500/20 font-medium">计算机硬件工程师</span>
+                            <span class="text-xs px-3 py-1.5 bg-amber-500/10 text-amber-300 rounded-lg border border-amber-500/20 font-medium">网络工程师</span>
+                            <span class="text-xs px-3 py-1.5 bg-amber-500/10 text-amber-300 rounded-lg border border-amber-500/20 font-medium">PCB 设计专项技能认证</span>
+                            <span class="text-xs px-3 py-1.5 bg-emerald-500/10 text-emerald-300 rounded-lg border border-emerald-500/20 font-medium">高校 EDA 校园培训讲师</span>
                         </div>
                     </div>
                 </div>
@@ -367,228 +642,173 @@
     <section id="skills" class="py-24">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="reveal">
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 flex items-center gap-4">
-                    <span class="w-12 h-1 bg-gradient-to-r from-amber-500 to-orange-400 rounded-full"></span>
-                    前沿技能图谱 & 工业级工具链
-                </h2>
-                <p class="text-slate-500 mb-14 ml-0 md:ml-16 section-lead">深耕硬核硬件底色，融合宽禁带半导体、高速仿真、RISC-V 与端侧 TinyML AI</p>
+                <div class="flex flex-col lg:flex-row lg:items-end justify-between mb-12 gap-4">
+                    <div>
+                        <h2 class="text-3xl md:text-4xl font-bold text-white mb-3 flex items-center gap-4">
+                            <span class="w-12 h-1 bg-gradient-to-r from-amber-500 to-orange-400 rounded-full"></span>
+                            前沿技能图谱 &amp; 工业级工具链
+                        </h2>
+                        <p class="text-slate-400 ml-0 md:ml-16 section-lead text-sm">点击任意技能标签可查看具体工程应用场景；点击右侧按钮可按岗位方向高亮核心技能域。</p>
+                    </div>
+                    <!-- 技能域高亮筛选器 -->
+                    <div class="flex flex-wrap gap-2" role="group" aria-label="技能域高亮筛选">
+                        <button type="button" class="skill-domain-btn filter-btn active px-3.5 py-1.5 text-xs font-bold rounded-xl" data-domain="all">全部技能域 (6)</button>
+                        <button type="button" class="skill-domain-btn filter-btn px-3.5 py-1.5 text-xs font-bold rounded-xl" data-domain="hw">高速硬件 &amp; 军标EMC</button>
+                        <button type="button" class="skill-domain-btn filter-btn px-3.5 py-1.5 text-xs font-bold rounded-xl" data-domain="fw">FPGA / 固件 &amp; 端侧AI</button>
+                        <button type="button" class="skill-domain-btn filter-btn px-3.5 py-1.5 text-xs font-bold rounded-xl" data-domain="sys">总线 / 上位机 &amp; 量产</button>
+                    </div>
+                </div>
             </div>
             
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 reveal">
                 <!-- 1. 前沿硬件架构与高速多层 PCB -->
-                <div class="skill-category-card">
-                    <h3 class="skill-category-title text-amber-400">
-                        <i class="fas fa-microchip text-amber-400"></i> 前沿硬件架构 & 高速多层设计
-                    </h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="skill-tag skill-tag-frontier px-3 py-1.5 rounded-xl text-xs" title="16层高密 HDI 板，支持微盲孔、埋孔与盘中孔(VIPPO)工艺"><span class="skill-frontier-dot"></span> 16层 HDI 高密板</span>
-                        <span class="skill-tag skill-tag-frontier px-3 py-1.5 rounded-xl text-xs" title="第三代宽禁带半导体，GaN 高频高效驱动与 SiC 高压功率拓扑"><span class="skill-frontier-dot"></span> 第三代半导体 (GaN/SiC)</span>
-                        <span class="skill-tag skill-tag-frontier px-3 py-1.5 rounded-xl text-xs" title="Cadence Sigrity GHz 级高速差分走线信号完整性与电源完整性仿真"><span class="skill-frontier-dot"></span> Cadence Sigrity (SI/PI)</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="ANSYS HFSS 高频电磁场与天线空间辐射方向图仿真">ANSYS HFSS / Q3D</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="严格执行国军标 GJB151B CE102/RE102 传导辐射及雷击浪涌整改">GJB151B 军标 EMC</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="Altium Designer 24 高速数模混合 Layout 与刚柔结合板">Altium Designer 24</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="高速差分对等长对内/对称匹配与微带线精密阻抗控制">差分等长 & 阻抗控制</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="大功率移相全桥与 LLC 谐振软开关变换拓扑">LLC / 移相全桥拓扑</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="面向批量制造的可制造性、可测试性设计规范">DFM / DFA / DFT</span>
+                <div class="skill-category-card" data-domain="hw">
+                    <div>
+                        <h3 class="skill-category-title text-amber-400">
+                            <span class="flex items-center gap-2"><i class="fas fa-microchip text-amber-400"></i> 硬件架构 &amp; 高速多层PCB</span>
+                            <span class="text-[11px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">96% 精通</span>
+                        </h3>
+                        <div class="skill-mastery-bar"><div class="skill-mastery-fill" style="width: 96%;"></div></div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-tag skill-tag-frontier px-3 py-1.5 rounded-xl text-xs" title="16层高密 HDI 板，支持微盲孔、埋孔与盘中孔(VIPPO)工艺"><span class="skill-frontier-dot"></span> 16层 HDI 高密板</span>
+                            <span class="skill-tag skill-tag-frontier px-3 py-1.5 rounded-xl text-xs" title="第三代宽禁带半导体，GaN 高频高效驱动与 SiC 高压功率拓扑"><span class="skill-frontier-dot"></span> 第三代半导体 (GaN/SiC)</span>
+                            <span class="skill-tag skill-tag-frontier px-3 py-1.5 rounded-xl text-xs" title="Cadence Sigrity GHz 级高速差分走线信号完整性与电源完整性仿真"><span class="skill-frontier-dot"></span> Cadence Sigrity (SI/PI)</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="ANSYS HFSS 高频电磁场与天线空间辐射方向图仿真">ANSYS HFSS / Q3D</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="严格执行国军标 GJB151B CE102/RE102 传导辐射及雷击浪涌整改">GJB151B 军标 EMC</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="Altium Designer 24 高速数模混合 Layout 与刚柔结合板">Altium Designer 24</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="高速差分对等长对内/对称匹配与微带线精密阻抗控制">差分等长 &amp; 阻抗控制</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="大功率移相全桥与 LLC 谐振软开关变换拓扑">LLC / 移相全桥拓扑</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="面向批量制造的可制造性、可测试性设计规范">DFM / DFA / DFT</span>
+                        </div>
+                    </div>
+                    <div class="skill-proof-footer">
+                        <span><i class="fas fa-check-double text-amber-400 mr-1"></i> 代表战绩：12~16层军工板卡 / 115V&amp;28V大功率电源</span>
+                        <span class="text-amber-300 font-semibold">零缺陷交付</span>
                     </div>
                 </div>
 
                 <!-- 2. 异构芯片、RISC-V 与端侧 TinyML -->
-                <div class="skill-category-card">
-                    <h3 class="skill-category-title text-amber-400">
-                        <i class="fas fa-brain text-amber-400"></i> 异构架构、RISC-V & TinyML
-                    </h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="skill-tag skill-tag-frontier px-3 py-1.5 rounded-xl text-xs" title="微秒级边缘端轻量化神经网络模型量化 (INT8/FP16) 与端侧推理"><span class="skill-frontier-dot"></span> TinyML 边缘端 AI</span>
-                        <span class="skill-tag skill-tag-frontier px-3 py-1.5 rounded-xl text-xs" title="平头哥玄铁 / 先楫 HPM / 沁恒 RISC-V 开源架构芯片底层生态"><span class="skill-frontier-dot"></span> RISC-V 开放架构 SoC</span>
-                        <span class="skill-tag skill-tag-frontier px-3 py-1.5 rounded-xl text-xs" title="ARM Cortex-A + Cortex-M 异构双核实时协同通信 (RPMsg/OpenAMP)"><span class="skill-frontier-dot"></span> 异构多核 IPC (RPMsg)</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="STM32Cube.AI & TFLite for Microcontrollers 端侧模型部署">STM32Cube.AI / TFLite</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="Xilinx Zynq / Verilog 高速并行数据流处理与静态时序分析">FPGA / Verilog 加速</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="基于端侧振动加速度与音频特征的工业设备早期故障诊断">Edge Impulse 故障预测</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="STM32H7 / GD32 / ESP32-S3 全系列主流嵌入式主控平台">STM32 / GD32 / ESP32</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="边缘端工件表面缺陷特征提取与轻量计算机视觉处理">OpenCV 边缘视觉</span>
+                <div class="skill-category-card" data-domain="fw">
+                    <div>
+                        <h3 class="skill-category-title text-amber-400">
+                            <span class="flex items-center gap-2"><i class="fas fa-brain text-amber-400"></i> 异构芯片、FPGA &amp; TinyML</span>
+                            <span class="text-[11px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">92% 精通</span>
+                        </h3>
+                        <div class="skill-mastery-bar"><div class="skill-mastery-fill" style="width: 92%;"></div></div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-tag skill-tag-frontier px-3 py-1.5 rounded-xl text-xs" title="微秒级边缘端轻量化神经网络模型量化 (INT8/FP16) 与端侧推理"><span class="skill-frontier-dot"></span> TinyML 边缘端 AI</span>
+                            <span class="skill-tag skill-tag-frontier px-3 py-1.5 rounded-xl text-xs" title="平头哥玄铁 / 先楫 HPM / 沁恒 RISC-V 开源架构芯片底层生态"><span class="skill-frontier-dot"></span> RISC-V 开放架构 SoC</span>
+                            <span class="skill-tag skill-tag-frontier px-3 py-1.5 rounded-xl text-xs" title="ARM Cortex-A + Cortex-M 异构双核实时协同通信 (RPMsg/OpenAMP)"><span class="skill-frontier-dot"></span> 异构多核 IPC (RPMsg)</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="STM32Cube.AI &amp; TFLite for Microcontrollers 端侧模型部署">STM32Cube.AI / TFLite</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="Xilinx Zynq / Verilog 高速并行数据流处理与静态时序分析">FPGA / Verilog 加速</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="基于端侧振动加速度与音频特征的工业设备早期故障诊断">Edge Impulse 故障预测</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="STM32H7 / GD32 / ESP32-S3 全系列主流嵌入式主控平台">STM32 / GD32 / ESP32</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="边缘端工件表面缺陷特征提取与轻量计算机视觉处理">OpenCV 边缘视觉</span>
+                        </div>
+                    </div>
+                    <div class="skill-proof-footer">
+                        <span><i class="fas fa-check-double text-amber-400 mr-1"></i> 代表战绩：FPGA纳秒级脉冲同步 / 端侧推理 &lt;12ms</span>
+                        <span class="text-amber-300 font-semibold">硬核落地</span>
                     </div>
                 </div>
 
                 <!-- 3. 工业现场总线、航空总线与前沿无线 -->
-                <div class="skill-category-card">
-                    <h3 class="skill-category-title text-amber-400">
-                        <i class="fas fa-network-wired text-amber-400"></i> 工业/航空总线 & 前沿无线
-                    </h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="skill-tag skill-tag-frontier px-3 py-1.5 rounded-xl text-xs" title="IEEE 802.1Qbv 时间敏感工业以太网，提供微秒级确定性低延迟"><span class="skill-frontier-dot"></span> TSN 时间敏感网络</span>
-                        <span class="skill-tag skill-tag-frontier px-3 py-1.5 rounded-xl text-xs" title="UWB 超宽带高精度厘米级空间无线定位与 ToF 测距天线阵列"><span class="skill-frontier-dot"></span> UWB 厘米级空间定位</span>
-                        <span class="skill-tag skill-tag-frontier px-3 py-1.5 rounded-xl text-xs" title="5Mbps 高速率工业/车载总线，支持灵活数据速率与报文仲裁"><span class="skill-frontier-dot"></span> CAN-FD / CANopen</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="EtherCAT 工业以太网从站硬件 PHY 隔离与分布式时钟同步">EtherCAT 工业总线</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="军品航空级高可靠高速串行总线与同步数据链路层协议栈">HDLC / IEEE1394B</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="BLE 5.4 PAwR 双向广播与 2.4G/5G 双频 Wi-Fi 6 射频天线匹配">BLE 5.4 / Wi-Fi 6 射频</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="Sub-GHz 工业复杂厂区远距离自组网与跳频抗干扰通信">LoRa Mesh / 433MHz</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="工业现场差分隔离总线与 Modbus RTU/TCP 多节点健壮组网">RS485 / Modbus</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="工业摄像头与高清显示屏差分高速串行物理接口">MIPI (CSI/DSI)</span>
+                <div class="skill-category-card" data-domain="sys">
+                    <div>
+                        <h3 class="skill-category-title text-amber-400">
+                            <span class="flex items-center gap-2"><i class="fas fa-network-wired text-amber-400"></i> 工业/航空总线 &amp; 无线通信</span>
+                            <span class="text-[11px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">94% 精通</span>
+                        </h3>
+                        <div class="skill-mastery-bar"><div class="skill-mastery-fill" style="width: 94%;"></div></div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-tag skill-tag-frontier px-3 py-1.5 rounded-xl text-xs" title="IEEE 802.1Qbv 时间敏感工业以太网，提供微秒级确定性低延迟"><span class="skill-frontier-dot"></span> TSN 时间敏感网络</span>
+                            <span class="skill-tag skill-tag-frontier px-3 py-1.5 rounded-xl text-xs" title="UWB 超宽带高精度厘米级空间无线定位与 ToF 测距天线阵列"><span class="skill-frontier-dot"></span> UWB 厘米级空间定位</span>
+                            <span class="skill-tag skill-tag-frontier px-3 py-1.5 rounded-xl text-xs" title="5Mbps 高速率工业/车载总线，支持灵活数据速率与报文仲裁"><span class="skill-frontier-dot"></span> CAN-FD / CANopen</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="EtherCAT 工业以太网从站硬件 PHY 隔离与分布式时钟同步">EtherCAT 工业总线</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="军品航空级高可靠高速串行总线与同步数据链路层协议栈">HDLC / IEEE1394B</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="BLE 5.4 PAwR 双向广播与 2.4G/5G 双频 Wi-Fi 6 射频天线匹配">BLE 5.4 / Wi-Fi 6 射频</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="Sub-GHz 工业复杂厂区远距离自组网与跳频抗干扰通信">LoRa Mesh / 433MHz</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="工业现场差分隔离总线与 Modbus RTU/TCP 多节点健壮组网">RS485 / Modbus</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="工业摄像头与高清显示屏差分高速串行物理接口">MIPI (CSI/DSI)</span>
+                        </div>
+                    </div>
+                    <div class="skill-proof-footer">
+                        <span><i class="fas fa-check-double text-amber-400 mr-1"></i> 代表战绩：从0编写HDLC协议栈 / 强干扰下零丢包</span>
+                        <span class="text-amber-300 font-semibold">高可靠链路</span>
                     </div>
                 </div>
 
                 <!-- 4. 嵌入式固件、实时操作系统与安全 -->
-                <div class="skill-category-card">
-                    <h3 class="skill-category-title text-amber-400">
-                        <i class="fas fa-terminal text-amber-400"></i> 固件架构、实时内核 & 安全
-                    </h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="skill-tag skill-tag-frontier px-3 py-1.5 rounded-xl text-xs" title="内存安全、零成本抽象的下一代嵌入式底层系统编程语言"><span class="skill-frontier-dot"></span> Rust for Embedded</span>
-                        <span class="skill-tag skill-tag-frontier px-3 py-1.5 rounded-xl text-xs" title="A/B 双分区无感升级、AES256 加密验签与掉电断点续传机制"><span class="skill-frontier-dot"></span> 安全差分 OTA (A/B)</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="现代 C11 / C++17 嵌入式面向对象架构与驱动硬件抽象层 (HAL)">现代 C / C++ (C11/17)</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="任务调度、消息队列、信号量、内存池管理与内核裁切优化">FreeRTOS / RT-Thread</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="设备树 (DTS) 配置、I2C/SPI/UART 字符设备驱动与 V4L2 移植">嵌入式 Linux 驱动</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="卡尔曼滤波 (Kalman)、FIR/IIR 数字滤波器与快速傅里叶变换 (FFT)">数字信号处理 (DSP/卡尔曼)</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="抗积分饱和、前馈补偿的高精度温控与变频闭环控制算法">高精度串级 PID 闭环</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="硬件独立看门狗、时钟失效监测与欠压复位故障自愈">硬件看门狗 & 故障自愈</span>
+                <div class="skill-category-card" data-domain="fw">
+                    <div>
+                        <h3 class="skill-category-title text-amber-400">
+                            <span class="flex items-center gap-2"><i class="fas fa-terminal text-amber-400"></i> 固件架构、实时内核 &amp; 算法</span>
+                            <span class="text-[11px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">95% 精通</span>
+                        </h3>
+                        <div class="skill-mastery-bar"><div class="skill-mastery-fill" style="width: 95%;"></div></div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-tag skill-tag-frontier px-3 py-1.5 rounded-xl text-xs" title="内存安全、零成本抽象的下一代嵌入式底层系统编程语言"><span class="skill-frontier-dot"></span> Rust for Embedded</span>
+                            <span class="skill-tag skill-tag-frontier px-3 py-1.5 rounded-xl text-xs" title="A/B 双分区无感升级、AES256 加密验签与掉电断点续传机制"><span class="skill-frontier-dot"></span> 安全差分 OTA (A/B)</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="现代 C11 / C++17 嵌入式面向对象架构与驱动硬件抽象层 (HAL)">现代 C / C++ (C11/17)</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="任务调度、消息队列、信号量、内存池管理与内核裁切优化">FreeRTOS / RT-Thread</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="设备树 (DTS) 配置、I2C/SPI/UART 字符设备驱动与 V4L2 移植">嵌入式 Linux 驱动</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="卡尔曼滤波 (Kalman)、FIR/IIR 数字滤波器与快速傅里叶变换 (FFT)">数字信号处理 (DSP/卡尔曼)</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="抗积分饱和、前馈补偿的高精度温控与变频闭环控制算法">高精度串级 PID 闭环</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="硬件独立看门狗、时钟失效监测与欠压复位故障自愈">硬件看门狗 &amp; 故障自愈</span>
+                        </div>
+                    </div>
+                    <div class="skill-proof-footer">
+                        <span><i class="fas fa-check-double text-amber-400 mr-1"></i> 代表战绩：±0.01动态校准 / 300℃温控过冲&lt;±1℃</span>
+                        <span class="text-amber-300 font-semibold">精密控制</span>
                     </div>
                 </div>
 
                 <!-- 5. 高精密仪器、ATE 治具与环境可靠性 -->
-                <div class="skill-category-card">
-                    <h3 class="skill-category-title text-amber-400">
-                        <i class="fas fa-vial text-amber-400"></i> 仪器链、ATE 治具 & 可靠性
-                    </h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="skill-tag skill-tag-frontier px-3 py-1.5 rounded-xl text-xs" title="自动化测试机台 (ATE/FCT)、针床治具与自动化判定溯源系统"><span class="skill-frontier-dot"></span> ATE / FCT 产线治具</span>
-                        <span class="skill-tag skill-tag-frontier px-3 py-1.5 rounded-xl text-xs" title="硬件在环仿真系统，模拟极限故障工况与信号注入自动化测试"><span class="skill-frontier-dot"></span> HIL 硬件在环仿真</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="MSO 混合信号示波器、眼图质量分析与时钟抖动精确捕获">高带宽混合信号示波器</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="矢量网络分析仪 (VNA) 射频 S 参数测试与天线驻波比 VSWR 调谐">矢量网络分析仪 (VNA)</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="频谱分析仪配合近场空间探头进行 EMI 噪声源定位摸底">频谱分析仪 & 近场探头</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="多通道深存储逻辑分析仪与复杂状态机死锁分析">逻辑分析仪深度解码</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="0201 / QFN / BGA 显微级精密焊接、返修与热风温曲线调优">BGA / 0201 显微返修</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="-40~+85℃ 宽温高低温冲击试验、三防漆涂覆工艺与振动跌落测试">HALT / HASS 可靠性试验</span>
+                <div class="skill-category-card" data-domain="hw">
+                    <div>
+                        <h3 class="skill-category-title text-amber-400">
+                            <span class="flex items-center gap-2"><i class="fas fa-vial text-amber-400"></i> 仪器链、ATE治具 &amp; 可靠性</span>
+                            <span class="text-[11px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">95% 精通</span>
+                        </h3>
+                        <div class="skill-mastery-bar"><div class="skill-mastery-fill" style="width: 95%;"></div></div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-tag skill-tag-frontier px-3 py-1.5 rounded-xl text-xs" title="自动化测试机台 (ATE/FCT)、针床治具与自动化判定溯源系统"><span class="skill-frontier-dot"></span> ATE / FCT 产线治具</span>
+                            <span class="skill-tag skill-tag-frontier px-3 py-1.5 rounded-xl text-xs" title="硬件在环仿真系统，模拟极限故障工况与信号注入自动化测试"><span class="skill-frontier-dot"></span> HIL 硬件在环仿真</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="MSO 混合信号示波器、眼图质量分析与时钟抖动精确捕获">高带宽混合信号示波器</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="矢量网络分析仪 (VNA) 射频 S 参数测试与天线驻波比 VSWR 调谐">矢量网络分析仪 (VNA)</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="频谱分析仪配合近场空间探头进行 EMI 噪声源定位摸底">频谱分析仪 &amp; 近场探头</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="多通道深存储逻辑分析仪与复杂状态机死锁分析">逻辑分析仪深度解码</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="0201 / QFN / BGA 显微级精密焊接、返修与热风温曲线调优">BGA / 0201 显微返修</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="-40~+85℃ 宽温高低温冲击试验、三防漆涂覆工艺与振动跌落测试">HALT / HASS 可靠性试验</span>
+                        </div>
+                    </div>
+                    <div class="skill-proof-footer">
+                        <span><i class="fas fa-check-double text-amber-400 mr-1"></i> 代表战绩：独立搭建军品ATE测试柜与校准规范</span>
+                        <span class="text-amber-300 font-semibold">量产保障</span>
                     </div>
                 </div>
 
                 <!-- 6. 跨平台测控上位机与全流程工具 -->
-                <div class="skill-category-card">
-                    <h3 class="skill-category-title text-amber-400">
-                        <i class="fas fa-laptop-code text-amber-400"></i> 测控上位机、工具链 & DevOps
-                    </h3>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="skill-tag skill-tag-frontier px-3 py-1.5 rounded-xl text-xs" title="现代化 Rust 高性能通信底层 + Web 轻量极速跨平台桌面框架"><span class="skill-frontier-dot"></span> Tauri / Rust 测控端</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="Qt6 / C++ 工业级测控上位机与 QCustomPlot 百万级实时曲线绘制">Qt6 / C++ 工业上位机</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="PySerial / NumPy / Pandas 批量产测数据清洗、拟合与报表导出">Python 自动化测控脚本</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="MQTT / HTTP / WebSocket 工业物联网双向通信与边缘数据网关">MQTT / IoT 数据网关</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="嵌入式交叉编译环境容器化、自动化固件编译与测试流水线">Docker / CI/CD 流水线</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="硬件版本迭代规范、多分支管理与 BOM 物料版本协同追溯">Git / SVN 硬件协同</span>
-                        <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="SolidWorks 3D 机电一体化协同结构建模与装配干涉检查">SolidWorks 3D 机电协同</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===== EXPERIENCE SECTION ===== -->
-    <section id="experience" class="py-24 bg-slate-900/20">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6">
-            <div class="reveal">
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 flex items-center gap-4">
-                    <span class="w-12 h-1 bg-gradient-to-r from-amber-500 to-orange-400 rounded-full"></span>
-                    工作经历
-                </h2>
-                <p class="text-slate-500 mb-16 ml-0 md:ml-16 section-lead">多年深耕，从硬件到软件全栈</p>
-            </div>
-            <div class="impact-strip reveal">
-                <div class="impact-card">
-                    <div class="impact-label">交付强度</div>
-                    <div class="impact-value">20+</div>
-                    <p class="impact-desc">覆盖军工、工业、物联网与检测设备项目，具备复杂系统的持续交付能力。</p>
-                </div>
-                <div class="impact-card">
-                    <div class="impact-label">部署规模</div>
-                    <div class="impact-value">450+</div>
-                    <p class="impact-desc">共享充电与数据采集节点已规模化部署，项目能力经过真实业务环境验证。</p>
-                </div>
-                <div class="impact-card">
-                    <div class="impact-label">稳定运行</div>
-                    <div class="impact-value">5W+</div>
-                    <p class="impact-desc">累计无故障运行小时数可见，体现硬件可靠性与软件稳定性的综合质量。</p>
-                </div>
-            </div>
-            <div class="relative pl-16 space-y-12 reveal">
-                <div class="timeline-line"></div>
-
-                <!-- Experience 1 -->
-                <div class="timeline-item relative">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-card p-6 bg-white/[0.02] rounded-2xl border border-white/5 hover:border-amber-500/20 transition-all">
-                        <div class="flex flex-wrap items-center gap-3 mb-3">
-                            <span class="px-3 py-1 bg-amber-500/10 text-amber-300 text-xs font-bold rounded-lg border border-amber-500/15">当前</span>
-                            <span class="text-xs text-slate-500">2025.11 - 至今</span>
-                        </div>
-                        <h3 class="text-white font-bold text-lg mb-1">陕西邦鼎电子科技有限公司</h3>
-                        <p class="text-amber-400 text-sm font-medium mb-3">嵌入式开发工程师 / 硬件工程师</p>
-                        <p class="text-slate-400 text-sm leading-relaxed">
-                            深耕涉密研发一线，主导多款自研硬件功能板卡的全生命周期开发：从底层外设驱动、高速通讯协议栈到跨平台上位机，一手搭建模块化功能自检与自动化测试平台，实现测试用例一键回归、故障自动定位。同时承担非标测试设备硬件板卡的“端到端”交付——独立完成需求拆解、器件选型、高速Layout、SI/PI仿真、BOM成本优化、SMT钢网与焊接工艺文件输出，直至产线调试与可靠性验证，确保每一块板卡在极端工况下零缺陷运行。
-                        </p>
-                        <div class="timeline-meta">
-                            <span class="timeline-chip" data-link-project="1"><i class="fas fa-microchip" aria-hidden="true"></i> 自研板卡 (项目#1)</span>
-                            <span class="timeline-chip" data-link-project="3"><i class="fas fa-vial-circle-check" aria-hidden="true"></i> 自动化测试 (项目#3)</span>
-                            <span class="timeline-chip" data-link-project="4"><i class="fas fa-boxes-stacked" aria-hidden="true"></i> 量产导入 (项目#4)</span>
+                <div class="skill-category-card" data-domain="sys">
+                    <div>
+                        <h3 class="skill-category-title text-amber-400">
+                            <span class="flex items-center gap-2"><i class="fas fa-laptop-code text-amber-400"></i> 测控上位机、全栈 &amp; DevOps</span>
+                            <span class="text-[11px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">90% 精通</span>
+                        </h3>
+                        <div class="skill-mastery-bar"><div class="skill-mastery-fill" style="width: 90%;"></div></div>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="skill-tag skill-tag-frontier px-3 py-1.5 rounded-xl text-xs" title="现代化 Rust 高性能通信底层 + Web 轻量极速跨平台桌面框架"><span class="skill-frontier-dot"></span> Tauri / Rust 测控端</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="Qt6 / C++ 工业级测控上位机与 QCustomPlot 百万级实时曲线绘制">Qt6 / C++ 工业上位机</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="PySerial / NumPy / Pandas 批量产测数据清洗、拟合与报表导出">Python 自动化测控脚本</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="MQTT / HTTP / WebSocket 工业物联网双向通信与边缘数据网关">MQTT / IoT 数据网关</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="微信小程序 BLE 蓝牙低延迟控制端与 Canvas 动态波形渲染">微信小程序 (BLE/Canvas)</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="嵌入式交叉编译环境容器化、自动化固件编译与测试流水线">Docker / K8s / CI/CD</span>
+                            <span class="skill-tag px-3 py-1.5 rounded-xl text-xs" title="SolidWorks 3D 机电一体化协同结构建模与装配干涉检查">SolidWorks 3D 机电协同</span>
                         </div>
                     </div>
-                </div>
-
-                <!-- Experience 2 -->
-                <div class="timeline-item relative">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-card p-6 bg-white/[0.02] rounded-2xl border border-white/5 hover:border-amber-500/20 transition-all">
-                        <div class="flex flex-wrap items-center gap-3 mb-3">
-                            <span class="text-xs text-slate-500">2025.02 - 2025.11</span>
-                        </div>
-                        <h3 class="text-white font-bold text-lg mb-1">陕西华科航电科技有限公司</h3>
-                        <p class="text-amber-400 text-sm font-medium mb-3">嵌入式软件工程师 / 硬件工程师</p>
-                        <p class="text-slate-400 text-sm leading-relaxed">
-                            独立主导电喷地测设备多通道异步采集板卡的全栈开发：从底层外设驱动到高可靠协议库，一手打造军工级数据链路；作为唯一嵌入式软件负责人，为军工某所绝缘测试仪交付整套软件架构——工业电容屏 GUI、自定义通讯协议、实时校准算法全线贯通；从 0 到 1 编写 HDLC 编解码引擎，实现多节点高速同步与误码重传，保障极端电磁环境下零丢包。
-                        </p>
-                        <div class="timeline-meta">
-                            <span class="timeline-chip" data-link-project="2"><i class="fas fa-link" aria-hidden="true"></i> HDLC 协议栈 (项目#2)</span>
-                            <span class="timeline-chip" data-link-project="3"><i class="fas fa-display" aria-hidden="true"></i> 工业 HMI</span>
-                            <span class="timeline-chip" data-link-project="1"><i class="fas fa-shield-halved" aria-hidden="true"></i> 军工级可靠性 (项目#1)</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Experience 3 -->
-                <div class="timeline-item relative">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-card p-6 bg-white/[0.02] rounded-2xl border border-white/5 hover:border-amber-500/20 transition-all">
-                        <div class="flex flex-wrap items-center gap-3 mb-3">
-                            <span class="text-xs text-slate-500">2023.04 - 2025.01</span>
-                        </div>
-                        <h3 class="text-white font-bold text-lg mb-1">山西物联工业自动化技术研究院&山西运创自动化系统有限公司</h3>
-                        <p class="text-amber-400 text-sm font-medium mb-3">嵌入式软件工程师 / 硬件工程师</p>
-                        <p class="text-slate-400 text-sm leading-relaxed">
-                            全流程主导工业级高可靠硬件产品的设计、研发与批量制造，涵盖需求拆解、器件选型、原理图设计、高速PCB Layout、EMC预兼容测试及产线工装开发；主导自动化控制系统通用型PLC核心板卡架构 definition，完成双冗余电源、多总线隔离、宽温域（-40~+85℃）设计，单年交付5款以上量产机型。独立承担多款军工、汽车功能性测试系统PCB的研发与生产调试：完成绝缘耐压、瞬态脉冲、电流电压精度校准等测试模块，均一次性通过GJB151B电磁兼容与震动冲击试验。作为核心成员参与新能源空调核心控制器项目，负责变频驱动、BMS接口、IoT通信三合一主板设计，支持Modbus、CANopen双协议，量产稳定性>99.5%；主导共享充电核心板及数据采集终端开发，实现AC/DC双向计量、4G远程升级、OTA灰度发布，已在山西、陕西两地规模化部署450+节点，累计无故障运行>5W小时。
-                        </p>
-                        <div class="timeline-meta">
-                            <span class="timeline-chip" data-link-project="9"><i class="fas fa-bolt" aria-hidden="true"></i> 5+ 量产机型</span>
-                            <span class="timeline-chip" data-link-project="11"><i class="fas fa-tower-cell" aria-hidden="true"></i> 450+ 节点部署 (项目#11)</span>
-                            <span class="timeline-chip" data-link-project="10"><i class="fas fa-clock" aria-hidden="true"></i> 5W+ 运行小时</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Experience 4 -->
-                <div class="timeline-item relative">
-                    <div class="timeline-dot"></div>
-                    <div class="timeline-card p-6 bg-white/[0.02] rounded-2xl border border-white/5 hover:border-amber-500/20 transition-all">
-                        <div class="flex flex-wrap items-center gap-3 mb-3">
-                            <span class="text-xs text-slate-500">2013.06 - 至今</span>
-                        </div>
-                        <h3 class="text-white font-bold text-lg mb-1">华视嘉德国际文化传媒(北京)有限公司</h3>
-                        <p class="text-amber-400 text-sm font-medium mb-3">网络工程师</p>
-                        <p class="text-slate-400 text-sm leading-relaxed">
-                            负责IDC机房及云平台的网络架构规划、核心交换与路由策略调优，独立完成Web服务器、数据库、中间件的高可用集群部署及重要数据自动化备份；主导业务系统CI/CD流水线搭建，办公设备、门禁、监控等IoT系统的安装维护及网络安全加固；7×24小时监控服务器运行状态，快速定位并解决网络故障与系统异常。期间沉淀扎实的网络工程与IT基础设施运维经验，并深入实践大数据云计算：基于Linux（CentOS/Ubuntu）构建KVM虚拟化资源池，利用Kubernetes+Docker实现微服务弹性伸缩；在阿里云、腾讯云、华为云完成IaaS/PaaS混合云部署，通过Prometheus+Grafana实现云资源与业务指标统一观测；使用Ansible+Terraform做基础设施即代码（IaC）交付，日均处理日志>500GB，基于ELK/ClickHouse完成实时数仓与离线计算，支撑峰值10W级并发，保障全年SLA>99.9%。
-                        </p>
-                        <div class="timeline-meta">
-                            <span class="timeline-chip"><i class="fas fa-server" aria-hidden="true"></i> 混合云部署</span>
-                            <span class="timeline-chip"><i class="fas fa-chart-line" aria-hidden="true"></i> 10W 级并发</span>
-                            <span class="timeline-chip"><i class="fas fa-database" aria-hidden="true"></i> 500GB 日志处理</span>
-                        </div>
+                    <div class="skill-proof-footer">
+                        <span><i class="fas fa-check-double text-amber-400 mr-1"></i> 代表战绩：100+终端北斗Web平台 / 蓝牙温控小程序</span>
+                        <span class="text-amber-300 font-semibold">全栈闭环</span>
                     </div>
                 </div>
             </div>
@@ -596,125 +816,298 @@
     </section>
 
     <!-- ===== PROJECTS SECTION ===== -->
-    <section id="projects" class="py-24">
+    <section id="projects" class="py-24 bg-slate-900/15">
         <div class="max-w-7xl mx-auto px-4 sm:px-6">
             <div class="reveal">
-                <div class="flex flex-col md:flex-row md:justify-between md:items-end mb-12 gap-4">
+                <div class="flex flex-col md:flex-row md:justify-between md:items-end mb-8 gap-4">
                     <div>
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-bold mb-3">
+                            <i class="fas fa-folder-tree" aria-hidden="true"></i> 18 个实战工程档案 · 均注明全栈包干层级与商业交付价值
+                        </div>
                         <h2 class="text-3xl md:text-4xl font-bold text-white mb-2 flex items-center gap-4">
                             <span class="w-12 h-1 bg-gradient-to-r from-amber-500 to-orange-400 rounded-full"></span>
                             研发项目精选
                         </h2>
-                        <p class="text-slate-500 ml-0 md:ml-16 section-lead">精选项目覆盖军工航电、工业控制、物联网与医疗检测，突出复杂场景下的方案能力与交付能力。</p>
+                        <p class="text-slate-400 ml-0 md:ml-16 section-lead text-sm">覆盖军工航电、工业控制、能源物联网与全栈软件系统，点击任意项目卡片可查看**全栈角色拆解、技术攻坚细节与量产成果**。</p>
                     </div>
-                    <div class="flex flex-wrap gap-2 ml-0 md:ml-0" id="filterBtns" role="group" aria-label="项目筛选">
-                        <button class="filter-btn active px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all" data-filter="all" aria-pressed="true">全部</button>
-                        <button class="filter-btn px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all" data-filter="mil" aria-pressed="false">军工/航电</button>
-                        <button class="filter-btn px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all" data-filter="ind" aria-pressed="false">工业/能源</button>
-                        <button class="filter-btn px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all" data-filter="iot" aria-pressed="false">物联网</button>
-                        <button class="filter-btn px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all" data-filter="sw" aria-pressed="false">嵌入式软件</button>
+                    <div class="contact-actions !justify-start !m-0">
+                        <button id="downloadResumeBtn" type="button" class="contact-action-btn cursor-pointer">
+                            <i class="fas fa-file-arrow-down text-amber-400" aria-hidden="true"></i> 预览 / 下载 A4 简历
+                        </button>
+                        <a href="#contact" class="contact-action-btn nav-scroll" data-target="contact">
+                            <i class="fas fa-comments text-amber-400" aria-hidden="true"></i> 约聊项目细节
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="project-showcase-header reveal">
-                <p class="project-showcase-note">每个项目卡片都优先展示场景、角色、核心成果和技术关键词，让招聘者快速判断我是否适合他们的岗位强度。</p>
-                <div class="contact-actions !justify-start !m-0">
-                    <button id="downloadResumeBtn" type="button" class="contact-action-btn cursor-pointer">
-                        <i class="fas fa-file-arrow-down" aria-hidden="true"></i> 下载简历 (PDF)
+
+            <!-- 升级版：项目分类筛选 + 实时关键词搜索工具栏 -->
+            <div class="project-toolbar reveal">
+                <div class="flex flex-wrap gap-2" id="filterBtns" role="group" aria-label="项目筛选">
+                    <button type="button" class="filter-btn active px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all" data-filter="all" aria-pressed="true">
+                        全部项目 <span class="filter-count" id="count-all">18</span>
                     </button>
-                    <a href="#contact" class="contact-action-btn nav-scroll" data-target="contact">
-                        <i class="fas fa-comments" aria-hidden="true"></i> 在线沟通
-                    </a>
+                    <button type="button" class="filter-btn px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all" data-filter="flagship" aria-pressed="false">
+                        <i class="fas fa-crown text-amber-400"></i> 王牌代表作 <span class="filter-count" id="count-flagship">6</span>
+                    </button>
+                    <button type="button" class="filter-btn px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all" data-filter="mil" aria-pressed="false">
+                        军工/航电 <span class="filter-count" id="count-mil">8</span>
+                    </button>
+                    <button type="button" class="filter-btn px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all" data-filter="ind" aria-pressed="false">
+                        工业/能源 <span class="filter-count" id="count-ind">3</span>
+                    </button>
+                    <button type="button" class="filter-btn px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all" data-filter="iot" aria-pressed="false">
+                        物联网 <span class="filter-count" id="count-iot">2</span>
+                    </button>
+                    <button type="button" class="filter-btn px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all" data-filter="sw" aria-pressed="false">
+                        嵌入式软件/全栈 <span class="filter-count" id="count-sw">5</span>
+                    </button>
+                </div>
+
+                <!-- 实时关键词检索框 -->
+                <div class="project-search-wrap">
+                    <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs pointer-events-none" aria-hidden="true"></i>
+                    <input type="text" id="projectSearchInput" class="project-search-input" placeholder="搜索技术词：FPGA / 115V / 12层板 / PID / 蓝牙..." aria-label="搜索项目关键词">
+                    <button type="button" id="clearProjectSearchBtn" class="hidden absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white text-xs cursor-pointer" aria-label="清空搜索">
+                        <i class="fas fa-times-circle"></i>
+                    </button>
                 </div>
             </div>
-            <div id="projectGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- 由 JS 填充 -->
+
+            <div id="projectGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
+                <!-- 由 JS 动态渲染 -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== EXPERIENCE SECTION ===== -->
+    <section id="experience" class="py-24 bg-slate-900/25">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6">
+            <div class="reveal">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 flex items-center gap-4">
+                    <span class="w-12 h-1 bg-gradient-to-r from-amber-500 to-orange-400 rounded-full"></span>
+                    工作经历 &amp; 交付轨迹
+                </h2>
+                <p class="text-slate-400 mb-12 ml-0 md:ml-16 section-lead text-sm">13 年一线深耕，从云计算与网络基础设施起步，一路深入工业自动化、军工航电与软硬件全栈架构（点击经历下方标签可直接定位至对应实操项目）。</p>
+            </div>
+
+            <!-- 4维工程影响力数据带 -->
+            <div class="impact-strip reveal">
+                <div class="impact-card">
+                    <div class="impact-label">全周期独立交付</div>
+                    <div class="impact-value">20+ 项</div>
+                    <p class="impact-desc">覆盖军工、航电、工业控制与物联网，主导从方案、PCB到上位机的完整闭环。</p>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-label">城市与产线规模</div>
+                    <div class="impact-value">450+ 节点</div>
+                    <p class="impact-desc">共享充电与数采终端规模化部署，新能源热泵主控板实现客户产线 100% 采用。</p>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-label">现场无故障运行</div>
+                    <div class="impact-value">50,000+ h</div>
+                    <p class="impact-desc">历经高低温冲击、强电磁干扰与户外严苛工况考验，保持极高系统可用性。</p>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-label">高并发与云底座</div>
+                    <div class="impact-value">10W+ 并发</div>
+                    <p class="impact-desc">兼具 Linux/K8s 混合云架构与日均 500GB 日志处理经验，保障全年 SLA &gt; 99.9%。</p>
+                </div>
+            </div>
+
+            <div class="relative pl-16 space-y-10 reveal">
+                <div class="timeline-line"></div>
+
+                <!-- Experience 1 -->
+                <div class="timeline-item relative">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card p-6 bg-white/[0.02] rounded-2xl border border-white/5 hover:border-amber-500/25 transition-all">
+                        <div class="flex flex-wrap items-center justify-between gap-3 mb-2">
+                            <div class="flex items-center gap-2.5">
+                                <span class="px-3 py-1 bg-amber-500/15 text-amber-300 text-xs font-bold rounded-lg border border-amber-500/25">当前在职 · 核心骨干</span>
+                                <span class="text-xs font-mono text-slate-400">2025.11 - 至今</span>
+                            </div>
+                            <span class="text-xs text-emerald-400 font-semibold"><i class="fas fa-shield-halved mr-1"></i>涉密军工 / 非标ATE装备端到端交付</span>
+                        </div>
+                        <h3 class="text-white font-bold text-lg mb-1">陕西邦鼎电子科技有限公司</h3>
+                        <p class="text-amber-400 text-sm font-semibold mb-3">嵌入式开发工程师 / 硬件工程师（全栈研发负责人）</p>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            深耕涉密研发一线，主导多款自研硬件功能板卡的全生命周期开发：从底层外设驱动、FPGA高速同步协议栈到跨平台测控上位机，一手搭建模块化功能自检与自动化测试平台，实现测试用例一键回归、故障自动定位。同时承担非标测试设备硬件板卡的“端到端”交付——独立完成需求拆解、器件选型、12层高速Layout、SI/PI仿真、BOM成本优化、SMT钢网与焊接工艺文件输出，直至产线调试与可靠性验证，确保每一块板卡在极端工况下零缺陷运行。
+                        </p>
+                        <div class="timeline-meta">
+                            <span class="timeline-chip" data-link-project="1"><i class="fas fa-microchip text-amber-400" aria-hidden="true"></i> 军品绝缘自动测试系统 (#1)</span>
+                            <span class="timeline-chip" data-link-project="4"><i class="fas fa-jet-fighter text-amber-400" aria-hidden="true"></i> 航发电喷测试工装 (#4)</span>
+                            <span class="timeline-chip" data-link-project="6"><i class="fas fa-gauge-high text-amber-400" aria-hidden="true"></i> ±0.01精度非标采集模组 (#6)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience 2 -->
+                <div class="timeline-item relative">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card p-6 bg-white/[0.02] rounded-2xl border border-white/5 hover:border-amber-500/25 transition-all">
+                        <div class="flex flex-wrap items-center justify-between gap-3 mb-2">
+                            <span class="text-xs font-mono text-slate-400">2025.02 - 2025.11</span>
+                            <span class="text-xs text-amber-300/90 font-semibold"><i class="fas fa-plane-up mr-1"></i>中航工业(AVIC)机载地测装备研发</span>
+                        </div>
+                        <h3 class="text-white font-bold text-lg mb-1">陕西华科航电科技有限公司</h3>
+                        <p class="text-amber-400 text-sm font-semibold mb-3">嵌入式软件工程师 / 硬件工程师 / 项目经理</p>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            独立主导机载一次配电与电加热地面检测设备多通道异步采集板卡的全栈开发：从 115V 高共模采集硬件、底层外设驱动到高可靠协议库，一手打造军工级数据链路；作为唯一嵌入式软件负责人，为军工某所测试设备交付整套软件架构——工业电容屏 GUI、自定义通讯协议、实时校准算法全线贯通；从 0 到 1 编写 HDLC 编解码引擎，实现多节点高速同步与误码重传，保障极端电磁环境下零丢包。
+                        </p>
+                        <div class="timeline-meta">
+                            <span class="timeline-chip" data-link-project="2"><i class="fas fa-link text-amber-400" aria-hidden="true"></i> 机载配电地面测试设备 (#2)</span>
+                            <span class="timeline-chip" data-link-project="3"><i class="fas fa-temperature-arrow-up text-amber-400" aria-hidden="true"></i> 机载电加热组件测试设备 (#3)</span>
+                            <span class="timeline-chip" data-link-project="5"><i class="fas fa-filter text-amber-400" aria-hidden="true"></i> 某型无人机电源滤波器 (#5)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience 3 -->
+                <div class="timeline-item relative">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card p-6 bg-white/[0.02] rounded-2xl border border-white/5 hover:border-amber-500/25 transition-all">
+                        <div class="flex flex-wrap items-center justify-between gap-3 mb-2">
+                            <span class="text-xs font-mono text-slate-400">2023.04 - 2025.01</span>
+                            <span class="text-xs text-emerald-400 font-semibold"><i class="fas fa-industry mr-1"></i>单年交付 5+ 量产机型 · 良率 &gt; 99.5%</span>
+                        </div>
+                        <h3 class="text-white font-bold text-lg mb-1">山西物联工业自动化技术研究院 &amp; 山西运创自动化系统有限公司</h3>
+                        <p class="text-amber-400 text-sm font-semibold mb-3">嵌入式软件工程师 / 硬件工程师</p>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            全流程主导工业级高可靠硬件产品的设计、研发与批量制造，涵盖需求拆解、器件选型、原理图设计、高速PCB Layout、EMC预兼容测试及产线工装开发；主导通用型PLC核心板卡架构定义，完成双冗余电源、多总线隔离、宽温域（-40~+85℃）设计，单年交付5款以上量产机型。独立承担多款军工、汽车功能性测试系统PCB研发与调试，一次性通过GJB151B电磁兼容与震动冲击试验；主导新能源地源热泵主控板（客户产线全线采用）及共享充电控制器开发，在山西、陕西规模化部署 450+ 节点，累计无故障运行 &gt;5W 小时。
+                        </p>
+                        <div class="timeline-meta">
+                            <span class="timeline-chip" data-link-project="9"><i class="fas fa-bolt text-amber-400" aria-hidden="true"></i> 新能源热泵控制板 (#9)</span>
+                            <span class="timeline-chip" data-link-project="10"><i class="fas fa-charging-station text-amber-400" aria-hidden="true"></i> 450+节点共享充电控制器 (#10)</span>
+                            <span class="timeline-chip" data-link-project="8"><i class="fas fa-satellite-dish text-amber-400" aria-hidden="true"></i> 通用4G数采模组 (#8)</span>
+                            <span class="timeline-chip" data-link-project="11"><i class="fas fa-clock text-amber-400" aria-hidden="true"></i> 军用脉冲时间同步器 (#11)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience 4 -->
+                <div class="timeline-item relative">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card p-6 bg-white/[0.02] rounded-2xl border border-white/5 hover:border-amber-500/25 transition-all">
+                        <div class="flex flex-wrap items-center justify-between gap-3 mb-2">
+                            <span class="text-xs font-mono text-slate-400">2013.06 - 2023.03 (及持续顾问支持)</span>
+                            <span class="text-xs text-amber-300/90 font-semibold"><i class="fas fa-server mr-1"></i>混合云架构 / 10W级并发 / SLA &gt; 99.9%</span>
+                        </div>
+                        <h3 class="text-white font-bold text-lg mb-1">华视嘉德国际文化传媒(北京)有限公司</h3>
+                        <p class="text-amber-400 text-sm font-semibold mb-3">资深网络与云架构工程师</p>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            负责IDC机房及云平台的网络架构规划、核心交换与路由策略调优，独立完成高可用集群部署及自动化备份；主导业务系统 CI/CD 流水线搭建及门禁、监控等 IoT 系统工程落地。深入实践 Linux KVM 虚拟化资源池与 Kubernetes + Docker 微服务弹性伸缩；在阿里云、腾讯云、华为云完成混合云部署，通过 Prometheus + Grafana 实现统一观测；使用 Ansible + Terraform 做基础设施即代码（IaC）交付，日均处理日志 &gt;500GB，支撑峰值 10W 级并发，为后续从事“云-边-端”物联网全栈研发奠定了深厚的网络与服务端底座。
+                        </p>
+                        <div class="timeline-meta">
+                            <span class="timeline-chip" data-link-project="15"><i class="fas fa-location-crosshairs text-amber-400" aria-hidden="true"></i> 北斗与GPS定位Web平台 (#15)</span>
+                            <span class="timeline-chip" data-link-project="18"><i class="fas fa-calculator text-amber-400" aria-hidden="true"></i> 会计记账管理系统 ERP (#18)</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- ===== AWARDS SECTION ===== -->
-    <section id="awards" class="py-24 bg-slate-900/20">
+    <section id="awards" class="py-24">
         <div class="max-w-6xl mx-auto px-4 sm:px-6">
             <div class="reveal">
                 <h2 class="text-3xl md:text-4xl font-bold text-white mb-4 flex items-center gap-4">
                     <span class="w-12 h-1 bg-gradient-to-r from-amber-500 to-orange-400 rounded-full"></span>
-                    荣誉与成就
+                    荣誉奖项、专利软著 &amp; 行业影响力
                 </h2>
-                <p class="text-slate-500 mb-16 ml-0 md:ml-16 section-lead">开源精神驱动，持续精进</p>
+                <p class="text-slate-400 mb-14 ml-0 md:ml-16 section-lead text-sm">以开源精神反哺技术社区，以省级科技奖项与真实城市级工程验证实力。</p>
             </div>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 reveal">
                 <div class="award-badge">
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
-                            <i class="fas fa-trophy text-amber-400" aria-hidden="true"></i>
+                    <div class="flex items-center justify-between gap-3 mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-amber-500/15 flex items-center justify-center">
+                                <i class="fas fa-trophy text-amber-400" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold text-sm">年度硬件开源达人</h4>
+                                <p class="text-xs text-slate-400">2022 / 2023 连续两年蝉联</p>
+                            </div>
                         </div>
-                        <div>
-                            <h4 class="text-white font-bold text-sm">硬件开源达人</h4>
-                            <p class="text-xs text-slate-500">2022 / 2023 连续两年</p>
-                        </div>
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300">70+ 开源项</span>
                     </div>
-                    <p class="text-slate-400 text-sm">累计开源自开发软硬件作品约70余项，部分已签署保密合作协议，在开源社区具有广泛影响力。</p>
+                    <p class="text-slate-300 text-xs leading-relaxed">累计开源自研软硬件工程作品 70 余项，多项高人气工程被社区广泛复刻并签署商业保密合作协议。</p>
                 </div>
                 <div class="award-badge">
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
-                            <i class="fas fa-medal text-amber-400" aria-hidden="true"></i>
+                    <div class="flex items-center justify-between gap-3 mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-amber-500/15 flex items-center justify-center">
+                                <i class="fas fa-flask text-amber-400" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold text-sm">山西省科技进步奖</h4>
+                                <p class="text-xs text-slate-400">实用新型专利 / 软件著作权</p>
+                            </div>
                         </div>
-                        <div>
-                            <h4 class="text-white font-bold text-sm">开源项目自由组二等奖</h4>
-                            <p class="text-xs text-slate-500">2023</p>
-                        </div>
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300">省级荣誉</span>
                     </div>
-                    <p class="text-slate-400 text-sm">凭借出色的开源项目质量与社区贡献，荣获开源项目自由组二等奖。</p>
+                    <p class="text-slate-300 text-xs leading-relaxed">主导研发的多个工业与物联网项目荣获山西省科技进步奖，同步完成多项国家专利与软件著作权申报落地。</p>
                 </div>
                 <div class="award-badge">
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
-                            <i class="fas fa-chalkboard-teacher text-amber-400" aria-hidden="true"></i>
+                    <div class="flex items-center justify-between gap-3 mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-amber-500/15 flex items-center justify-center">
+                                <i class="fas fa-award text-amber-400" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold text-sm">全国电子大赛山西省第二名</h4>
+                                <p class="text-xs text-slate-400">2023 · F组省级亚军</p>
+                            </div>
                         </div>
-                        <div>
-                            <h4 class="text-white font-bold text-sm">EDA校园培训讲师</h4>
-                            <p class="text-xs text-slate-500">运城学院</p>
-                        </div>
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300">竞赛大奖</span>
                     </div>
-                    <p class="text-slate-400 text-sm">获得EDA校园培训讲师资格，持有PCB设计专业技能证书，积极推动电子设计教育。</p>
+                    <p class="text-slate-300 text-xs leading-relaxed">在高强度限时电子系统设计竞赛中，凭借扎实的模拟/数字电路功底与高速固件联调能力斩获山西省 F 组第二名。</p>
                 </div>
                 <div class="award-badge">
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
-                            <i class="fas fa-award text-amber-400" aria-hidden="true"></i>
+                    <div class="flex items-center justify-between gap-3 mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-amber-500/15 flex items-center justify-center">
+                                <i class="fas fa-medal text-amber-400" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold text-sm">开源项目自由组二等奖</h4>
+                                <p class="text-xs text-slate-400">2023 全国开源硬件大赛</p>
+                            </div>
                         </div>
-                        <div>
-                            <h4 class="text-white font-bold text-sm">全国电子大赛山西省F组第二名</h4>
-                            <p class="text-xs text-slate-500">2023</p>
-                        </div>
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300">全国奖项</span>
                     </div>
-                    <p class="text-slate-400 text-sm">在全国电子大赛中脱颖而出，获得山西省F组第二名的好成绩。</p>
+                    <p class="text-slate-300 text-xs leading-relaxed">凭借高完成度的软硬一体创新设计与详尽的工程开源文档，在众多参赛作品中脱颖而出荣获二等奖。</p>
                 </div>
                 <div class="award-badge">
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
-                            <i class="fas fa-flask text-amber-400" aria-hidden="true"></i>
+                    <div class="flex items-center justify-between gap-3 mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-amber-500/15 flex items-center justify-center">
+                                <i class="fas fa-chalkboard-teacher text-amber-400" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold text-sm">高校 EDA 校园培训讲师</h4>
+                                <p class="text-xs text-slate-400">运城学院 · 技术布道与赋能</p>
+                            </div>
                         </div>
-                        <div>
-                            <h4 class="text-white font-bold text-sm">山西省科技进步奖</h4>
-                            <p class="text-xs text-slate-500">实用型/软著</p>
-                        </div>
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300">导师认证</span>
                     </div>
-                    <p class="text-slate-400 text-sm">负责的多个项目荣获山西省科技进步奖，配合申请多项专利。</p>
+                    <p class="text-slate-300 text-xs leading-relaxed">受聘担任高校 EDA 校园培训讲师并持有 PCB 设计专项技能证书，具备优秀的复杂技术体系化讲授与团队赋能能力。</p>
                 </div>
                 <div class="award-badge">
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-10 h-10 rounded-xl bg-amber-500/10 flex items-center justify-center">
-                            <i class="fas fa-city text-amber-400" aria-hidden="true"></i>
+                    <div class="flex items-center justify-between gap-3 mb-3">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-xl bg-amber-500/15 flex items-center justify-center">
+                                <i class="fas fa-city text-amber-400" aria-hidden="true"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold text-sm">城市级公共设施规模化量产</h4>
+                                <p class="text-xs text-slate-400">450+ 节点 · 产线 100% 导入</p>
+                            </div>
                         </div>
-                        <div>
-                            <h4 class="text-white font-bold text-sm">城市部署</h4>
-                            <p class="text-xs text-slate-500">运城市及周边</p>
-                        </div>
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300">商业验证</span>
                     </div>
-                    <p class="text-slate-400 text-sm">独立完成多项主控板核心电路设计、生产测试、调试量产，山西运城市公共设施已部署共享充电节点约450个；新能源变频控制器批量装机。</p>
+                    <p class="text-slate-300 text-xs leading-relaxed">自研共享充电控制器在运城市公共设施部署逾 450 个节点；自研地源热泵主控板实现客户产线全线替代量产。</p>
                 </div>
             </div>
         </div>
@@ -722,64 +1115,68 @@
 
     <!-- ===== CONTACT SECTION ===== -->
     <footer id="contact" class="py-24 border-t border-white/5 relative overflow-hidden">
-        <!-- 包含模糊光晕防止移动端横向溢出 -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
             <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-amber-500/5 rounded-full blur-[120px]"></div>
         </div>
         <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center relative z-10">
             <div class="reveal">
-                <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-300 text-xs font-bold mb-5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                    常驻陕西·西安 · 支持全国到岗或高可靠远程全栈交付
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-5">
                     “交付不仅是产品的完成，<br class="hidden md:block">更是对可靠性的终极承诺。”
                 </h2>
-                <p class="text-slate-500 mb-16 max-w-lg mx-auto">如果您正在寻找一位能从硬件到软件提供整体解决方案的工程师，欢迎随时联系我。</p>
+                <p class="text-slate-400 mb-12 max-w-xl mx-auto text-sm leading-relaxed">
+                    如果您正在寻找一位能从**高速原理图/PCB、FPGA/嵌入式固件一直打通到测控上位机与产线量产治具**的全栈研发负责人或核心骨干，欢迎随时与我联系。
+                </p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal">
-                <!-- 邮箱链接优化：点击一键复制 + 唤起邮件 -->
-                <div id="emailCard" class="group p-6 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-amber-500/20 transition-all hover:-translate-y-1 text-center block cursor-pointer" title="点击一键复制邮箱">
+                <!-- 邮箱卡片 -->
+                <div id="emailCard" class="group p-6 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-amber-500/30 transition-all hover:-translate-y-1 text-center block cursor-pointer" role="button" tabindex="0" title="点击一键复制邮箱">
                     <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-amber-500/20 transition-colors">
                         <i class="fas fa-envelope text-amber-400 text-lg" aria-hidden="true"></i>
                     </div>
-                    <p class="text-sm font-medium text-white select-all">
+                    <p class="text-sm font-bold text-white select-all">
                         <span>43823845@qq.com</span>
                     </p>
-                    <p class="text-xs text-amber-400/80 mt-1 flex items-center justify-center gap-1">
-                        <i class="fas fa-copy text-[10px]"></i> 点击快速复制邮箱
+                    <p class="text-xs text-amber-400/90 mt-1.5 flex items-center justify-center gap-1 font-medium">
+                        <i class="fas fa-copy text-[10px]"></i> 点击一键复制邮箱
                     </p>
                 </div>
                 
-                <!-- 微信名片：点击一键复制 + 弹出二维码 -->
-                <button id="wechatCard" type="button" class="group p-6 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-amber-500/20 transition-all hover:-translate-y-1 cursor-pointer w-full text-center">
+                <!-- 微信名片 -->
+                <button id="wechatCard" type="button" class="group p-6 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-amber-500/30 transition-all hover:-translate-y-1 cursor-pointer w-full text-center">
                     <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-amber-500/20 transition-colors">
                         <i class="fab fa-weixin text-amber-400 text-lg" aria-hidden="true"></i>
                     </div>
-                    <p class="text-sm font-medium text-white">微信号: 43823845</p>
-                    <p class="text-xs text-amber-400/80 mt-1 flex items-center justify-center gap-1">
-                        <i class="fas fa-qrcode text-[10px]"></i> 点击复制并扫码
+                    <p class="text-sm font-bold text-white">微信号: 43823845</p>
+                    <p class="text-xs text-amber-400/90 mt-1.5 flex items-center justify-center gap-1 font-medium">
+                        <i class="fas fa-qrcode text-[10px]"></i> 点击复制并弹出二维码
                     </p>
                 </button>
                 
-                <button id="easterEggCard" type="button" class="group p-6 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-amber-500/20 transition-all hover:-translate-y-1 w-full text-center relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-amber-500/0 via-amber-500/0 to-amber-500/0 group-hover:from-amber-500/5 group-hover:via-transparent group-hover:to-amber-500/5 transition-all duration-500" aria-hidden="true"></div>
+                <!-- 彩蛋卡片 -->
+                <button id="easterEggCard" type="button" class="group p-6 bg-white/[0.03] rounded-2xl border border-white/5 hover:border-amber-500/30 transition-all hover:-translate-y-1 w-full text-center relative overflow-hidden cursor-pointer">
                     <div class="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-amber-500/20 transition-all group-hover:scale-110 relative z-10">
-                        <i class="fas fa-magic text-amber-400 text-lg group-hover:animate-pulse" aria-hidden="true"></i>
+                        <i class="fas fa-heart text-amber-400 text-lg group-hover:animate-pulse" aria-hidden="true"></i>
                     </div>
-                    <p class="text-sm font-medium text-white relative z-10">发现彩蛋</p>
-                    <p class="text-xs text-slate-500 mt-1 relative z-10">点击触发隐藏特效</p>
+                    <p class="text-sm font-bold text-white relative z-10">致技术伯乐的一封信</p>
+                    <p class="text-xs text-amber-400/90 mt-1.5 relative z-10 font-medium">点击开启硬件工程师的浪漫彩蛋</p>
                 </button>
             </div>
             
+            <!-- 彩蛋弹窗 -->
             <div id="easterEggModal" class="fixed inset-0 z-[10000] flex items-center justify-center p-4 opacity-0 invisible transition-all duration-300" style="background: rgba(0,0,0,0.85); backdrop-filter: blur(12px);" role="dialog" aria-modal="true" aria-label="浪漫彩蛋">
                 <div class="relative bg-slate-900 border border-white/10 w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row transform scale-90 transition-all duration-300" id="easterEggModalContent">
-                    <button id="closeEasterEgg" type="button" class="absolute top-5 right-5 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-red-500/80 text-white transition-all z-10 focus:outline-none" aria-label="关闭彩蛋">
+                    <button id="closeEasterEgg" type="button" class="absolute top-5 right-5 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-red-500/80 text-white transition-all z-10 focus:outline-none cursor-pointer" aria-label="关闭彩蛋">
                         <i class="fas fa-times text-sm" aria-hidden="true"></i>
                     </button>
-                    <!-- Left: GIF Image -->
                     <div class="md:w-1/2 bg-slate-950 p-6 flex flex-col items-center justify-center border-r border-white/5 flex-shrink-0">
                         <img id="easterEggGif" src="img/easter-egg.gif" alt="硬件工程师的浪漫彩蛋动画" loading="lazy" decoding="async" width="240" height="240" class="rounded-xl shadow-lg border border-white/10 object-contain max-w-full">
-                        <p class="text-center text-slate-400 text-xs mt-4">硬件工程师的浪漫</p>
+                        <p class="text-center text-amber-400/80 text-xs mt-4 font-semibold">♥ 硬件工程师的纯粹热忱</p>
                     </div>
-                    <!-- Right: Emotional Letter -->
-                    <div class="md:w-1/2 p-8 overflow-y-auto no-scrollbar max-h-[70vh] md:max-h-none flex flex-col justify-center">
+                    <div class="md:w-1/2 p-8 overflow-y-auto no-scrollbar max-h-[70vh] md:max-h-none flex flex-col justify-center text-left">
                         <h3 class="text-white font-bold text-lg mb-3 flex items-center gap-2">
                             <i class="fas fa-heart text-amber-500"></i>
                             写给技术招聘官的一封信
@@ -792,57 +1189,101 @@
                 </div>
             </div>
             
-            <div class="mt-16 pt-8 border-t border-white/5 text-center">
-                <p class="text-xs text-slate-600">&copy; 2026 杨杰 · 全栈工程师 · All Rights Reserved</p>
+            <div class="mt-16 pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+                <p>&copy; 2026 杨杰 · 软硬件研发全栈架构师 · All Rights Reserved</p>
+                <div class="flex items-center gap-4">
+                    <button type="button" id="footerResumeBtn" class="hover:text-amber-400 transition-colors cursor-pointer">A4 精装简历</button>
+                    <span>·</span>
+                    <button type="button" id="footerAdminBtn" class="hover:text-amber-400 transition-colors cursor-pointer">项目管理台</button>
+                </div>
             </div>
         </div>
     </footer>
 
-    <!-- ===== PROJECT MODAL ===== -->
+    <!-- ===== PROJECT MODAL (升级版：支持全栈角色拆解、商业价值评估与上下项目切换) ===== -->
     <div id="projectModal" class="items-center justify-center p-3 sm:p-4" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-        <div class="modal-content bg-slate-900 w-full max-w-5xl rounded-3xl overflow-hidden shadow-[0_0_80px_rgba(0,0,0,0.6)] flex flex-col md:flex-row relative max-h-[92vh] border border-white/5">
-            <!-- Close Button (a11y focus target) -->
-            <button id="closeModalBtn" class="absolute top-3 right-3 sm:top-5 sm:right-5 w-10 h-10 sm:w-11 sm:h-11 bg-black/50 md:bg-white/10 hover:bg-red-500/90 text-white rounded-full z-[10001] backdrop-blur-md transition-all flex items-center justify-center hover:scale-110 focus:outline-none focus:ring-2 focus:ring-amber-500 cursor-pointer" aria-label="关闭详情弹窗">
+        <div class="modal-content bg-slate-900 w-full max-w-5xl rounded-3xl overflow-hidden shadow-[0_0_80px_rgba(0,0,0,0.65)] flex flex-col md:flex-row relative max-h-[92vh] border border-white/10">
+            <!-- Close Button -->
+            <button id="closeModalBtn" type="button" class="absolute top-3 right-3 sm:top-5 sm:right-5 w-10 h-10 sm:w-11 sm:h-11 bg-black/60 md:bg-white/10 hover:bg-red-500/90 text-white rounded-full z-[10001] backdrop-blur-md transition-all flex items-center justify-center hover:scale-110 focus:outline-none focus:ring-2 focus:ring-amber-500 cursor-pointer" aria-label="关闭详情弹窗">
                 <i class="fas fa-times text-base sm:text-lg" aria-hidden="true"></i>
             </button>
 
-            <!-- Image Area -->
-            <div class="h-48 sm:h-64 md:h-auto md:w-1/2 bg-slate-800 relative flex items-center justify-center overflow-hidden flex-shrink-0">
-                <img id="modalImg" src="" alt="项目大图预览" loading="lazy" decoding="async" width="600" height="400" class="max-w-full max-h-full object-contain">
-                <div class="absolute inset-0 bg-gradient-to-r from-transparent to-slate-900/20 hidden md:block pointer-events-none" aria-hidden="true"></div>
+            <!-- Image & Quick Summary Area -->
+            <div class="h-52 sm:h-64 md:h-auto md:w-5/12 bg-slate-950 relative flex flex-col justify-between overflow-hidden flex-shrink-0 border-b md:border-b-0 md:border-r border-white/10">
+                <div class="relative flex-grow flex items-center justify-center p-4 overflow-hidden">
+                    <img id="modalImg" src="" alt="项目大图预览" loading="lazy" decoding="async" width="600" height="400" class="max-w-full max-h-full object-contain rounded-xl">
+                    <div id="modalFlagshipBadge" class="hidden absolute top-3 left-3 px-3 py-1 rounded-lg bg-gradient-to-r from-amber-500 to-orange-500 text-white text-[11px] font-extrabold shadow-lg">
+                        <i class="fas fa-crown mr-1"></i> 王牌代表作
+                    </div>
+                </div>
+                <!-- 左侧底部：全栈独立包干层级拆解 -->
+                <div class="p-4 sm:p-5 bg-white/[0.02] border-t border-white/5 hidden md:block">
+                    <div class="text-[10px] font-bold text-amber-400 uppercase tracking-wider mb-2">
+                        <i class="fas fa-layer-group mr-1"></i> 本项目独立包干全栈层级
+                    </div>
+                    <div id="modalStackLayers" class="flex flex-wrap gap-1.5"></div>
+                </div>
             </div>
 
             <!-- Content Area -->
-            <div class="flex-grow p-5 sm:p-8 md:p-12 overflow-y-auto no-scrollbar">
-                <div id="modalTags" class="flex flex-wrap gap-1.5 sm:gap-2 mb-4 sm:mb-5"></div>
-                <h3 id="modalTitle" class="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1.5 sm:mb-2"></h3>
-                <p id="modalRole" class="text-amber-400 text-xs sm:text-sm font-medium mb-4 sm:mb-6"></p>
-                <div class="space-y-6 sm:space-y-8">
-                    <div>
-                        <h4 class="text-amber-400 text-xs font-bold uppercase tracking-widest mb-3 sm:mb-4 flex items-center gap-2">
-                            <i class="fas fa-crosshairs" aria-hidden="true"></i> 核心挑战与攻克
-                        </h4>
-                        <ul id="modalChallenges" class="space-y-2.5 sm:space-y-3 text-slate-300 text-xs sm:text-sm list-none p-0 m-0"></ul>
+            <div class="flex-grow p-5 sm:p-8 md:p-9 overflow-y-auto no-scrollbar flex flex-col justify-between">
+                <div>
+                    <div class="flex flex-wrap items-center gap-2 mb-3">
+                        <span id="modalCatBadge" class="px-2.5 py-1 bg-amber-500/15 text-amber-300 rounded-lg text-xs font-bold border border-amber-500/30"></span>
+                        <span id="modalMetricBadge" class="px-2.5 py-1 bg-emerald-500/15 text-emerald-300 rounded-lg text-xs font-bold border border-emerald-500/30"></span>
                     </div>
-                    <div>
-                        <h4 class="text-amber-400 text-xs font-bold uppercase tracking-widest mb-3 sm:mb-4 flex items-center gap-2">
-                            <i class="fas fa-cog" aria-hidden="true"></i> 技术细节
-                        </h4>
-                        <p id="modalTech" class="text-slate-400 text-xs sm:text-sm leading-relaxed bg-white/[0.03] p-4 sm:p-5 rounded-xl border border-white/5"></p>
+                    <h3 id="modalTitle" class="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1.5"></h3>
+                    <p id="modalRole" class="text-amber-400 text-xs sm:text-sm font-semibold mb-4"></p>
+                    <div id="modalTags" class="flex flex-wrap gap-1.5 mb-5"></div>
+
+                    <div class="space-y-5">
+                        <!-- 新增：商业与工程价值高亮框 -->
+                        <div class="p-4 rounded-xl bg-amber-500/[0.07] border border-amber-500/25">
+                            <h4 class="text-amber-300 text-xs font-bold uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                                <i class="fas fa-gem" aria-hidden="true"></i> 核心工程与商业赋能价值
+                            </h4>
+                            <p id="modalValueImpact" class="text-slate-200 text-xs sm:text-sm leading-relaxed"></p>
+                        </div>
+
+                        <div>
+                            <h4 class="text-amber-400 text-xs font-bold uppercase tracking-widest mb-2.5 flex items-center gap-2">
+                                <i class="fas fa-crosshairs" aria-hidden="true"></i> 核心挑战与技术攻克
+                            </h4>
+                            <ul id="modalChallenges" class="space-y-2 text-slate-300 text-xs sm:text-sm list-none p-0 m-0"></ul>
+                        </div>
+
+                        <div>
+                            <h4 class="text-amber-400 text-xs font-bold uppercase tracking-widest mb-2.5 flex items-center gap-2">
+                                <i class="fas fa-cog" aria-hidden="true"></i> 架构设计与技术细节
+                            </h4>
+                            <p id="modalTech" class="text-slate-300 text-xs sm:text-sm leading-relaxed bg-white/[0.03] p-4 rounded-xl border border-white/5"></p>
+                        </div>
+
+                        <div id="modalAchievements" class="hidden">
+                            <h4 class="text-emerald-400 text-xs font-bold uppercase tracking-widest mb-2.5 flex items-center gap-2">
+                                <i class="fas fa-check-circle" aria-hidden="true"></i> 量产与验收交付成果
+                            </h4>
+                            <p id="modalAchText" class="text-slate-300 text-xs sm:text-sm leading-relaxed bg-emerald-500/[0.05] p-4 rounded-xl border border-emerald-500/15"></p>
+                        </div>
                     </div>
-                    <div id="modalAchievements" class="hidden">
-                        <h4 class="text-amber-400 text-xs font-bold uppercase tracking-widest mb-3 sm:mb-4 flex items-center gap-2">
-                            <i class="fas fa-check-circle" aria-hidden="true"></i> 项目成果
-                        </h4>
-                        <p id="modalAchText" class="text-slate-400 text-xs sm:text-sm leading-relaxed bg-green-500/[0.03] p-4 sm:p-5 rounded-xl border border-green-500/10"></p>
-                    </div>
+                </div>
+
+                <!-- 弹窗底部：上下项目无缝切换器 -->
+                <div class="flex items-center justify-between pt-5 mt-6 border-t border-white/10">
+                    <button type="button" id="prevProjectBtn" class="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white text-xs font-bold border border-white/10 transition-all flex items-center gap-2 cursor-pointer">
+                        <i class="fas fa-arrow-left"></i> 上一个项目
+                    </button>
+                    <span id="modalProjIndexIndicator" class="text-xs font-mono text-slate-400">01 / 18</span>
+                    <button type="button" id="nextProjectBtn" class="px-3.5 py-2 rounded-xl bg-amber-600/20 hover:bg-amber-600/35 text-amber-300 hover:text-white text-xs font-bold border border-amber-500/30 transition-all flex items-center gap-2 cursor-pointer">
+                        下一个项目 <i class="fas fa-arrow-right"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- ===== WECHAT QR MODAL ===== -->
-    <div id="wechatModal" class="fixed inset-0 z-[1000] flex items-center justify-center p-4 opacity-0 invisible transition-all duration-300" style="background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);" role="dialog" aria-modal="true" aria-labelledby="wechatModalTitle">
+    <div id="wechatModal" class="fixed inset-0 z-[1000] flex items-center justify-center p-4 opacity-0 invisible transition-all duration-300" style="background: rgba(0,0,0,0.75); backdrop-filter: blur(8px);" role="dialog" aria-modal="true" aria-labelledby="wechatModalTitle">
         <div class="relative bg-[#0c1424] rounded-2xl border border-white/10 shadow-2xl p-6 sm:p-8 max-w-sm w-full transform scale-90 transition-transform duration-300" id="wechatModalContent">
             <button id="closeWechatModal" type="button" class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-all cursor-pointer" aria-label="关闭微信二维码">
                 <i class="fas fa-times text-sm" aria-hidden="true"></i>
@@ -852,11 +1293,11 @@
                     <i class="fab fa-weixin text-green-500 text-xl sm:text-2xl" aria-hidden="true"></i>
                 </div>
                 <h3 id="wechatModalTitle" class="text-white font-bold text-base sm:text-lg mb-1">微信扫码添加好友</h3>
-                <p class="text-slate-500 text-xs sm:text-sm mb-4 sm:mb-6">微信号: 43823845</p>
+                <p class="text-slate-400 text-xs sm:text-sm mb-4 sm:mb-6">微信号: 43823845 (已自动复制)</p>
                 <div class="bg-white rounded-xl p-2.5 sm:p-3 inline-block shadow-lg">
-                    <img id="wechatQRImg" src="" alt="微信二维码名片" loading="lazy" decoding="async" width="208" height="208" class="w-44 h-44 sm:w-52 sm:h-52 object-contain rounded-lg">
+                    <img id="wechatQRImg" src="img/wechat-qr.jpg" alt="微信二维码名片" loading="lazy" decoding="async" width="208" height="208" class="w-44 h-44 sm:w-52 sm:h-52 object-contain rounded-lg">
                 </div>
-                <p class="text-slate-500 text-[11px] sm:text-xs mt-3 sm:mt-4">打开微信扫一扫，即可添加好友</p>
+                <p class="text-slate-400 text-[11px] sm:text-xs mt-3 sm:mt-4">打开微信扫一扫，或直接搜索微信号添加</p>
             </div>
         </div>
     </div>
@@ -864,34 +1305,34 @@
     <!-- ===== DEVELOPER MANAGEMENT CONSOLE MODAL ===== -->
     <div id="adminModal" class="fixed inset-0 z-[10000] flex items-center justify-center p-4 opacity-0 invisible transition-all duration-300" style="background: rgba(0,0,0,0.85); backdrop-filter: blur(16px);" role="dialog" aria-modal="true" aria-labelledby="adminModalTitle">
         <div class="relative bg-slate-900 border border-white/10 w-full max-w-5xl rounded-3xl overflow-hidden shadow-2xl flex flex-col md:flex-row transform scale-90 transition-all duration-300 max-h-[90vh]" id="adminModalContent">
-            <button id="closeAdminModal" type="button" class="absolute top-5 right-5 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-red-500/80 text-white transition-all z-10 focus:outline-none" aria-label="关闭管理控制台">
+            <button id="closeAdminModal" type="button" class="absolute top-5 right-5 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-red-500/80 text-white transition-all z-10 focus:outline-none cursor-pointer" aria-label="关闭管理控制台">
                 <i class="fas fa-times text-sm" aria-hidden="true"></i>
             </button>
             
-            <!-- Left Side: Form Editor (Scrollable) -->
+            <!-- Left Side: Form Editor -->
             <div class="md:w-1/2 p-6 md:p-8 border-r border-white/5 overflow-y-auto no-scrollbar flex flex-col justify-between max-h-[45vh] md:max-h-none">
                 <div>
                     <h3 id="adminModalTitle" class="text-white font-black text-xl mb-6 flex items-center gap-2">
                         <i class="fas fa-terminal text-amber-500"></i>
                         项目可视化编辑器
                     </h3>
-                    <form id="adminForm" class="space-y-4" onsubmit="return false;">
+                    <form id="adminForm" class="space-y-4">
                         <input type="hidden" id="editIndex" value="-1">
                         
                         <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-[10px] text-slate-400 uppercase tracking-wider mb-1 font-bold">项目标题</label>
+                                <label for="adminTitle" class="block text-[10px] text-slate-400 uppercase tracking-wider mb-1 font-bold">项目标题</label>
                                 <input type="text" id="adminTitle" class="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500" required placeholder="例如：智能SMT微型焊台">
                             </div>
                             <div>
-                                <label class="block text-[10px] text-slate-400 uppercase tracking-wider mb-1 font-bold">项目角色</label>
+                                <label for="adminRole" class="block text-[10px] text-slate-400 uppercase tracking-wider mb-1 font-bold">项目角色</label>
                                 <input type="text" id="adminRole" class="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500" required placeholder="例如：个人独立研发 · 2025">
                             </div>
                         </div>
 
                         <div class="grid grid-cols-3 gap-3">
                             <div>
-                                <label class="block text-[10px] text-slate-400 uppercase tracking-wider mb-1 font-bold">项目分类</label>
+                                <label for="adminCat" class="block text-[10px] text-slate-400 uppercase tracking-wider mb-1 font-bold">项目分类</label>
                                 <select id="adminCat" class="w-full bg-slate-950 border border-white/10 rounded-xl px-2 py-2 text-xs text-slate-300 focus:outline-none focus:border-amber-500 cursor-pointer">
                                     <option value="军工/航电">军工/航电</option>
                                     <option value="工业/能源">工业/能源</option>
@@ -900,7 +1341,7 @@
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-[10px] text-slate-400 uppercase tracking-wider mb-1 font-bold">筛选过滤器</label>
+                                <label for="adminFilter" class="block text-[10px] text-slate-400 uppercase tracking-wider mb-1 font-bold">筛选过滤器</label>
                                 <select id="adminFilter" class="w-full bg-slate-950 border border-white/10 rounded-xl px-2 py-2 text-xs text-slate-300 focus:outline-none focus:border-amber-500 cursor-pointer">
                                     <option value="mil">军工 (mil)</option>
                                     <option value="ind">工业 (ind)</option>
@@ -909,7 +1350,7 @@
                                 </select>
                             </div>
                             <div>
-                                <label class="block text-[10px] text-slate-400 uppercase tracking-wider mb-1 font-bold">软硬件类型</label>
+                                <label for="adminType" class="block text-[10px] text-slate-400 uppercase tracking-wider mb-1 font-bold">软硬件类型</label>
                                 <select id="adminType" class="w-full bg-slate-950 border border-white/10 rounded-xl px-2 py-2 text-xs text-slate-300 focus:outline-none focus:border-amber-500 cursor-pointer">
                                     <option value="hw">硬件 (hw)</option>
                                     <option value="sw">软件 (sw)</option>
@@ -919,27 +1360,27 @@
 
                         <div class="grid grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-[10px] text-slate-400 uppercase tracking-wider mb-1 font-bold">图片路径</label>
+                                <label for="adminImg" class="block text-[10px] text-slate-400 uppercase tracking-wider mb-1 font-bold">图片路径</label>
                                 <input type="text" id="adminImg" class="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500" required placeholder="例如：img/smt_hw.jpg">
                             </div>
                             <div>
-                                <label class="block text-[10px] text-slate-400 uppercase tracking-wider mb-1 font-bold">核心标签 (逗号分隔)</label>
+                                <label for="adminTags" class="block text-[10px] text-slate-400 uppercase tracking-wider mb-1 font-bold">核心标签 (逗号分隔)</label>
                                 <input type="text" id="adminTags" class="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500" placeholder="例如：加热台, PID温控">
                             </div>
                         </div>
 
                         <div>
-                            <label class="block text-[10px] text-slate-400 uppercase tracking-wider mb-1 font-bold">技术核心细节</label>
+                            <label for="adminTech" class="block text-[10px] text-slate-400 uppercase tracking-wider mb-1 font-bold">技术核心细节</label>
                             <textarea id="adminTech" rows="2" class="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500" required placeholder="描述项目所应用到的具体技术点及方案..."></textarea>
                         </div>
 
                         <div>
-                            <label class="block text-[10px] text-slate-400 uppercase tracking-wider mb-1 font-bold">核心挑战与攻克 (按行分隔)</label>
-                            <textarea id="adminChallenges" rows="2" class="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500" required placeholder="每行输入一个挑战点，例如：&#10;极小空间下的发热绝缘与散热设计&#10;基于PID的精密恒温控制"></textarea>
+                            <label for="adminChallenges" class="block text-[10px] text-slate-400 uppercase tracking-wider mb-1 font-bold">核心挑战与攻克 (按行分隔)</label>
+                            <textarea id="adminChallenges" rows="2" class="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500" required placeholder="每行输入一个挑战点..."></textarea>
                         </div>
 
                         <div>
-                            <label class="block text-[10px] text-slate-400 uppercase tracking-wider mb-1 font-bold">项目成果与收获 (选填)</label>
+                            <label for="adminAchievements" class="block text-[10px] text-slate-400 uppercase tracking-wider mb-1 font-bold">项目成果与收获 (选填)</label>
                             <textarea id="adminAchievements" rows="2" class="w-full bg-slate-950 border border-white/10 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500" placeholder="项目带来的经济效益、量产规模或可靠性表现..."></textarea>
                         </div>
                     </form>
@@ -950,12 +1391,12 @@
                         保存并应用项目
                     </button>
                     <button type="button" id="adminClearBtn" class="px-4 py-3 bg-white/5 hover:bg-white/10 text-white font-bold text-xs rounded-xl transition-all border border-white/10 cursor-pointer">
-                        清空
+                        清空表单
                     </button>
                 </div>
             </div>
 
-            <!-- Right Side: Exporter & List (Scrollable) -->
+            <!-- Right Side: Exporter & List -->
             <div class="md:w-1/2 p-6 md:p-8 bg-slate-950/40 flex flex-col justify-between overflow-y-auto no-scrollbar max-h-[45vh] md:max-h-none">
                 <div>
                     <h3 class="text-white font-black text-xl mb-4 flex items-center gap-2">
@@ -963,7 +1404,6 @@
                         已装载项目管理
                     </h3>
                     
-                    <!-- Exporter and Reset Row -->
                     <div class="grid grid-cols-2 gap-3 mb-6">
                         <button type="button" id="adminExportBtn" class="py-2.5 bg-gradient-to-r from-emerald-600 to-teal-500 hover:from-emerald-500 hover:to-teal-400 text-white font-bold text-[11px] rounded-xl transition-all shadow-lg shadow-emerald-600/10 cursor-pointer">
                             <i class="fas fa-file-export mr-1"></i>
@@ -975,7 +1415,6 @@
                         </button>
                     </div>
 
-                    <!-- Project List Container -->
                     <label class="block text-[10px] text-slate-500 uppercase tracking-wider mb-2 font-bold">所有项目列表 (共 <span id="adminProjCount">0</span> 个)</label>
                     <div id="adminProjectList" class="space-y-2.5 overflow-y-auto max-h-[30vh] md:max-h-[50vh] pr-1.5 no-scrollbar scroll-smooth">
                         <!-- Dynamically filled -->
@@ -986,20 +1425,20 @@
     </div>
 
     <!-- ===== 📄 精装 A4 个人电子简历模态窗 (Resume Modal) ===== -->
-    <div id="resumeModal" class="fixed inset-0 z-[1000] flex items-center justify-center bg-black/80 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 p-2 sm:p-4 overflow-y-auto">
+    <div id="resumeModal" class="fixed inset-0 z-[1000] flex items-center justify-center bg-black/80 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-300 p-2 sm:p-4 overflow-y-auto" role="dialog" aria-modal="true" aria-label="杨杰精装A4电子简历">
         <div id="resumeModalContent" class="relative w-full max-w-4xl bg-slate-900 border border-amber-500/30 rounded-2xl shadow-2xl overflow-hidden my-auto transform scale-95 transition-all duration-300 flex flex-col max-h-[92vh]">
             <!-- 模态窗口顶部工具栏 -->
             <div class="flex items-center justify-between px-3.5 sm:px-5 py-3 sm:py-3.5 bg-slate-950/80 border-b border-white/10 flex-shrink-0">
                 <div class="flex items-center gap-2 min-w-0 pr-2">
                     <span class="w-2.5 h-2.5 rounded-full bg-amber-500 animate-pulse flex-shrink-0"></span>
-                    <h3 class="text-xs sm:text-sm font-bold text-white tracking-wide truncate">杨杰 · 个人精装电子简历 (A4 专业排版)</h3>
+                    <h3 class="text-xs sm:text-sm font-bold text-white tracking-wide truncate">杨杰 · 个人精装电子简历 (A4 高保真排版)</h3>
                 </div>
                 <div class="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
                     <button type="button" id="resumePrintBtn" class="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3.5 py-1.5 bg-amber-600 hover:bg-amber-500 text-white font-bold text-xs rounded-lg transition-all shadow-md cursor-pointer">
                         <i class="fas fa-print"></i> <span class="hidden sm:inline">打印 / 另存为 A4 PDF</span><span class="sm:hidden">打印</span>
                     </button>
                     <button type="button" id="resumeCopyTextBtn" class="inline-flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3.5 py-1.5 bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white font-medium text-xs rounded-lg border border-white/10 transition-all cursor-pointer">
-                        <i class="fas fa-copy"></i> <span class="hidden sm:inline">复制文本</span><span class="sm:hidden">复制</span>
+                        <i class="fas fa-copy"></i> <span class="hidden sm:inline">复制纯文本简历</span><span class="sm:hidden">复制</span>
                     </button>
                     <button type="button" id="closeResumeModal" class="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 hover:bg-rose-500/20 text-slate-400 hover:text-rose-400 transition-all cursor-pointer" aria-label="关闭简历预览">
                         <i class="fas fa-times"></i>
@@ -1009,173 +1448,164 @@
 
             <!-- 简历内容滚动视口 -->
             <div class="flex-grow overflow-y-auto p-4 sm:p-8 bg-[#0e1117] select-text">
-                <!-- A4 纸张质感简历容器 -->
                 <div id="resumeSheet" class="resume-sheet">
-                    
                     <!-- 1. 顶部 Header -->
                     <div class="resume-header">
                         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b-2 border-amber-500/30 pb-5">
                             <div>
                                 <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight flex items-center gap-3">
                                     杨 杰
-                                    <span class="text-xs font-bold text-amber-800 bg-amber-100 px-2.5 py-1 rounded-md border border-amber-300">13年软硬件研发实战</span>
+                                    <span class="text-xs font-bold text-amber-800 bg-amber-100 px-2.5 py-1 rounded-md border border-amber-300">13年软硬件研发实战 · 1人=5岗闭环</span>
                                 </h1>
                                 <p class="text-sm font-semibold text-slate-700 mt-1.5">
-                                    软硬件全栈研发架构师 / 高级嵌入式系统工程师 / 0→1 落地专家
+                                    软硬件全栈研发架构师 / 高级嵌入式系统工程师 / 军工与工业级 0→1 落地专家
                                 </p>
                             </div>
                             <div class="text-xs text-slate-600 space-y-1 text-left sm:text-right font-mono">
                                 <div><i class="fas fa-envelope text-amber-700 w-4"></i> 43823845@qq.com</div>
                                 <div><i class="fab fa-weixin text-emerald-700 w-4"></i> 43823845</div>
-                                <div><i class="fas fa-map-marker-alt text-rose-700 w-4"></i> 陕西·西安 / 支持全国远程交付</div>
-                                <div><i class="fas fa-check-circle text-blue-700 w-4"></i> 求职意向：软硬件全栈 / 嵌入式负责人</div>
+                                <div><i class="fas fa-map-marker-alt text-rose-700 w-4"></i> 陕西·西安 / 支持全国远程或到岗交付</div>
+                                <div><i class="fas fa-check-circle text-blue-700 w-4"></i> 求职意向：软硬件全栈架构师 / 研发负责人</div>
                             </div>
                         </div>
                     </div>
 
                     <!-- 2. 核心技术优势与底色 -->
                     <div class="resume-section mt-5">
-                        <h2 class="resume-section-title">核心技术优势 & 工程师底色</h2>
+                        <h2 class="resume-section-title">核心技术优势 &amp; 商业赋能价值</h2>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs text-slate-700 mt-2.5">
                             <div class="bg-slate-50 p-2.5 rounded border border-slate-200">
-                                <strong class="text-slate-900">★ 0→1 全周期全栈闭环：</strong> 具备从原理图设计、多层PCB Layout、底层驱动、通信协议栈、TinyML 端侧AI到产线自动化测试治具的全链条独立交付能力。
+                                <strong class="text-slate-900">★ 0→1 一人成军全闭环：</strong> 独立打通原理图设计、16层HDI PCB、FPGA/MCU固件、端侧TinyML、Qt/Web/小程序上位机及ATE产线治具，消弭跨部门推诿损耗。
                             </div>
                             <div class="bg-slate-50 p-2.5 rounded border border-slate-200">
-                                <strong class="text-slate-900">★ 军工 / 车规高可靠设计：</strong> 深入贯彻国家军用标准 GJB151B / GJB367A，深谙高低压隔离、差分阻抗匹配、EMC/EMI 电磁兼容防护与热平衡设计。
+                                <strong class="text-slate-900">★ 军工 / 航电高可靠设计：</strong> 深入贯彻国军标 GJB151B / GJB367A，主导多款中航AVIC机载地测与航发ECU测试工装，深谙1000V高低压隔离、阻抗控制与EMC整改。
                             </div>
                             <div class="bg-slate-50 p-2.5 rounded border border-slate-200">
-                                <strong class="text-slate-900">★ 大规模量产与现场工程：</strong> 曾主导 450+ 节点分布式物联网模组、高压机载测试电源等规模化量产项目，现场死磕难题，具备极强的复杂工况排故能力。
+                                <strong class="text-slate-900">★ 规模化量产与降本实战：</strong> 主导 450+ 城市级充电与数采节点批量部署（累计运行&gt;5W小时）、地源热泵主控板产线100%导入，善用软硬协同算法优化 BOM 成本。
                             </div>
                             <div class="bg-slate-50 p-2.5 rounded border border-slate-200">
-                                <strong class="text-slate-900">★ 实战派工程师信条：</strong> 儿时“破坏大王”对电子的纯粹热爱；信奉“先做出来，再细细打磨”，快速验证核心功能，在实战中打磨出可落地的最优解。
+                                <strong class="text-slate-900">★ 实战派工程师信条：</strong> 连续两年获评“硬件开源达人”（70+开源工程）、全国电子大赛山西省F组亚军、省科技进步奖得主，信奉“先做出来，再细细打磨”。
                             </div>
                         </div>
                     </div>
 
-                    <!-- 3. 专业技能矩阵 (Skills Matrix) -->
+                    <!-- 3. 专业技能矩阵 -->
                     <div class="resume-section mt-5">
                         <h2 class="resume-section-title">专业技能矩阵 (Skills Matrix)</h2>
                         <div class="space-y-2 text-xs text-slate-700 mt-2.5">
                             <div class="flex items-start gap-2">
                                 <span class="resume-skill-tag">硬件研发</span>
-                                <span class="flex-grow">16层板 HDI 高密 PCB 叠层设计、高速差分走线与阻抗控制、精密模拟微弱信号采集调理、115V/28V/5V 大功率车载与机载电源拓扑、GJB151B EMC 防护。</span>
+                                <span class="flex-grow">16层 HDI 高密 PCB 叠层设计、Cadence Sigrity SI/PI 仿真、GaN/SiC 宽禁带拓扑、115V/28V/5V 机载与车载电源、微弱漏电流精密调理、GJB151B EMC 防护。</span>
                             </div>
                             <div class="flex items-start gap-2">
-                                <span class="resume-skill-tag">嵌入式软件</span>
-                                <span class="flex-grow">ARM Cortex-M (STM32/GD32/ESP32)、FreeRTOS/RT-Thread/Linux 内核驱动、HDLC/CAN/Modbus/TCP-IP 工业总线协议栈、TinyML 边缘端轻量化模型部署。</span>
+                                <span class="resume-skill-tag">FPGA与固件</span>
+                                <span class="flex-grow">Xilinx FPGA / Verilog 高速同步采集、ARM Cortex-M (STM32/GD32/ESP32/RISC-V)、FreeRTOS/RT-Thread/嵌入式Linux驱动、HDLC/CANopen/Modbus/EtherCAT、TinyML端侧推理。</span>
                             </div>
                             <div class="flex items-start gap-2">
-                                <span class="resume-skill-tag">量产与测试</span>
-                                <span class="flex-grow">自动化测试系统 (ATE/FCT)、精密产线测试工装治具开发、环境可靠性试验 (高低温/三防/振动)、工程良率爬坡与供应链管理。</span>
+                                <span class="resume-skill-tag">上位机与量产</span>
+                                <span class="flex-grow">Qt6/C++ 与 Tauri/Rust 工业上位机、微信小程序(BLE蓝牙温控)、Web GIS监控平台、ATE/FCT自动化测试机台治具、高低温环境应力筛选与供应链良率爬坡。</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 4. 精选重点项目经历 (Selected Star Projects) -->
+                    <!-- 4. 精选重点项目经历 -->
                     <div class="resume-section mt-5">
-                        <h2 class="resume-section-title">精选重点项目经历 (Selected Projects)</h2>
-                        <div class="space-y-3.5 mt-2.5">
-                            
-                            <!-- 项目 1 -->
+                        <h2 class="resume-section-title">精选代表项目 (Selected Flagship Projects)</h2>
+                        <div class="space-y-3 mt-2.5">
                             <div class="resume-proj-item">
                                 <div class="flex justify-between items-baseline">
-                                    <h3 class="text-xs font-bold text-slate-900">军品机载配电及绝缘电阻自动化测试系统</h3>
-                                    <span class="text-[11px] font-mono text-amber-800 font-semibold">军工/航电 · 硬件架构与系统交付</span>
+                                    <h3 class="text-xs font-bold text-slate-900">1. 军品绝缘自动测试系统 &amp; AVIC机载配电地面测试设备</h3>
+                                    <span class="text-[11px] font-mono text-amber-800 font-semibold">军工/航电 · 项目负责人 (全栈包干)</span>
                                 </div>
                                 <p class="text-[11px] text-slate-600 mt-1 leading-relaxed">
-                                    <strong>项目背景与职责：</strong>针对多型战机地面测试严苛环境，主导多通道高压机载配电与高阻绝缘测量系统的全套软硬件架构设计。
-                                </p>
-                                <p class="text-[11px] text-slate-600 mt-0.5 leading-relaxed">
-                                    <strong>技术攻坚与成果：</strong>攻克 1000V 高压环境下的微弱漏电流精密检测难题，完成 12 层高密 HDI 板卡信号完整性设计，通过国家军用标准 GJB151B 严苛电磁兼容性认证并顺利批量交付军工客户。
+                                    <strong>全栈交付与成果：</strong>独立完成航插选型、12层高密板卡原理图与PCB Layout、FPGA高速同步解码、115V多路异步采集固件、交互上位机及全套军标《测试/校准规范》，攻克微弱漏电流低噪测量难题，一次性通过军用环境应力与GJB151B验收。
                                 </p>
                             </div>
 
-                            <!-- 项目 2 -->
                             <div class="resume-proj-item">
                                 <div class="flex justify-between items-baseline">
-                                    <h3 class="text-xs font-bold text-slate-900">450+ 节点分布式智能充电主控模组</h3>
-                                    <span class="text-[11px] font-mono text-amber-800 font-semibold">物联网/能源 · 软硬件全栈负责人</span>
+                                    <h3 class="text-xs font-bold text-slate-900">2. 非标量产型多模态电参采集模组 (误差 ≤ ±0.01)</h3>
+                                    <span class="text-[11px] font-mono text-amber-800 font-semibold">工业/能源 · 研发负责人</span>
                                 </div>
                                 <p class="text-[11px] text-slate-600 mt-1 leading-relaxed">
-                                    <strong>项目背景与职责：</strong>0 到 1 打造高并发、高稳定性的分布式充电桩主控终端，负责从硬件射频天线匹配到嵌入式网络协议栈全流程。
-                                </p>
-                                <p class="text-[11px] text-slate-600 mt-0.5 leading-relaxed">
-                                    <strong>技术攻坚与成果：</strong>设计 4G Cat.1 + BLE + RS485 异构冗余链路，引入掉电离线交易自愈算法，全网平稳部署 450+ 台终端设备，历经全国极端工况运行，保持零严重故障与极佳通信 SLA。
+                                    <strong>全栈交付与成果：</strong>支持 AC/DC 1-150V、0.1-20A 宽范围测量，独创内部温度动态补偿与动态增益自校准算法，将综合测量误差严格控制在 ±0.01 以内，独立交付硬件板卡、RTU协议栈与配套测控上位机 UI。
                                 </p>
                             </div>
 
-                            <!-- 项目 3 -->
                             <div class="resume-proj-item">
                                 <div class="flex justify-between items-baseline">
-                                    <h3 class="text-xs font-bold text-slate-900">115V 400Hz 机载三相测试主电源控制系统</h3>
-                                    <span class="text-[11px] font-mono text-amber-800 font-semibold">航空电源 · 核心控制算法与软件</span>
+                                    <h3 class="text-xs font-bold text-slate-900">3. 共享充电主控终端 (450+城市节点) &amp; 新能源地源热泵主控板</h3>
+                                    <span class="text-[11px] font-mono text-amber-800 font-semibold">物联网/新能源 · 硬件与固件核心研发</span>
                                 </div>
                                 <p class="text-[11px] text-slate-600 mt-1 leading-relaxed">
-                                    <strong>技术攻坚与成果：</strong>基于 DSP/STM32 编写全数字 SPWM 调制闭环与抗积分饱和双环 PID 控制算法，实现波形总谐波失真 THD &lt; 1.5%，瞬态突加负载电压恢复时间 &lt; 2ms，成功满足航空装备严苛供电需求。
+                                    <strong>全栈交付与成果：</strong>完成主控功率板、4G远端数传模组及 TCP 协议栈研发，在山西运城公共设施规模化部署 450+ 节点，累计无故障运行超 50,000 小时；自研单/双压机地源热泵主控板实现客户产线 100% 全线导入，量产良率 &gt;99.5%。
                                 </p>
                             </div>
 
-                            <!-- 项目 4 -->
                             <div class="resume-proj-item">
                                 <div class="flex justify-between items-baseline">
-                                    <h3 class="text-xs font-bold text-slate-900">高精度 16 通道交直流非标数据采集分析模组</h3>
-                                    <span class="text-[11px] font-mono text-amber-800 font-semibold">工业自动化 · 硬件与固件开发</span>
+                                    <h3 class="text-xs font-bold text-slate-900">4. 北斗/GPS双模定位Web管理平台 &amp; 智能SMT微型焊台(硬件+小程序)</h3>
+                                    <span class="text-[11px] font-mono text-amber-800 font-semibold">软硬一体全栈 · 独立开发者</span>
                                 </div>
                                 <p class="text-[11px] text-slate-600 mt-1 leading-relaxed">
-                                    <strong>技术攻坚与成果：</strong>采用 24-bit 工业级 ADC 与全通道光电隔离技术，实现微伏级电压/毫安级电流高共模抑制比采集；配合边缘端 FIR 滤波与 TinyML 特征提取，实现工业设备早期振动故障诊断。
+                                    <strong>全栈交付与成果：</strong>独立开发 TCP/HTTP 双协议网关与 WebSocket 高德地图实时追踪平台（支撑 100+ 终端并发，延迟 &lt;200ms）；自主设计 300℃ 微型智能焊台 PCB、增量式 PID 算法（过冲 &lt;±1℃）及配套 BLE 蓝牙微信小程序动态波形监控系统。
                                 </p>
                             </div>
-
                         </div>
                     </div>
 
-                    <!-- 5. 职业历程与量产经验 (Work History) -->
+                    <!-- 5. 职业发展历程 -->
                     <div class="resume-section mt-5">
-                        <h2 class="resume-section-title">职业发展历程 (Career Timeline)</h2>
+                        <h2 class="resume-section-title">工作经历 (Career Timeline)</h2>
                         <div class="space-y-2 text-xs text-slate-700 mt-2.5">
                             <div class="flex justify-between items-start">
                                 <div>
-                                    <span class="font-bold text-slate-900">全栈研发负责人 / 资深嵌入式系统架构师</span>
-                                    <p class="text-slate-600 text-[11px] mt-0.5">统筹多款军工及工业级高可靠产品研发，主导从电路设计、固件开发到产线自动化测试治具 (ATE) 的全流程落地。</p>
+                                    <span class="font-bold text-slate-900">陕西邦鼎电子科技有限公司 · 嵌入式开发工程师 / 硬件工程师</span>
+                                    <p class="text-slate-600 text-[11px] mt-0.5">主导涉密军工自研功能板卡、FPGA同步采集、跨平台上位机及模块化自动化测试机台全生命周期端到端交付。</p>
                                 </div>
-                                <span class="font-mono text-slate-500 text-[11px] flex-shrink-0">2021.06 - 至今</span>
+                                <span class="font-mono text-slate-500 text-[11px] flex-shrink-0">2025.11 - 至今</span>
                             </div>
-                            <div class="flex justify-between items-start border-t border-slate-100 pt-2">
+                            <div class="flex justify-between items-start border-t border-slate-100 pt-1.5">
                                 <div>
-                                    <span class="font-bold text-slate-900">高级硬件研发工程师</span>
-                                    <p class="text-slate-600 text-[11px] mt-0.5">主导 10+ 款高密 PCB 板卡设计、高速差分信号仿真与 GJB151B 电磁兼容 (EMC) 攻坚，完成批量交付。</p>
+                                    <span class="font-bold text-slate-900">陕西华科航电科技有限公司 · 嵌入式软件工程师 / 硬件工程师</span>
+                                    <p class="text-slate-600 text-[11px] mt-0.5">主导中航AVIC机载一次配电地测设备、电加热测试设备、工业电容屏HMI及HDLC高速通信协议栈研发交付。</p>
                                 </div>
-                                <span class="font-mono text-slate-500 text-[11px] flex-shrink-0">2017.03 - 2021.05</span>
+                                <span class="font-mono text-slate-500 text-[11px] flex-shrink-0">2025.02 - 2025.11</span>
                             </div>
-                            <div class="flex justify-between items-start border-t border-slate-100 pt-2">
+                            <div class="flex justify-between items-start border-t border-slate-100 pt-1.5">
                                 <div>
-                                    <span class="font-bold text-slate-900">嵌入式软硬件开发工程师</span>
-                                    <p class="text-slate-600 text-[11px] mt-0.5">负责单片机底层驱动开发、工业通信协议实现与原型机手工焊接调试、小批量产线工装验证。</p>
+                                    <span class="font-bold text-slate-900">山西物联工业自动化技术研究院 &amp; 运创自动化 · 嵌入式 / 硬件工程师</span>
+                                    <p class="text-slate-600 text-[11px] mt-0.5">单年交付5+量产机型，主导PLC核心板、军工CV测试系统、地源热泵主控板及450+节点共享充电终端研发与批量制造。</p>
                                 </div>
-                                <span class="font-mono text-slate-500 text-[11px] flex-shrink-0">2013.07 - 2017.02</span>
+                                <span class="font-mono text-slate-500 text-[11px] flex-shrink-0">2023.04 - 2025.01</span>
+                            </div>
+                            <div class="flex justify-between items-start border-t border-slate-100 pt-1.5">
+                                <div>
+                                    <span class="font-bold text-slate-900">华视嘉德国际文化传媒(北京)有限公司 · 资深网络与云架构工程师</span>
+                                    <p class="text-slate-600 text-[11px] mt-0.5">负责IDC与混合云高可用架构、K8s+Docker弹性伸缩、IoT安防监控工程及10W级并发基础设施运维（SLA &gt; 99.9%）。</p>
+                                </div>
+                                <span class="font-mono text-slate-500 text-[11px] flex-shrink-0">2013.06 - 2023.03</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- 6. 工程师信条 Footer -->
-                    <div class="mt-6 pt-4 border-t border-slate-200 text-center">
+                    <!-- 6. Footer -->
+                    <div class="mt-5 pt-3 border-t border-slate-200 text-center">
                         <p class="text-[11px] text-slate-500 italic">
-                            “学历不是光环，对电子和代码最纯粹的热爱才是。先做出来，再细细打磨——期待与贵团队并肩打造有用的好产品！”
+                            “学历不是光环，对电子和代码最纯粹的热爱才是。先做出来，再细细打磨——期待与贵团队并肩打造高可靠的好产品！”
                         </p>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 
     <!-- ===== BACK TO TOP ===== -->
-    <button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 bg-amber-600 hover:bg-amber-500 text-white rounded-full shadow-lg shadow-amber-600/25 z-[999] flex items-center justify-center transition-all hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-amber-500" aria-label="回到顶部">
+    <button id="backToTop" type="button" class="fixed bottom-8 right-8 w-12 h-12 bg-amber-600 hover:bg-amber-500 text-white rounded-full shadow-lg shadow-amber-600/25 z-[999] flex items-center justify-center transition-all hover:-translate-y-1 focus:outline-none focus:ring-2 focus:ring-amber-500 cursor-pointer" aria-label="回到顶部">
         <i class="fas fa-arrow-up" aria-hidden="true"></i>
     </button>
 
     <!-- ===== JAVASCRIPT ===== -->
-    <!-- 引入独立的项目数据和应用逻辑脚本文件，支持二次访问强缓存，极大缩减首次 HTML 体积 -->
     <script src="src/projects.js" defer></script>
     <script src="src/app.js" defer></script>
 
