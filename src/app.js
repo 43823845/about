@@ -149,6 +149,7 @@
         function toggleMobileMenu() {
             var isOpen = mobileMenu.classList.toggle('open');
             menuOverlay.classList.toggle('hidden', !isOpen);
+            if (menuToggle) menuToggle.classList.toggle('open', isOpen);
             document.body.style.overflow = isOpen ? 'hidden' : '';
             menuToggle.setAttribute('aria-expanded', String(isOpen));
         }
@@ -157,6 +158,7 @@
             if (!mobileMenu) return;
             mobileMenu.classList.remove('open');
             if (menuOverlay) menuOverlay.classList.add('hidden');
+            if (menuToggle) menuToggle.classList.remove('open');
             document.body.style.overflow = '';
             if (menuToggle) menuToggle.setAttribute('aria-expanded', 'false');
         }
@@ -328,27 +330,200 @@
             if (adminModal && adminModal.style.visibility === 'visible') hideAdminModal();
         });
 
-        /* ── 简历下载（#10 优化：优先寻找 PDF，降级到打印）── */
-        var downloadBtn = document.getElementById('downloadResumeBtn');
-        if (downloadBtn) {
-            downloadBtn.addEventListener('click', function (e) {
+        /* ── 全局 Toast 提示组件与剪贴板复制 ── */
+        var toastContainer = document.getElementById('toastContainer');
+
+        function showToast(msg, icon) {
+            if (!toastContainer) return;
+            var toast = document.createElement('div');
+            toast.className = 'toast-message';
+            var iconHTML = icon ? '<i class="' + esc(icon) + ' text-amber-400"></i>' : '<i class="fas fa-check-circle text-emerald-400"></i>';
+            toast.innerHTML = iconHTML + '<span>' + esc(msg) + '</span>';
+            toastContainer.appendChild(toast);
+
+            setTimeout(function () {
+                toast.classList.add('toast-fadeout');
+                setTimeout(function () {
+                    if (toast.parentNode) toast.parentNode.removeChild(toast);
+                }, 300);
+            }, 2500);
+        }
+        window.showToast = showToast;
+
+        function copyToClipboard(text, successMsg) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(function () {
+                    showToast(successMsg || '已复制到剪贴板！');
+                }).catch(function () {
+                    fallbackCopy(text, successMsg);
+                });
+            } else {
+                fallbackCopy(text, successMsg);
+            }
+        }
+
+        function fallbackCopy(text, successMsg) {
+            var textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showToast(successMsg || '已复制到剪贴板！');
+            } catch (e) {
+                showToast('复制失败，请手动选择复制', 'fas fa-exclamation-circle');
+            }
+            document.body.removeChild(textarea);
+        }
+
+        // 绑定邮箱卡片一键复制
+        var emailCard = document.getElementById('emailCard');
+        if (emailCard) {
+            emailCard.addEventListener('click', function (e) {
                 e.preventDefault();
-                // 尝试下载 resume.pdf，如不存在则降级到打印
-                var pdfUrl = 'resume.pdf';
-                fetch(pdfUrl, { method: 'HEAD' })
-                    .then(function (res) {
-                        if (res.ok) {
-                            var a = document.createElement('a');
-                            a.href = pdfUrl;
-                            a.download = '杨杰_软硬件研发全栈工程师.pdf';
-                            a.click();
-                        } else {
-                            window.print();
-                        }
-                    })
-                    .catch(function () { window.print(); });
+                copyToClipboard('43823845@qq.com', '✓ 已成功复制邮箱: 43823845@qq.com');
             });
         }
+
+        /* ── 经历标签与项目联动跳转 ── */
+        document.querySelectorAll('.timeline-chip[data-link-project]').forEach(function (chip) {
+            chip.addEventListener('click', function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var projId = parseInt(this.getAttribute('data-link-project'), 10);
+                if (!projId) return;
+
+                // 重置筛选器到全部，确保项目可见
+                var allFilterBtn = document.querySelector('.filter-btn[data-filter="all"]');
+                if (allFilterBtn) allFilterBtn.click();
+
+                var targetCard = document.querySelector('.project-card[data-id="' + projId + '"]');
+                var projectsSec = document.getElementById('projects');
+
+                if (projectsSec) {
+                    window.scrollTo({
+                        top: (targetCard ? targetCard.offsetTop : projectsSec.offsetTop) - 100,
+                        behavior: 'smooth'
+                    });
+                }
+
+                if (targetCard) {
+                    targetCard.classList.add('highlight-project');
+                    showToast('已为您定位到关联项目：' + (targetCard.querySelector('h3') ? targetCard.querySelector('h3').textContent : ''));
+                    setTimeout(function () {
+                        targetCard.classList.remove('highlight-project');
+                    }, 3000);
+                }
+            });
+        });
+
+        /* ── 移动触控端点击技能标签弹出详尽说明 ── */
+        document.querySelectorAll('.skill-tag[title]').forEach(function (tag) {
+            tag.addEventListener('click', function () {
+                var title = this.getAttribute('title');
+                var text = this.innerText ? this.innerText.trim() : this.textContent.trim();
+                if (title) {
+                    showToast(text + '：' + title, 'fas fa-microchip');
+                }
+            });
+        });
+
+        /* ── 📄 精装 A4 电子简历模态窗交互 ── */
+        var resumeModal = document.getElementById('resumeModal');
+        var resumeModalContent = document.getElementById('resumeModalContent');
+        var closeResumeModalBtn = document.getElementById('closeResumeModal');
+        var resumePrintBtn = document.getElementById('resumePrintBtn');
+        var resumeCopyTextBtn = document.getElementById('resumeCopyTextBtn');
+
+        window.openResumeModal = function (e) {
+            if (e) { e.preventDefault(); e.stopPropagation(); }
+            if (!resumeModal) return;
+            resumeModal.classList.remove('opacity-0', 'pointer-events-none');
+            resumeModal.classList.add('opacity-100', 'pointer-events-auto');
+            if (resumeModalContent) {
+                resumeModalContent.classList.remove('scale-95');
+                resumeModalContent.classList.add('scale-100');
+            }
+            document.body.style.overflow = 'hidden';
+            showToast('已载入杨杰 A4 精装电子简历', 'fas fa-file-alt');
+        };
+
+        window.closeResumeModal = function (e) {
+            if (e) { e.preventDefault(); e.stopPropagation(); }
+            if (!resumeModal) return;
+            resumeModal.classList.remove('opacity-100', 'pointer-events-auto');
+            resumeModal.classList.add('opacity-0', 'pointer-events-none');
+            if (resumeModalContent) {
+                resumeModalContent.classList.remove('scale-100');
+                resumeModalContent.classList.add('scale-95');
+            }
+            document.body.style.overflow = '';
+        };
+
+        if (closeResumeModalBtn) closeResumeModalBtn.addEventListener('click', closeResumeModal);
+        if (resumeModal) {
+            resumeModal.addEventListener('click', function (e) {
+                if (e.target === resumeModal) closeResumeModal(e);
+            });
+        }
+
+        // 打印 / 另存为 A4 PDF
+        if (resumePrintBtn) {
+            resumePrintBtn.addEventListener('click', function () {
+                showToast('正在调起 A4 高保真打印 / 另存为 PDF...', 'fas fa-print');
+                setTimeout(function () {
+                    window.print();
+                }, 300);
+            });
+        }
+
+        // 复制纯文本简历
+        if (resumeCopyTextBtn) {
+            resumeCopyTextBtn.addEventListener('click', function () {
+                var plainResume = [
+                    '【杨杰 - 软硬件全栈研发架构师 / 高级嵌入式工程师 简历】',
+                    '工作经验: 13年软硬件研发实战 | 状态: 随时可到岗',
+                    '联系电话/微信: 43823845 | 邮箱: 43823845@qq.com',
+                    '常驻坐标: 陕西·西安 / 支持全国远程交付',
+                    '',
+                    '一、核心优势 & 工程师底色',
+                    '1. 0→1 全周期全栈闭环: 具备原理图、多层PCB、底层驱动、通信协议栈、TinyML、产线治具全链条交付能力。',
+                    '2. 军工/车规高可靠设计: 严格贯彻 GJB151B/367A 军标，深谙隔离、阻抗匹配、EMC防护与热平衡。',
+                    '3. 大规模量产经验: 主导 450+ 节点物联网模组、高压机载电源量产交付，零严重客诉。',
+                    '',
+                    '二、专业技能',
+                    '- 硬件: 16层HDI、高速差分、EMC/EMI军标、模拟信号调理、115V/28V/5V大功率电源拓扑。',
+                    '- 软件: ARM Cortex-M (STM32/GD32/ESP32)、FreeRTOS/RT-Thread/Linux、HDLC/CAN/Modbus/TCP-IP、TinyML。',
+                    '- 量产: 自动化测试治具 (ATE/FCT)、环境可靠性试验、工程良率爬坡。',
+                    '',
+                    '三、精选重点项目',
+                    '1. 军品机载配电及绝缘电阻自动化测试系统 (军工航电 / 负责硬件架构与系统交付)',
+                    '2. 450+ 节点分布式智能充电主控模组 (物联网能源 / 软硬件全栈负责人)',
+                    '3. 115V 400Hz 机载三相测试主电源控制系统 (航空电源 / 核心控制算法与软件)',
+                    '4. 高精度 16 通道交直流非标数据采集分析模组 (工业自动化 / 软硬件开发)',
+                    '',
+                    '四、职业历程',
+                    '- 2021.06 - 至今: 全栈研发负责人 / 资深嵌入式系统架构师',
+                    '- 2017.03 - 2021.05: 高级硬件研发工程师',
+                    '- 2013.07 - 2017.02: 嵌入式软硬件开发工程师'
+                ].join('\n');
+
+                copyToClipboard(plainResume, '✓ 已成功复制纯文本简历至剪贴板');
+            });
+        }
+
+        var navResumeBtn = document.getElementById('navResumeBtn');
+        var mobileResumeBtn = document.getElementById('mobileResumeBtn');
+        var downloadBtn = document.getElementById('downloadResumeBtn');
+
+        if (navResumeBtn) navResumeBtn.addEventListener('click', openResumeModal);
+        if (mobileResumeBtn) mobileResumeBtn.addEventListener('click', function () {
+            closeMobileMenu();
+            openResumeModal();
+        });
+        if (downloadBtn) downloadBtn.addEventListener('click', openResumeModal);
 
         /* ── 彩蛋 ── */
         var easterEggCard    = document.getElementById('easterEggCard');
@@ -461,6 +636,7 @@
 
         window.showWechatQR = function (e) {
             if (e) { e.preventDefault(); e.stopPropagation(); }
+            copyToClipboard('43823845', '✓ 已复制微信号: 43823845，正在为您打开二维码名片');
             if (!wechatModal) return;
             wechatModal.style.opacity    = '1';
             wechatModal.style.visibility = 'visible';
@@ -707,7 +883,7 @@
     }); // end DOMContentLoaded
 
     /* ─────────────────────────────────────────
-       项目卡片渲染（#9 统一筛选逻辑）
+       项目卡片渲染（统一筛选逻辑 + 核心指标徽章）
     ───────────────────────────────────────── */
     function renderProjects(filter) {
         var grid = document.getElementById('projectGrid');
@@ -726,7 +902,6 @@
         filtered.forEach(function (p, index) {
             var card = document.createElement('div');
             card.className = 'project-card';
-            // 采用极客感的高阶交错(staggered)入场动画延迟
             card.style.animationDelay = (index * 0.05) + 's';
             card.setAttribute('data-id', String(p.id));
             card.setAttribute('role', 'button');
@@ -739,7 +914,7 @@
                 openModal(p.id);
             });
 
-            // 键盘操作支持（#13 可访问性）
+            // 键盘操作支持
             card.addEventListener('keydown', function (e) {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
@@ -748,15 +923,27 @@
             });
 
             var summary = getProjectSummary(p);
-            card.innerHTML = buildCardHTML(p, index, summary);
+            var metric = getProjectMetric(p);
+            card.innerHTML = buildCardHTML(p, index, summary, metric);
             grid.appendChild(card);
         });
     }
 
-    function buildCardHTML(project, index, summary) {
+    function getProjectMetric(project) {
+        var text = (project.achievements || '') + ' ' + (project.tech || '');
+        if (text.indexOf('450') !== -1) return '★ 部署450+节点';
+        if (text.indexOf('GJB151B') !== -1 || text.indexOf('军品') !== -1) return '★ GJB151B军标';
+        if (text.indexOf('12层板') !== -1 || text.indexOf('HDI') !== -1) return '★ 12层高密PCB';
+        if (text.indexOf('115V') !== -1) return '★ 115V高可靠采集';
+        if (text.indexOf('TinyML') !== -1) return '★ TinyML边缘端';
+        if (text.indexOf('量产') !== -1) return '★ 批量量产交付';
+        return '★ 完整交付';
+    }
+
+    function buildCardHTML(project, index, summary, metric) {
         var num = String(index + 1).padStart(2, '0');
         var tagsHTML = project.tags.map(function (tag) {
-            return '<span class="text-[10px] text-slate-400 bg-white/[0.04] px-2.5 py-1 rounded-lg border border-white/5">#' + esc(tag) + '</span>';
+            return '<span class="text-[10px] text-slate-300 bg-white/[0.06] px-2.5 py-1 rounded-lg border border-white/10">#' + esc(tag) + '</span>';
         }).join('');
 
         return [
@@ -768,18 +955,19 @@
             '     class="card-img">',
             '<div class="card-overlay" aria-hidden="true"></div>',
             '<div class="card-frame" aria-hidden="true"></div>',
-            '<div class="absolute top-4 left-4 px-3 py-1 bg-amber-700/90 text-[10px] font-bold rounded-lg text-white uppercase tracking-wider">' + esc(project.cat) + '</div>',
+            '<div class="absolute top-3.5 left-3.5 px-3 py-1 bg-amber-600/90 backdrop-blur-sm text-[10px] font-bold rounded-lg text-white uppercase tracking-wider shadow-md">' + esc(project.cat) + '</div>',
+            '<div class="card-metric-badge">' + esc(metric) + '</div>',
             '<div class="card-number" aria-hidden="true">' + num + '</div>',
-            '<div class="view-btn absolute bottom-4 right-4 px-4 py-2 bg-white/10 backdrop-blur-sm text-white text-xs font-bold rounded-lg border border-white/20" aria-hidden="true">',
+            '<div class="view-btn absolute bottom-4 right-4 px-3.5 py-1.5 bg-black/60 backdrop-blur-md text-white text-xs font-bold rounded-lg border border-white/20" aria-hidden="true">',
             '<i class="fas fa-expand mr-1" aria-hidden="true"></i> 查看详情',
             '</div>',
             '</div>',
             '<div class="p-6">',
-            '<h3 class="text-white font-bold mb-2 text-base">' + esc(project.title) + '</h3>',
-            '<p class="text-slate-500 text-xs mb-4">' + esc(project.role) + '</p>',
-            '<div class="card-proof" aria-hidden="true">核心成果摘要</div>',
-            '<p class="card-summary">' + esc(summary) + '</p>',
-            '<div class="flex flex-wrap gap-2">' + tagsHTML + '</div>',
+            '<h3 class="text-white font-bold mb-1.5 text-base tracking-tight">' + esc(project.title) + '</h3>',
+            '<p class="text-amber-400/80 text-xs font-medium mb-3.5">' + esc(project.role) + '</p>',
+            '<div class="card-proof" aria-hidden="true">核心成果与亮点</div>',
+            '<p class="card-summary text-slate-300 text-xs leading-relaxed mb-4">' + esc(summary) + '</p>',
+            '<div class="flex flex-wrap gap-1.5">' + tagsHTML + '</div>',
             '</div>'
         ].join('');
     }
@@ -911,27 +1099,17 @@
 
         if (!tabConsoleBtn || !tabOscilloscopeBtn || !debugConsolePanel || !debugOscilloscopePanel) return;
 
-        // 1. Tab 切换逻辑
+        // 1. Tab 切换逻辑 (纯粹双Tab: 终端控制台 + 信号示波器)
         var activeTab = 'console'; // 'console' | 'oscilloscope'
         var oscAnimationFrame = null;
 
         tabConsoleBtn.addEventListener('click', function () {
             if (activeTab === 'console') return;
             activeTab = 'console';
-            tabConsoleBtn.setAttribute('aria-selected', 'true');
-            tabConsoleBtn.classList.add('active');
-            tabOscilloscopeBtn.setAttribute('aria-selected', 'false');
-            tabOscilloscopeBtn.classList.remove('active');
-
+            updateTabs();
             debugConsolePanel.classList.remove('hidden');
             debugOscilloscopePanel.classList.add('hidden');
-
-            if (oscAnimationFrame) {
-                cancelAnimationFrame(oscAnimationFrame);
-                oscAnimationFrame = null;
-            }
-            
-            // 自动聚焦输入框
+            stopAnim();
             var consoleInput = document.getElementById('consoleInput');
             if (consoleInput) consoleInput.focus();
         });
@@ -939,16 +1117,26 @@
         tabOscilloscopeBtn.addEventListener('click', function () {
             if (activeTab === 'oscilloscope') return;
             activeTab = 'oscilloscope';
-            tabOscilloscopeBtn.setAttribute('aria-selected', 'true');
-            tabOscilloscopeBtn.classList.add('active');
-            tabConsoleBtn.setAttribute('aria-selected', 'false');
-            tabConsoleBtn.classList.remove('active');
-
+            updateTabs();
             debugOscilloscopePanel.classList.remove('hidden');
             debugConsolePanel.classList.add('hidden');
-
+            stopAnim();
             startOscilloscope();
         });
+
+        function updateTabs() {
+            tabConsoleBtn.setAttribute('aria-selected', String(activeTab === 'console'));
+            tabConsoleBtn.classList.toggle('active', activeTab === 'console');
+            tabOscilloscopeBtn.setAttribute('aria-selected', String(activeTab === 'oscilloscope'));
+            tabOscilloscopeBtn.classList.toggle('active', activeTab === 'oscilloscope');
+        }
+
+        function stopAnim() {
+            if (oscAnimationFrame) {
+                cancelAnimationFrame(oscAnimationFrame);
+                oscAnimationFrame = null;
+            }
+        }
 
         // 2. 终端控制台逻辑
         var consoleHistory = document.getElementById('consoleHistory');
@@ -960,9 +1148,10 @@
             '[ 正常 ] 精密模拟信号调理采集单元就绪，检测状态：稳定',
             '[ 信息 ] 28V/11A 装备车载测试主电源供电轨：28.00V 供电正常',
             '[ 正常 ] 嵌入式 TinyML 神经网络端侧轻量化推理引擎挂载成功',
+            '[ 浪漫 ] 示波器 CH1 通道已就绪，搭载工程师之吻与生命律动信号源',
             '[ 信息 ] 国家军用标准 GJB151B 电磁兼容(EMC)防护验证完毕',
             '==================================================',
-            '杨杰软硬件全栈研发系统已稳定就绪。输入 "help" 获取指令菜单。',
+            '杨杰软硬件全栈研发系统已稳定就绪。输入 "help" 或点击上方指令。',
             ''
         ];
 
@@ -971,9 +1160,8 @@
             if (logIndex < initialLogs.length) {
                 printRow(initialLogs[logIndex]);
                 logIndex++;
-                setTimeout(printNextLog, Math.random() * 200 + 100);
+                setTimeout(printNextLog, Math.random() * 140 + 70);
             } else {
-                // 加一个闪烁的光标
                 var cursor = document.createElement('span');
                 cursor.className = 'console-cursor';
                 cursor.id = 'consoleCursor';
@@ -989,9 +1177,9 @@
             else if (type === 'warn') row.style.color = '#fbbf24';
             else if (type === 'info') row.style.color = '#60a5fa';
             else if (type === 'success') row.style.color = '#34d399';
+            else if (type === 'romance') row.style.color = '#f472b6';
             row.textContent = text;
             
-            // 如果光标存在，插在光标前面，否则插在末尾
             var cursor = document.getElementById('consoleCursor');
             if (cursor) {
                 consoleHistory.insertBefore(row, cursor);
@@ -1005,8 +1193,18 @@
             consoleHistory.scrollTop = consoleHistory.scrollHeight;
         }
 
-        // 开始打印初始化日志
         printNextLog();
+
+        // 监听快捷指令 Chips
+        document.querySelectorAll('.terminal-chip').forEach(function (chip) {
+            chip.addEventListener('click', function (e) {
+                e.preventDefault();
+                var cmd = this.getAttribute('data-cmd');
+                if (!cmd) return;
+                printRow('yj_core:~$ ' + cmd);
+                parseCommand(cmd);
+            });
+        });
 
         // 键盘输入命令监听
         if (consoleInput) {
@@ -1031,13 +1229,58 @@
                 if (core === 'help') {
                     printRow('可用指令菜单:', 'info');
                     printRow('  help      - 显示此指令菜单');
-                    printRow('  ls        - 列出虚拟内核工作目录');
-                    printRow('  cat <file>- 查看指定文本文件内容');
-                    printRow('  admin     - 启动可视化项目管理后台');
+                    printRow('  love      - 💖 查看硬件工程师的浪漫与心形波');
+                    printRow('  blink     - ✨ 体验第一颗点亮的 LED (Hello World)');
+                    printRow('  matrix    - 💻 启动黑客帝国代码雨');
                     printRow('  status    - 查看硬件系统实时健康诊断报告');
                     printRow('  projects  - 查看全栈研发项目分类列表');
+                    printRow('  cat <file>- 查看指定文本文件内容 (如: cat 儿时初心.txt)');
+                    printRow('  admin     - 启动可视化项目管理后台');
                     printRow('  egg       - 启动隐藏的极客浪漫彩蛋');
                     printRow('  clear     - 清空终端屏幕历史记录');
+                } else if (core === 'love' || core === 'heart' || core === 'romance') {
+                    printRow('>> 正在加载硬件工程师的浪漫协议...', 'romance');
+                    printRow('┌────────────────────────────────────────────────────────┐', 'romance');
+                    printRow('│  ♥「愿为你写下永不跑飞的看门狗，                         │', 'romance');
+                    printRow('│    愿为你匹配最纯净的特征阻抗；                         │', 'romance');
+                    printRow('│    在嘈杂的电磁世界里，为你滤尽所有噪声；               │', 'romance');
+                    printRow('│    让爱如时钟晶振般坚定，千万年误差不超 1ppm。」        │', 'romance');
+                    printRow('└────────────────────────────────────────────────────────┘', 'romance');
+                    printRow('>> 已联动示波器切入「💖 工程师之吻」心形脉冲波形', 'success');
+                    showToast('💖 示波器已输出工程师心形波形', 'fas fa-heart');
+                    
+                    // 联动切换示波器并选择心形
+                    var waveSel = document.getElementById('oscWaveSelect');
+                    if (waveSel) { waveSel.value = 'heart'; }
+                    setTimeout(function() {
+                        if (tabOscilloscopeBtn) tabOscilloscopeBtn.click();
+                    }, 1200);
+
+                } else if (core === 'blink' || core === 'led') {
+                    printRow('>> 正在执行 GPIO 初始化与呼吸灯点亮程序...', 'info');
+                    printRow('HAL_GPIO_WritePin(GPIOA, GPIO_PIN_5, GPIO_PIN_SET); // LED_ON', 'success');
+                    printRow('【从 0 到 1 的第一束光】', 'warn');
+                    printRow('那一年，电烙铁烫红了指尖，第一颗 LED 在面包板上闪烁起微光。');
+                    printRow('十三年过去，从最初的闪烁到百万级量产装备，对硬件最纯粹的热爱从未熄灭。');
+                    printRow('>> 已联动示波器切入「✨ PWM 呼吸灯」信号', 'success');
+                    showToast('✨ 正在呼吸点亮第一颗虚拟 LED...', 'fas fa-lightbulb');
+
+                    var waveSel = document.getElementById('oscWaveSelect');
+                    if (waveSel) { waveSel.value = 'blink'; }
+                    setTimeout(function() {
+                        if (tabOscilloscopeBtn) tabOscilloscopeBtn.click();
+                    }, 1200);
+
+                } else if (core === 'matrix') {
+                    printRow('>> 正在加载 Cyberpunk Matrix 数据流...', 'success');
+                    var matrixChars = '01010110 01100001 01101100 01110101 01100101 11010010 00101101';
+                    for (var mi = 0; mi < 4; mi++) {
+                        setTimeout(function() {
+                            printRow('0x' + Math.random().toString(16).substr(2, 8).toUpperCase() + ' ' + matrixChars + ' [OK]', 'success');
+                        }, mi * 100);
+                    }
+                    showToast('⚡ 数字矩阵流加载完成', 'fas fa-terminal');
+
                 } else if (core === 'ls') {
                     printRow('项目集/  技能库/  工作经历/  儿时初心.txt  隐藏彩蛋.sh*', 'info');
                 } else if (core === 'cat') {
@@ -1096,14 +1339,13 @@
                     printRow('2. 工业/能源 (ind) - 包含非标采集模组、新能源地源热泵控制板等量产项目');
                     printRow('3. 物联网 (iot)    - 包含通用 4G 数采模组、450个共享充电控制器等项目');
                     printRow('4. 嵌入式软件 (sw) - 包含115V电源软件、交直流数采、北斗定位系统等项目');
-                    printRow('提示: 输入 "egg" 即可触发彩蛋体验。', 'info');
                 } else if (core === 'egg') {
                     printRow('>> 正在启动极客浪漫彩蛋系统...', 'success');
                     var eggBtn = document.getElementById('easterEggCard');
                     if (eggBtn) {
                         eggBtn.click();
                     } else {
-                        printRow('抱歉，未能检测到彩蛋入口组件。', 'error');
+                        printRow('未能检测到彩蛋入口组件。', 'error');
                     }
                 } else if (core === 'admin' || core === 'manage') {
                     printRow('>> 正在启动项目可视化管理控制台...', 'success');
@@ -1116,19 +1358,20 @@
             }, 100);
         }
 
-        // 3. 示波器 Canvas 逻辑
-        var canvas = document.getElementById('oscilloscopeCanvas');
+        // 3. 示波器 Canvas 逻辑 (融入心形线、心跳ECG、呼吸LED、李萨如浪漫波形)
+        var oscCanvas = document.getElementById('oscilloscopeCanvas');
         var freqSlider = document.getElementById('oscFreqSlider');
         var ampSlider = document.getElementById('oscAmpSlider');
         var waveSelect = document.getElementById('oscWaveSelect');
+        var oscModeLabel = document.getElementById('oscModeLabel');
 
         function startOscilloscope() {
-            if (!canvas) return;
-            var ctx = canvas.getContext('2d');
+            if (!oscCanvas) return;
+            var ctx = oscCanvas.getContext('2d');
             
             function resizeCanvas() {
-                canvas.width = canvas.offsetWidth;
-                canvas.height = canvas.offsetHeight;
+                oscCanvas.width = oscCanvas.offsetWidth;
+                oscCanvas.height = oscCanvas.offsetHeight;
             }
             resizeCanvas();
 
@@ -1136,100 +1379,219 @@
             function draw() {
                 if (activeTab !== 'oscilloscope') return;
 
-                var w = canvas.width;
-                var h = canvas.height;
+                var w = oscCanvas.width;
+                var h = oscCanvas.height;
+                var midX = w / 2;
                 var midY = h / 2;
 
                 ctx.fillStyle = '#050a12';
                 ctx.fillRect(0, 0, w, h);
 
-                // 绘制 CRT 绿/黄细格网格线
+                // 绘制 CRT 刻度网格
                 ctx.strokeStyle = 'rgba(232, 176, 79, 0.08)';
                 ctx.lineWidth = 1;
                 var gridSize = 20;
 
-                // 横线
                 for (var y = 0; y < h; y += gridSize) {
-                    ctx.beginPath();
-                    ctx.moveTo(0, y);
-                    ctx.lineTo(w, y);
-                    ctx.stroke();
+                    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
                 }
-                // 竖线
                 for (var x = 0; x < w; x += gridSize) {
-                    ctx.beginPath();
-                    ctx.moveTo(x, 0);
-                    ctx.lineTo(x, h);
-                    ctx.stroke();
+                    ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
                 }
 
-                // 绘制中心偏置水平基准线和刻度线
+                // 绘制中心基准线
                 ctx.strokeStyle = 'rgba(232, 176, 79, 0.25)';
-                ctx.beginPath();
-                ctx.moveTo(0, midY);
-                ctx.lineTo(w, midY);
-                ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(0, midY); ctx.lineTo(w, midY); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(midX, 0); ctx.lineTo(midX, h); ctx.stroke();
 
-                // 读取滑块参数
                 var freq = parseFloat(freqSlider.value) * 0.01;
                 var amp = parseFloat(ampSlider.value);
                 var waveType = waveSelect.value;
 
-                // 绘制流动波形辉光 (叠加物理白噪声与高频阻尼铃流，还原真实硬件示波器 CRT 显示)
-                ctx.strokeStyle = 'rgba(232, 176, 79, 0.95)';
-                ctx.shadowColor = 'rgba(232, 176, 79, 0.8)';
-                ctx.shadowBlur = 10;
-                ctx.lineWidth = 2.5;
-                ctx.beginPath();
-
-                for (var i = 0; i < w; i++) {
-                    var xVal = i;
-                    var angle = i * freq + offset;
-                    var yVal = 0;
-
-                    // 叠合高频微小随机白噪声模拟示波器热噪声
-                    var noise = (Math.random() - 0.5) * 1.5;
-
-                    if (waveType === 'sine') {
-                        yVal = Math.sin(angle) * amp + noise;
-                    } else if (waveType === 'square') {
-                        var base = Math.sin(angle) >= 0 ? amp : -amp;
-                        // 方波跳变沿的过冲与高频铃流振荡模拟 (Capacitive Overshoot & Ringing)
-                        var transitionPhase = Math.abs(Math.sin(angle));
-                        if (transitionPhase < 0.15) {
-                            base += Math.sin(angle * 12) * (amp * 0.15) * (1 - transitionPhase / 0.15);
-                        }
-                        yVal = base + noise;
-                    } else if (waveType === 'triangle') {
-                        yVal = ((Math.abs((angle % (Math.PI * 2)) - Math.PI) / Math.PI - 0.5) * 2 * amp) + noise;
-                    }
-
-                    if (i === 0) {
-                        ctx.moveTo(xVal, midY + yVal);
-                    } else {
-                        ctx.lineTo(xVal, midY + yVal);
-                    }
+                if (oscModeLabel) {
+                    if (waveType === 'heart') oscModeLabel.textContent = 'MODE: XY-HEART (80 BPM PULSE)';
+                    else if (waveType === 'ecg') oscModeLabel.textContent = 'MODE: CH1 ECG-VITAL (1.2mV)';
+                    else if (waveType === 'blink') oscModeLabel.textContent = 'MODE: PWM-BREATHE (LED_ON)';
+                    else if (waveType === 'lissajous') oscModeLabel.textContent = 'MODE: XY-LISSAJOUS 3:2';
+                    else oscModeLabel.textContent = 'MODE: CH1 DC-COUPLING';
                 }
-                ctx.stroke();
 
-                // 重置阴影防污染
+                // ── 浪漫波形 1: 💖 工程师之吻 (心形线参数方程) ──
+                if (waveType === 'heart') {
+                    // 心跳脉动缩放
+                    var pulse = 1 + Math.sin(offset * 3) * 0.12;
+                    var heartScale = (amp / 16) * pulse * 0.75;
+
+                    ctx.strokeStyle = 'rgba(244, 114, 182, 0.95)'; // 粉红微光
+                    ctx.shadowColor = 'rgba(244, 114, 182, 0.8)';
+                    ctx.shadowBlur = 12;
+                    ctx.lineWidth = 2.5;
+                    ctx.beginPath();
+
+                    for (var t = 0; t <= Math.PI * 2; t += 0.02) {
+                        // 经典心形参数方程: x = 16 sin^3(t), y = -(13 cos(t) - 5 cos(2t) - 2 cos(3t) - cos(4t))
+                        var hx = 16 * Math.pow(Math.sin(t), 3);
+                        var hy = -(13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+
+                        var screenX = midX + hx * heartScale;
+                        var screenY = midY + hy * heartScale;
+
+                        if (t === 0) ctx.moveTo(screenX, screenY);
+                        else ctx.lineTo(screenX, screenY);
+                    }
+                    ctx.closePath();
+                    ctx.stroke();
+
+                    // 中心微光文字
+                    ctx.fillStyle = 'rgba(251, 207, 232, 0.9)';
+                    ctx.font = 'bold 9px monospace';
+                    ctx.textAlign = 'center';
+                    ctx.fillText('♥ HARDWARE ROMANCE', midX, midY + 4);
+
+                } else if (waveType === 'lissajous') {
+                    // ── 浪漫波形 2: 🌀 李萨如图形 (3:2 谐振环) ──
+                    ctx.strokeStyle = 'rgba(129, 140, 248, 0.95)';
+                    ctx.shadowColor = 'rgba(129, 140, 248, 0.8)';
+                    ctx.shadowBlur = 10;
+                    ctx.lineWidth = 2.2;
+                    ctx.beginPath();
+
+                    var delta = offset * 0.8;
+                    for (var lt = 0; lt <= Math.PI * 2; lt += 0.02) {
+                        var lx = Math.sin(3 * lt + delta) * (amp * 2.2);
+                        var ly = Math.sin(2 * lt) * (amp * 1.5);
+                        if (lt === 0) ctx.moveTo(midX + lx, midY + ly);
+                        else ctx.lineTo(midX + lx, midY + ly);
+                    }
+                    ctx.closePath();
+                    ctx.stroke();
+
+                } else if (waveType === 'ecg') {
+                    // ── 浪漫波形 3: 💓 生命体征 (医疗级心电 ECG P-Q-R-S-T) ──
+                    ctx.strokeStyle = 'rgba(52, 211, 153, 0.95)';
+                    ctx.shadowColor = 'rgba(52, 211, 153, 0.8)';
+                    ctx.shadowBlur = 10;
+                    ctx.lineWidth = 2.2;
+                    ctx.beginPath();
+
+                    for (var ei = 0; ei < w; ei++) {
+                        var ePhase = ((ei + offset * 60) % 180) / 180;
+                        var eVal = 0;
+
+                        // P波
+                        if (ePhase > 0.15 && ePhase < 0.25) {
+                            eVal = Math.sin((ePhase - 0.15) / 0.1 * Math.PI) * (amp * 0.25);
+                        }
+                        // Q-R-S 尖峰波
+                        else if (ePhase >= 0.32 && ePhase < 0.35) {
+                            eVal = -(ePhase - 0.32) / 0.03 * (amp * 0.3); // Q波下沉
+                        } else if (ePhase >= 0.35 && ePhase < 0.40) {
+                            eVal = (1 - Math.abs((ePhase - 0.375) / 0.025)) * (amp * 1.6); // R波高尖峰
+                        } else if (ePhase >= 0.40 && ePhase < 0.43) {
+                            eVal = -((0.43 - ePhase) / 0.03) * (amp * 0.4); // S波下沉
+                        }
+                        // T波
+                        else if (ePhase > 0.55 && ePhase < 0.72) {
+                            eVal = Math.sin((ePhase - 0.55) / 0.17 * Math.PI) * (amp * 0.45);
+                        }
+
+                        eVal = -eVal + (Math.random() - 0.5) * 1.2; // 屏幕坐标反转并叠加基线白噪声
+
+                        if (ei === 0) ctx.moveTo(ei, midY + eVal);
+                        else ctx.lineTo(ei, midY + eVal);
+                    }
+                    ctx.stroke();
+
+                } else if (waveType === 'blink') {
+                    // ── 浪漫波形 4: ✨ 点亮第一颗 LED (PWM 呼吸曲线) ──
+                    var breatheVal = (Math.exp(Math.sin(offset * 1.5)) - 0.36787944) * 0.425; // 真实人眼感知的指数呼吸算法
+                    var pwmDuty = breatheVal;
+
+                    ctx.strokeStyle = 'rgba(251, 191, 36, 0.95)';
+                    ctx.shadowColor = 'rgba(251, 191, 36, 0.8)';
+                    ctx.shadowBlur = 10;
+                    ctx.lineWidth = 2.2;
+                    ctx.beginPath();
+
+                    for (var bi = 0; bi < w; bi++) {
+                        var bPhase = (bi * freq * 3 + offset) % 1;
+                        var bVal = (bPhase < pwmDuty ? amp : -amp) + (Math.random() - 0.5) * 1.5;
+                        if (bi === 0) ctx.moveTo(bi, midY + bVal);
+                        else ctx.lineTo(bi, midY + bVal);
+                    }
+                    ctx.stroke();
+
+                    // 绘制右上角虚拟发光 LED 状态指示
+                    ctx.fillStyle = 'rgba(251, 191, 36, ' + Math.max(0.1, breatheVal) + ')';
+                    ctx.shadowColor = 'rgba(251, 191, 36, 1)';
+                    ctx.shadowBlur = 15;
+                    ctx.beginPath();
+                    ctx.arc(w - 25, 25, 6, 0, Math.PI * 2);
+                    ctx.fill();
+
+                } else {
+                    // ── 常规波形 (Sine, Square, Filtered) ──
+                    if (waveType === 'filtered') {
+                        ctx.strokeStyle = 'rgba(248, 113, 113, 0.45)';
+                        ctx.lineWidth = 1.5;
+                        ctx.beginPath();
+                        for (var fi = 0; fi < w; fi++) {
+                            var fAngle = fi * freq + offset;
+                            var fNoise = (Math.random() - 0.5) * (amp * 0.7);
+                            var fYVal = Math.sin(fAngle) * amp + fNoise;
+                            if (fi === 0) ctx.moveTo(fi, midY + fYVal);
+                            else ctx.lineTo(fi, midY + fYVal);
+                        }
+                        ctx.stroke();
+                    }
+
+                    ctx.strokeStyle = 'rgba(232, 176, 79, 0.95)';
+                    ctx.shadowColor = 'rgba(232, 176, 79, 0.8)';
+                    ctx.shadowBlur = 10;
+                    ctx.lineWidth = 2.5;
+                    ctx.beginPath();
+
+                    for (var i = 0; i < w; i++) {
+                        var xVal = i;
+                        var angle = i * freq + offset;
+                        var yVal = 0;
+                        var noise = (Math.random() - 0.5) * 1.5;
+
+                        if (waveType === 'sine') {
+                            yVal = Math.sin(angle) * amp + noise;
+                        } else if (waveType === 'square') {
+                            var base = Math.sin(angle) >= 0 ? amp : -amp;
+                            var transitionPhase = Math.abs(Math.sin(angle));
+                            if (transitionPhase < 0.15) {
+                                base += Math.sin(angle * 12) * (amp * 0.15) * (1 - transitionPhase / 0.15);
+                            }
+                            yVal = base + noise;
+                        } else if (waveType === 'filtered') {
+                            yVal = Math.sin(angle) * amp;
+                        }
+
+                        if (i === 0) ctx.moveTo(xVal, midY + yVal);
+                        else ctx.lineTo(xVal, midY + yVal);
+                    }
+                    ctx.stroke();
+                }
+
                 ctx.shadowBlur = 0;
-
-                // 滚动步长，产生正向流速
                 offset += 0.08;
 
                 oscAnimationFrame = requestAnimationFrame(draw);
             }
 
-            // 监听窗口缩放重新适应 Canvas 尺寸
             window.addEventListener('resize', throttle(function () {
                 if (activeTab === 'oscilloscope') resizeCanvas();
             }, 250));
 
-            // 开始循环
             if (oscAnimationFrame) cancelAnimationFrame(oscAnimationFrame);
             draw();
         }
     }
 
 })();
+
+
+
